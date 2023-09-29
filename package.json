@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "react-native-health-connect": "^1.2.1"
+  }
+}
