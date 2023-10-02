@@ -4,7 +4,9 @@ import React from 'react'
 
 const stepCouterPage = () => {
     const {steps, distance, flights} = useHealthData();
-  
+    console.log(`Steps: ${steps} | Distance: ${distance}m | Flights: ${flights}`);
+
+    
     return (
     <View>
       <Text>Dashboard</Text>

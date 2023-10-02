@@ -42,4 +42,8 @@ const readSampleData = async () => {
       endTime: '2023-01-09T23:53:15.405Z',
     },
   });
+
+  useEffect(() => {
+    readSampleData();
+  })
 }
