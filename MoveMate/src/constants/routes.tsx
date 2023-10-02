@@ -14,4 +14,6 @@ export default {
   DASHBOARD_DETAIL: "Dashboard Detail" as never,
 
   PROFILE: 'Profile',
+  PROFILE_MAIN: "Profile Main Page" as never,
+  PROFILE_DETAIL: "Profile Detail" as never,
 };
