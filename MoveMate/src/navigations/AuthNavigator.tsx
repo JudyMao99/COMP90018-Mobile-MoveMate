@@ -11,7 +11,7 @@ function AuthNavigator() {
       <Stack.Screen name={ROUTES.LOGIN} component={Login} />
       <Stack.Screen name={ROUTES.FORGOT_PASSWORD} component={ForgotPassword}/>
       <Stack.Screen name={ROUTES.REGISTER} component={Register} />
-      <Stack.Screen name={ROUTES.HOME} component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name={ROUTES.APP} component={BottomTabNavigator} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }

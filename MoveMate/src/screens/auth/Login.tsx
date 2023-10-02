@@ -1,8 +1,5 @@
-import { View, Text, TouchableOpacity, Image, TextInput, Button } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-// import {ArrowLeftIcon} from 'react-native-heroicons/solid'
-// import { themeColors } from '../theme'
 import { useNavigation } from '@react-navigation/native'
 import { ROUTES } from '../../constants'
 
@@ -11,8 +8,15 @@ const Login = () => {
   return (
     <>
       <View className="flex flex-1 items-center justify-center">
-        <Text>Login</Text>
-        <Button title="Go to Home" onPress={() => navigation.navigate(ROUTES.HOME)}/>
+        <Text className="text-4xl font-extrabold">
+          <Text className="text-primary-blue">
+            Move
+          </Text>
+          <Text className="text-primary-orange">
+            Mate
+          </Text>
+        </Text>
+        <Button title="Go to App" onPress={() => navigation.navigate(ROUTES.APP)}/>
         <Button title="Go to Register" onPress={() => navigation.navigate(ROUTES.REGISTER)}/>
         <Button title="Go to Forgot Password" onPress={() => navigation.navigate(ROUTES.FORGOT_PASSWORD)}/>
       </View>

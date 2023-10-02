@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 function HomeNavigator() {
   return (
     <Stack.Navigator screenOptions={{}} initialRouteName={ROUTES.LOGIN}>
-      <Stack.Screen name={ROUTES.HOME_PAGE} component={Home} />
+      <Stack.Screen name={ROUTES.HOME_MAIN} component={Home} />
       <Stack.Screen name={ROUTES.HOME_DETAIL} component={HomeDetail}/>
     </Stack.Navigator>
   );
