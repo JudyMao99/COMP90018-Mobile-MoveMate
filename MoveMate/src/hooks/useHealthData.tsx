@@ -6,14 +6,14 @@ import {
 } from 'react-native-health-connect';
 
 
-const permissions: HealthKitPermissions = {
-    permissions: {
-        read: [
+// const permissions: HealthKitPermissions = {
+//     permissions: {
+//         read: [
 
-        ],
-        write: []
-    }
-}
+//         ],
+//         write: []
+//     }
+// }
 
 const useHealthData = (date: Date) => {
     const [hasPermissions, setHasPermission] = useState(false);
