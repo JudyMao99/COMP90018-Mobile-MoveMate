@@ -7,7 +7,7 @@ import { ROUTES } from '../../constants';
 const Dashboard = () => {
   const navigation = useNavigation();
   return (
-    <View className="flex flex-1 items-center justify-center">
+    <View>
       <Text>Dashboard</Text>
       <Button title="Dashboard Detail" onPress={() => navigation.navigate(ROUTES.DASHBOARD_DETAIL) }/>
     </View>
