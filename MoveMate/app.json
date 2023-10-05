@@ -4,10 +4,10 @@
     "slug": "MoveMate",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./src/assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -15,21 +15,38 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.MoveMate"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": [
         "android.permission.health.READ_STEPS",
         "android.permission.health.READ_FLOORS_CLIMBED",
         "android.permission.health.READ_DISTANCE"
-      ]
+      ],
+      "package": "com.anonymous.MoveMate"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./src/assets/favicon.png"
+    },
+    "plugins": [
+      "react-native-health-connect",
+      "./androidManifestPlugin.js",
+      "expo-build-properties",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 31,
+            "targetSdkVersion": 31,
+            "minSdkVersion": 26
+          }
+        }
+      ]
+    ]
   }
 }

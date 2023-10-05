@@ -16,4 +16,6 @@ export default {
   PROFILE: 'Profile' as never,
   PROFILE_MAIN: 'Profile Main Page' as never,
   PROFILE_DETAIL: 'Profile Detail' as never,
+
+  STEP_COUNTER: 'StepCounterPage' as never,
 };

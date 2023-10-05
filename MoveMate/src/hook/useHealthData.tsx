@@ -1,49 +1,44 @@
-// import {useEffect, useState } from 'react';
-// import {
-//   initialize,
-//   requestPermission,
-//   readRecords,
-// } from 'react-native-health-connect';
+import {useEffect, useState } from 'react';
+import {
+  initialize,
+  requestPermission,
+  readRecords,
+} from 'react-native-health-connect';
+import { Permission } from 'react-native-health-connect/lib/typescript/types';
+import { TimeRangeFilter } from 'react-native-health-connect/lib/typescript/types/base.types';
 
 
-// const permissions: HealthKitPermissions = {
-//     permissions: {
-//         read: [
 
-//         ],
-//         write: []
-//     }
-// }
+const useHealthData = () => {
+    const [androidPermissions, setAndroidPermissions] = useState<Permission[]>([]);
+    const [steps, setSteps] = useState(0);
+    const [flights, setFlights] = useState(0);
+    const [distance, setDistance] = useState(0);
 
-// const useHealthData = (date: Date) => {
-//     const [hasPermissions, setHasPermission] = useState(false);
-//     const [steps, setSteps] = useState(0);
-//     const [flights, setFlights] = useState(0);
-//     const [distance, setDistance] = useState(0);
-//     return { steps, flights, distance };
-// }
+    useEffect(() => {
+      const init = async () => {
+      // initialize the client
+      console.log("Check before init")
+      const isInitialized = await initialize();
+      if (!isInitialized) {
+        console.log('Failed to initialize Health Connect');
+        return;
+      }
+      console.log("Success!");
+      // request permissions
+      const grantedPermissions = await requestPermission([
+        { accessType: 'read', recordType: 'Steps' },
+        { accessType: 'read', recordType: 'Distance' },
+        { accessType: 'read', recordType: 'FloorsClimbed' },
+      ]);
 
+      setAndroidPermissions(grantedPermissions);
+    };
+    init();
+    }, [])
 
-// const readSampleData = async () => {
-//   // initialize the client
-//   const isInitialized = await initialize();
+    return {steps, flights, distance}
+}
 
-//   // request permissions
-//   const grantedPermissions = await requestPermission([
-//     { accessType: 'read', recordType: 'ActiveCaloriesBurned' },
-//   ]);
+export default useHealthData;
 
-//   // check if granted
-
-//   const result = await readRecords('ActiveCaloriesBurned', {
-//     timeRangeFilter: {
-//       operator: 'between',
-//       startTime: '2023-01-09T12:00:00.405Z',
-//       endTime: '2023-01-09T23:53:15.405Z',
-//     },
-//   });
-
-//   useEffect(() => {
-//     readSampleData();
-//   })
-// }

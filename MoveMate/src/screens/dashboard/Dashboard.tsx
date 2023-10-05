@@ -10,6 +10,7 @@ const Dashboard = () => {
     <View className="flex flex-1 items-center justify-center">
       <Text>Dashboard</Text>
       <Button title="Dashboard Detail" onPress={() => navigation.navigate(ROUTES.DASHBOARD_DETAIL) }/>
+      <Button title="StepCounter" onPress={() => navigation.navigate(ROUTES.STEP_COUNTER) }/>
     </View>
   )
 }
