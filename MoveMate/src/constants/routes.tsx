@@ -16,4 +16,8 @@ export default {
   PROFILE: 'Profile' as never,
   PROFILE_MAIN: 'Profile Main Page' as never,
   PROFILE_DETAIL: 'Profile Detail' as never,
+
+  MY_ACCOUNT: 'My Account' as never,
+
+  MY_GOALS: 'My Goals' as never,
 };
