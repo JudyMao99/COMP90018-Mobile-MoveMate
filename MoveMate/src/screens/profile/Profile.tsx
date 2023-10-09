@@ -3,7 +3,7 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
 import { signOut } from 'firebase/auth';
-import { auth } from '../../../config/firebase';
+import { auth } from '../../config/firebase';
 
 const Profile = () => {
   const navigation = useNavigation();

@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
 import { Button } from '@rneui/themed';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../../config/firebase';
+import { auth } from '../../config/firebase';
 
 const Register = () => {
   const navigation = useNavigation();

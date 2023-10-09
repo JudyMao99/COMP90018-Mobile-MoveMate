@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../../config/firebase';
+import { auth } from '../../config/firebase';
 
 
 const Login = () => {
