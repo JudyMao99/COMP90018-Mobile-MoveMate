@@ -26,7 +26,7 @@ const Login = () => {
       <View className="flex-1 bg-white justify-center">
         <View className="flex-1 bg-white px-8 pt-8 justify-center">
         <SafeAreaView className="flex justify-center items-center mb-4">
-          <Text className="font-extrabold text-4xl  text-yellow-500 opacity-80">
+          <Text className="font-extrabold text-4xl text-yellow-500 opacity-80">
             LOG IN
           </Text>
         </SafeAreaView>
@@ -69,12 +69,12 @@ const Login = () => {
           </TouchableOpacity>
         </View>
         <View className="flex-row justify-center mt-7">
-            <Text className="text-gray-500 font-semibold">
-                Don't have an account?
-            </Text>
-            <TouchableOpacity onPress={()=> navigation.navigate(ROUTES.REGISTER)}>
-                <Text className="font-semibold text-yellow-500"> Sign Up</Text>
-            </TouchableOpacity>
+          <Text className="text-gray-500 font-semibold">
+            Don't have an account?
+          </Text>
+          <TouchableOpacity onPress={()=> navigation.navigate(ROUTES.REGISTER)}>
+            <Text className="font-semibold text-yellow-500"> Sign Up</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
