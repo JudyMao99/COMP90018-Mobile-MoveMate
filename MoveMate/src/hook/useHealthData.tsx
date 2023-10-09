@@ -9,36 +9,36 @@ import { TimeRangeFilter } from 'react-native-health-connect/lib/typescript/type
 
 
 
-const useHealthData = () => {
-    const [androidPermissions, setAndroidPermissions] = useState<Permission[]>([]);
-    const [steps, setSteps] = useState(0);
-    const [flights, setFlights] = useState(0);
-    const [distance, setDistance] = useState(0);
+// const useHealthData = () => {
+//     const [androidPermissions, setAndroidPermissions] = useState<Permission[]>([]);
+//     const [steps, setSteps] = useState(0);
+//     const [flights, setFlights] = useState(0);
+//     const [distance, setDistance] = useState(0);
 
-    useEffect(() => {
-      const init = async () => {
-      // initialize the client
-      console.log("Check before init")
-      const isInitialized = await initialize();
-      if (!isInitialized) {
-        console.log('Failed to initialize Health Connect');
-        return;
-      }
-      console.log("Success!");
-      // request permissions
-      const grantedPermissions = await requestPermission([
-        { accessType: 'read', recordType: 'Steps' },
-        { accessType: 'read', recordType: 'Distance' },
-        { accessType: 'read', recordType: 'FloorsClimbed' },
-      ]);
+//     useEffect(() => {
+//       const init = async () => {
+//       // initialize the client
+//       console.log("Check before init")
+//       const isInitialized = await initialize();
+//       if (!isInitialized) {
+//         console.log('Failed to initialize Health Connect');
+//         return;
+//       }
+//       console.log("Success!");
+//       // request permissions
+//       const grantedPermissions = await requestPermission([
+//         { accessType: 'read', recordType: 'Steps' },
+//         { accessType: 'read', recordType: 'Distance' },
+//         { accessType: 'read', recordType: 'FloorsClimbed' },
+//       ]);
 
-      setAndroidPermissions(grantedPermissions);
-    };
-    init();
-    }, [])
+//       setAndroidPermissions(grantedPermissions);
+//     };
+//     init();
+//     }, [])
 
-    return {steps, flights, distance}
-}
+//     return {steps, flights, distance}
+// }
 
-export default useHealthData;
+//export default useHealthData;
 

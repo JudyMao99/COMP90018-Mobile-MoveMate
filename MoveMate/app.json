@@ -32,21 +32,6 @@
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
-    },
-    "plugins": [
-      "react-native-health-connect",
-      "./androidManifestPlugin.js",
-      "expo-build-properties",
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "compileSdkVersion": 31,
-            "targetSdkVersion": 31,
-            "minSdkVersion": 26
-          }
-        }
-      ]
-    ]
+    }
   }
 }
