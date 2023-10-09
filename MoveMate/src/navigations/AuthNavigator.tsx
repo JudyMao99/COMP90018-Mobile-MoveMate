@@ -4,10 +4,13 @@ import BottomTabNavigator from './BottomTabNavigator';
 import Login from '../screens/auth/Login';
 import ForgotPassword from '../screens/auth/ForgotPassword';
 import Register from '../screens/auth/Register';
+import useAuth from '../../hook/useAuth';
 
 const Stack = createStackNavigator();
 
 function AuthNavigator() {
+  const { user } = useAuth();
+
   return (
     <Stack.Navigator screenOptions={{}} initialRouteName={ROUTES.LOGIN}>
       <Stack.Screen name={ROUTES.LOGIN} component={Login}  options={{ headerShown: false }} />
