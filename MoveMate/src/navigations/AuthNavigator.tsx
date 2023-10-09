@@ -4,7 +4,7 @@ import BottomTabNavigator from './BottomTabNavigator';
 import Login from '../screens/auth/Login';
 import ForgotPassword from '../screens/auth/ForgotPassword';
 import Register from '../screens/auth/Register';
-import useAuth from '../../hook/useAuth';
+import useAuth from '../hook/useAuth';
 
 const Stack = createStackNavigator();
 
