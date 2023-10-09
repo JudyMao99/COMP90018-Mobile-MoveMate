@@ -11,14 +11,21 @@ const Stack = createStackNavigator();
 function AuthNavigator() {
   const { user } = useAuth();
 
-  return (
-    <Stack.Navigator screenOptions={{}} initialRouteName={ROUTES.LOGIN}>
-      <Stack.Screen name={ROUTES.LOGIN} component={Login}  options={{ headerShown: false }} />
-      <Stack.Screen name={ROUTES.FORGOT_PASSWORD} component={ForgotPassword}/>
-      <Stack.Screen name={ROUTES.REGISTER} component={Register} />
-      <Stack.Screen name={ROUTES.APP} component={BottomTabNavigator} options={{ headerShown: false }} />
-    </Stack.Navigator>
-  );
+  if (user) {
+    return (
+      <BottomTabNavigator />
+    )
+  } else {
+    return (
+      <Stack.Navigator screenOptions={{}} initialRouteName={ROUTES.LOGIN}>
+        <Stack.Screen name={ROUTES.LOGIN} component={Login} options={{ headerShown: false }} />
+        <Stack.Screen name={ROUTES.FORGOT_PASSWORD} component={ForgotPassword}/>
+        <Stack.Screen name={ROUTES.REGISTER} component={Register} options={{ headerShown: false }} />
+        <Stack.Screen name={ROUTES.APP} component={BottomTabNavigator} options={{ headerShown: false }} />
+      </Stack.Navigator>
+    );
+  }
+
 }
 
 export default AuthNavigator;

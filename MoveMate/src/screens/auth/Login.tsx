@@ -2,6 +2,7 @@ import { View, Text, Image } from 'react-native'
 import React from 'react';
 import { Icon, Button } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
+import { ROUTES } from '../../constants';
 
 
 const Login = () => {
@@ -30,6 +31,8 @@ const Login = () => {
             }
             onPress={() => {}}
           />
+          <Button title="Go to Register" onPress={() => navigation.navigate(ROUTES.REGISTER)}/>
+
           {/* <Button title="Go to App" onPress={() => navigation.navigate(ROUTES.APP)}/>
           <Button title="Go to Register" onPress={() => navigation.navigate(ROUTES.REGISTER)}/>
           <Button title="Go to Forgot Password" onPress={() => navigation.navigate(ROUTES.FORGOT_PASSWORD)}/> */}

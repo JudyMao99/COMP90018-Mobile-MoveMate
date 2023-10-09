@@ -9,7 +9,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 function BottomTabNavigator() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName={ROUTES.HOME}>
       <Tab.Screen name={ROUTES.HOME} component={HomeNavigator} />
       <Tab.Screen name={ROUTES.DASHBOARD} component={DashboardNavigator} />
       <Tab.Screen name={ROUTES.PROFILE} component={ProfileNavigator} />
