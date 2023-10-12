@@ -24,14 +24,13 @@
         "backgroundColor": "#ffffff"
       },
       "permissions": [
-        "android.permission.health.READ_STEPS",
-        "android.permission.health.READ_FLOORS_CLIMBED",
-        "android.permission.health.READ_DISTANCE"
+        "android.permission.ACTIVITY_RECOGNITION"
       ],
       "package": "com.anonymous.MoveMate"
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
-    }
+    },
+    "plugins": ["./android-manifest.plugin.js"]
   }
 }
