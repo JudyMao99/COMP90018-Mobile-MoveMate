@@ -21,4 +21,6 @@ export default {
   MY_ACCOUNT: 'My Account' as never,
 
   MY_GOALS: 'My Goals' as never,
+
+  MAP: 'Map' as never,
 };
