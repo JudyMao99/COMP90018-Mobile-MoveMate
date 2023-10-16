@@ -44,13 +44,10 @@ const requestMotionPermission = async () => {
   const subscribe = async () => {
     const isPermissionsAvailable = await Pedometer.getPermissionsAsync();
     setIsPermissionsAvailable(String(isPermissionsAvailable));
-    console.log(isPermissionsAvailable);
     const isAvailable = await Pedometer.isAvailableAsync();
     setIsPedometerAvailable(String(isAvailable));
     if (isAvailable) {
-      console.log("go into loop")
         Pedometer.watchStepCount((result) => {
-          console.log("go into function")
           updateStepCount(result.steps);
           console.log(result.steps)
         })
