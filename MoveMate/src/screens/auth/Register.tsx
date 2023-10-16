@@ -56,7 +56,7 @@ const Register = () => {
             onChangeText={(val: string) => setPassword(val)}
             placeholder='Enter Password'
           />
-          <Button size="lg" radius="md" title="Sign Up" onPress={handleSubmit} />
+          <Button size="lg" radius="lg" title="Sign Up" onPress={handleSubmit} />
         </View>
         <Text className="text-xl text-gray-700 font-bold text-center py-5">
           Or

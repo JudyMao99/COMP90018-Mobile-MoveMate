@@ -1,0 +1,1 @@
+export type GoalType = 'walk' | 'pushup' | 'situp';

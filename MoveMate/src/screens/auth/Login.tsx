@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../config/firebase';
-
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -50,8 +50,8 @@ const Login = () => {
             <Text className="text-gray-700 mb-5" onPress={() => navigation.navigate(ROUTES.FORGOT_PASSWORD)}>Forgot Password?</Text>
           </TouchableOpacity>
             <TouchableOpacity className="py-3 bg-yellow-400 rounded-xl" onPress={handleLogin}>
-              <Text className="text-xl font-bold text-center text-gray-700">
-                Login
+              <Text className="text-xl text-center text-white">
+                Log In
               </Text>
             </TouchableOpacity>
           

@@ -20,7 +20,7 @@ const Welcome = () => {
         <View className="w-72">
           <Button
             size="lg"
-            radius="xl"
+            radius="lg"
             title="Sign Up"
             titleStyle={{ fontSize: 20 }}
             onPress={() => navigation.navigate(ROUTES.REGISTER)}
@@ -31,9 +31,6 @@ const Welcome = () => {
               <Text className="font-semibold text-sky-600"> Login</Text>
             </TouchableOpacity>
           </View>
-          {/* <Button title="Go to App" onPress={() => navigation.navigate(ROUTES.APP)}/>
-          <Button title="Go to Register" onPress={() => navigation.navigate(ROUTES.REGISTER)}/>
-          <Button title="Go to Forgot Password" onPress={() => navigation.navigate(ROUTES.FORGOT_PASSWORD)}/> */}
         </View>
       </View>
     </>

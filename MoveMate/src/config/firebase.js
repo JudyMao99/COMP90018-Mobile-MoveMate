@@ -4,6 +4,9 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { getAuth } from 'firebase/auth';
 
+import { getReactNativePersistence } from 'firebase/auth';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBaef6pxHW0SIzJYhPwqsbMk65lzmldxWI",
@@ -11,10 +14,11 @@ const firebaseConfig = {
   projectId: "mobile-movemate",
   storageBucket: "mobile-movemate.appspot.com",
   messagingSenderId: "303461517165",
-  appId: "1:303461517165:web:03601dc82341fdf33bfc64"
+  appId: "1:303461517165:web:03601dc82341fdf33bfc64",
+  persistence: getReactNativePersistence(ReactNativeAsyncStorage)
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-export const auth = getAuth(app);
+export const auth = getAuth();
