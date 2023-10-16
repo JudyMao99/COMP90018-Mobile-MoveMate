@@ -81,3 +81,9 @@
     ```
 
 
+- 需要更改测试方式 EAS Build
+1. https://docs.expo.dev/build/setup/
+2. https://www.youtube.com/watch?v=3RCahcMlsBY&ab_channel=NativeNotify
+
+3. https://docs.expo.dev/build-reference/apk/
+
