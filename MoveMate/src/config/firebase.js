@@ -15,10 +15,15 @@ const firebaseConfig = {
   storageBucket: "mobile-movemate.appspot.com",
   messagingSenderId: "303461517165",
   appId: "1:303461517165:web:03601dc82341fdf33bfc64",
-  persistence: getReactNativePersistence(ReactNativeAsyncStorage)
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
-export const auth = getAuth();
+// Provide persistence config to auth
+const auth = getAuth();
+auth.setPersistence(getReactNativePersistence(ReactNativeAsyncStorage));
+
+export { auth };
+
+
