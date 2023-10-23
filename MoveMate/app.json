@@ -15,7 +15,9 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mobile.movemate",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
@@ -26,10 +28,17 @@
         "android.permission.health.READ_STEPS",
         "android.permission.health.READ_FLOORS_CLIMBED",
         "android.permission.health.READ_DISTANCE"
-      ]
+      ],
+      "package": "com.mobile.movemate",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "111241b9-ecec-4c5c-a351-e554b4007de8"
+      }
     }
   }
 }
