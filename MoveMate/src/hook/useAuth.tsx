@@ -7,14 +7,15 @@ const useAuth = () => {
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, user => {
-      console.log('got user: ', user);
       if (user) {
+        console.log('Got User: ', JSON.stringify(user, null, 2));
         setUser(user);
       } else {
+        console.log('No user Info, please log in!');
         setUser(null);
       }
     });
-    return unsub;
+    return () => unsub();
   }, []);
   
   return { user }

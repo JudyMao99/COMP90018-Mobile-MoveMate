@@ -1,15 +1,39 @@
 import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput } from 'react-native'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { User, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../config/firebase';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import * as Google from "expo-auth-session/providers/google";
+import * as WebBrowser from 'expo-web-browser';
+import {
+GoogleAuthProvider,
+onAuthStateChanged,
+signInWithCredential,
+} from "firebase/auth";
+
+WebBrowser.maybeCompleteAuthSession();
+
 
 const Login = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+
+  // Google Login
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    iosClientId: "567092706586-8tlk7ariv0erl08nb9bmn69mhva2ncof.apps.googleusercontent.com",
+    androidClientId: "567092706586-23l8rda3a1a2a4fcnrnss0u4ehpcbiob.apps.googleusercontent.com"
+  })
+
+  useEffect(() => {
+    if (response?.type == "success") {
+      const { id_token } = response. params;
+      const credential = GoogleAuthProvider. credential(id_token);
+      signInWithCredential(auth, credential);
+    }
+  },[response])
+  
 
   const handleLogin = async () => {
     if (email && password) {
@@ -58,7 +82,7 @@ const Login = () => {
         </View>
         <Text className="text-xl text-gray-700 font-bold text-center py-5">Or</Text>
         <View className="flex-row justify-center space-x-12">
-          <TouchableOpacity className="p-2 bg-gray-100 rounded-2xl">
+          <TouchableOpacity className="p-2 bg-gray-100 rounded-2xl" onPress={() => promptAsync()}>
             <Image source={require('../../assets/icons/google.png')} className="w-10 h-10" />
           </TouchableOpacity>
           <TouchableOpacity className="p-2 bg-gray-100 rounded-2xl">

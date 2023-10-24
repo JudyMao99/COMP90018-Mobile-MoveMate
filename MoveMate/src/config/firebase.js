@@ -1,13 +1,6 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 import { getAuth } from 'firebase/auth';
 
-import { getReactNativePersistence } from 'firebase/auth';
-import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
-
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBaef6pxHW0SIzJYhPwqsbMk65lzmldxWI",
   authDomain: "mobile-movemate.firebaseapp.com",
@@ -18,12 +11,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-initializeApp(firebaseConfig);
-
-// Provide persistence config to auth
-const auth = getAuth();
-auth.setPersistence(getReactNativePersistence(ReactNativeAsyncStorage));
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 export { auth };
 
-
+// IOS: 567092706586-8tlk7ariv0erl08nb9bmn69mhva2ncof.apps.googleusercontent.com
+// Android: 567092706586-23l8rda3a1a2a4fcnrnss0u4ehpcbiob.apps.googleusercontent.com
