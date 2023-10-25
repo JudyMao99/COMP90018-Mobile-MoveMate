@@ -29,7 +29,7 @@ const Login = () => {
   useEffect(() => {
     if (response?.type == "success") {
       const { id_token } = response. params;
-      const credential = GoogleAuthProvider. credential(id_token);
+      const credential = GoogleAuthProvider.credential(id_token);
       signInWithCredential(auth, credential);
     }
   },[response])
