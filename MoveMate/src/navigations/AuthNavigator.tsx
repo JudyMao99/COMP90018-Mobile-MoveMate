@@ -6,6 +6,7 @@ import ForgotPassword from '../screens/auth/ForgotPassword';
 import Register from '../screens/auth/Register';
 import WorkingMode from '../screens/home/WorkingMode';
 import WorkingFinish from '../screens/home/WorkingFinish';
+import WalkingMode from '../screens/home/walkingMode'
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ function AuthNavigator() {
       <Stack.Screen name={ROUTES.APP} component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name={ROUTES.WORKING_MODE} component={WorkingMode} initialParams={{duration: 15}} options={{ headerShown: false }}/>
       <Stack.Screen name={ROUTES.WORKING_FINISH} component={WorkingFinish} options={{ headerShown: false }}/>
+      <Stack.Screen name={ROUTES.WALKING_MODE} component={WalkingMode} options={{headerShown: false}}></Stack.Screen>
     </Stack.Navigator>
   );
 }

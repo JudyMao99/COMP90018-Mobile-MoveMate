@@ -11,10 +11,10 @@ import React from 'react';
 
 
 export default function App() {
-  const [isPedometerAvailable, setIsPedometerAvailable] = useState('checking');
-  const [isPermissionsAvailable, setIsPermissionsAvailable] = useState('Checking')
-  const [permissionRequst, setPermissionRequsts] = useState('')
-  const [stepCount, updateStepCount] = useState(0);
-  const [subscription, setSubscription] = useState(null);
-
+  return (
+  <NavigationContainer>
+    <AuthNavigator />
+  </NavigationContainer>
+  );
+}
 

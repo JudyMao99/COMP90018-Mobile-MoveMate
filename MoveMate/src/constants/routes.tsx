@@ -9,6 +9,7 @@ export default {
   HOME_MAIN: 'Home Main Page' as never,
   WORKING_MODE: 'Working Mode Page' as never,
   WORKING_FINISH: 'Working Finish Page' as never,
+  WALKING_MODE: 'Walking Mode Page' as never,
 
   DASHBOARD: 'Dashboard' as never,
   DASHBOARD_MAIN: 'Dashboard Main Page' as never,
@@ -18,5 +19,5 @@ export default {
   PROFILE_MAIN: 'Profile Main Page' as never,
   PROFILE_DETAIL: 'Profile Detail' as never,
 
-  STEP_COUNTER: 'StepCounterPage' as never,
+
 };
