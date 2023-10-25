@@ -6,6 +6,7 @@ import { Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
 
+
 const WorkingMode = ({route} : any) => {
   const {duration} = route.params;
   const navigation = useNavigation();
@@ -88,7 +89,12 @@ const WorkingMode = ({route} : any) => {
         <Dialog.Title title="" />
         <Text>Sure to terminate the working mode?</Text>
         <Dialog.Actions>
-          <Dialog.Button title="Yes" onPress={() => navigation.navigate(ROUTES.HOME)}/>
+          <Dialog.Button 
+          title="Yes" 
+          onPress={() => {
+            navigation.navigate(ROUTES.WORKING_FINISH)
+            setVisible(false)
+            }}/>
           <Dialog.Button title="Close" onPress={() => {
               setVisible(false)
               setRunning(true);

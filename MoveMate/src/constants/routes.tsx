@@ -10,6 +10,7 @@ export default {
   WORKING_MODE: 'Working Mode Page' as never,
   WORKING_FINISH: 'Working Finish Page' as never,
   WALKING_MODE: 'Walking Mode Page' as never,
+  WALKING_FINISH: 'Walking Finish Page' as never,
 
   DASHBOARD: 'Dashboard' as never,
   DASHBOARD_MAIN: 'Dashboard Main Page' as never,

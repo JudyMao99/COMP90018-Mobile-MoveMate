@@ -18,8 +18,9 @@ const WalkingMode = ({route}: any) => {
     const [visible, setVisible] = React.useState(false);
     const [iconName, setIconName] = React.useState('pause');
     const [running, setRunning] = React.useState(true);
+    const lastStep = 5
 
-    // Handle the pase function
+    // Handle the pause function
     const pauseHandler = () => {
     if (iconName === 'pause') {
       setIconName('play');
@@ -33,6 +34,7 @@ const WalkingMode = ({route}: any) => {
 
 
     // Subscirbe the Pedometer and update it 
+    // TODO: 问题： 当前stepcounter应该只能在每一次应用程序重启后，才能做到重头开始计算step count，要不然就会继续记录上一次step count的数据
     const subscribe = async () => {
     const isPermissionsAvailable = await Pedometer.getPermissionsAsync();
     setIsPermissionsAvailable(String(isPermissionsAvailable));
@@ -40,27 +42,27 @@ const WalkingMode = ({route}: any) => {
     setIsPedometerAvailable(String(isAvailable));
     if (isAvailable) {
     Pedometer.watchStepCount((result) => {
-        updateStepCount(result.steps);
+        updateStepCount(result.steps - lastStep);
         console.log(result.steps) })
         }
     };
 
-    const _unsubscribe = () => {
-    subscription && subscription.remove();
-    setSubscription(null);
-    };
+    // const _unsubscribe = () => {
+    // subscription && subscription.remove();
+    // setSubscription(null);
+    // };
 
 
     useEffect(() => {
     subscribe();
-    return _unsubscribe;
     },[]);
 
     // TODO: Write the step count down into the view
     return (
     <View className="flex flex-1 items-center w-screen h-screen ">  
-      <View className="bg-sky-500 h-3/4 w-full flex items-center justify-around ">
-        
+      <View className="bg-amber-400 h-3/4 w-full flex items-center justify-around ">
+        <Text fontSize="24">WALKING</Text>
+        <Text fontSize="30">steps: {stepCount}</Text>
       </View>
       <View className='flex-row w-full justify-around relative bottom-12'>
 
@@ -68,14 +70,14 @@ const WalkingMode = ({route}: any) => {
           icon={{
             name: 'close',
             type: 'font-awesome',
-            color: '#0ea5e9',
+            color: '#FF7457',
             size: 40
           }}
           buttonStyle={{
             backgroundColor: 'white',
             height: 100,
             width: 100,
-            borderColor: '#0ea5e9',
+            borderColor: '#FF7457',
             borderWidth: 5
           }}
           raised
@@ -90,14 +92,14 @@ const WalkingMode = ({route}: any) => {
           icon={{
             name: iconName,
             type: 'font-awesome',
-            color: '#0ea5e9',
+            color: '#FF7457',
             size: 40
           }}
           buttonStyle={{
             backgroundColor: 'white',
             height: 100,
             width: 100,
-            borderColor: '#0ea5e9',
+            borderColor: '#FF7457',
             borderWidth: 5
           }}
           raised
@@ -122,11 +124,6 @@ const WalkingMode = ({route}: any) => {
       </Dialog>
     </View>
   )
-
-
-
-
-
 }
 
 export default WalkingMode
