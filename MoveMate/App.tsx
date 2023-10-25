@@ -1,10 +1,10 @@
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import { Alert, PermissionsAndroid, StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
+import { Alert,StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import AuthNavigator from './src/navigations/AuthNavigator';
 import { useState, useEffect } from 'react';
-import { Pedometer, Accelerometer } from 'expo-sensors';
+import { Pedometer } from 'expo-sensors';
 import React from 'react';
 
 
@@ -18,27 +18,6 @@ export default function App() {
   const [subscription, setSubscription] = useState(null);
 
 
-  
-const requestMotionPermission = async () => {
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.ACTIVITY_RECOGNITION,
-      {
-        title: 'Cool Exercise App Activity Recognition Permission',
-        message:
-          'Cool Exercise App needs access to your Activity Data ' +
-          'so you can track the activity of user',
-        buttonNeutral: 'Ask Me Later',
-        buttonNegative: 'Cancel',
-        buttonPositive: 'OK',
-      },
-    );
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      console.log('You can use the activity permission');
-    } else {
-      console.log('activity permission denied');
-    }
- 
-};
 
 
   const subscribe = async () => {
@@ -61,14 +40,18 @@ const requestMotionPermission = async () => {
 
 
   useEffect(() => {
-    requestMotionPermission();
     subscribe();
     return _unsubscribe;
   },[]);
 
 
   return (
-    <View>
+    <View style={{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#F5FCFF'
+    }}>
       <Text>Pedometer.isAvailableAsync(): {isPedometerAvailable}</Text>
       <Text>steps: {stepCount}</Text>
     </View>
