@@ -4,6 +4,7 @@ import { ROUTES } from '../constants';
 import HomeNavigator from './HomeNavigator';
 import ProfileNavigator from './ProfileNavigator';
 import DashboardNavigator from './DashboardNavigator';
+import Home from '../screens/home/Home';
 
 const Tab = createMaterialBottomTabNavigator();
 

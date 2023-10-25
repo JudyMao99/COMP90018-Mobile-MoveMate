@@ -7,7 +7,8 @@ export default {
 
   HOME: 'Home' as never,
   HOME_MAIN: 'Home Main Page' as never,
-  HOME_DETAIL: 'Home Detail' as never,
+  WORKING_MODE: 'Working Mode Page' as never,
+  WORKING_FINISH: 'Working Finish Page' as never,
 
   DASHBOARD: 'Dashboard' as never,
   DASHBOARD_MAIN: 'Dashboard Main Page' as never,
