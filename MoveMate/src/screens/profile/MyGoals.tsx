@@ -55,52 +55,57 @@ const MyGoals = () => {
     <View className="flex ">
       <View className="flex flex-row">
         <View className="basis-8/12">
-          <Text className="text-4xl mt-10 ml-6 font-black">Set Up Goals!</Text>
+          <Text className="text-3xl mt-20 ml-6 font-black">Set Up Goals!</Text>
         </View>
-        <View className="basis-1/12 mt-8 ml-6 ">
-          <Image source={badge} style={{ width: 85, height: 85 }} />
+        <View className="basis-4/12 mt-16 ml-6 ">
+          <Image source={badge} style={{ width: 90, height: 90 }} />
         </View>
       </View>
-      <View className="items-center mt-6">
+      <View className="items-center mt-12">
         <View style={styles.container}>
-          <View className="flex flex-row ml-4 mt-12 justify-center items-center">
-            <Text className="text-3xl justify-center items-center">Walking</Text>
-            <TouchableOpacity onPress={handleWalkingMinus}>
-              <Image source={minus} style={{ width: 20, height: 20, marginLeft: 20,marginTop:8 }} />
-            </TouchableOpacity>
-            <Text className="text-2xl ml-4 mr-4 mt-1 ">{walking}</Text>
-            <TouchableOpacity onPress={handleWalkingPlus}>
-              <Image source={plus} style={{ width: 20, height: 20 ,marginTop:8 }} />
-            </TouchableOpacity>
+          <View className="flex flex-row ml-4 mt-10 mr-3 justify-between items-center">
+              <Text  className="text-3xl justify-center items-center">Walking</Text>
+              <TouchableOpacity onPress={handleWalkingMinus}>
+                <Image source={minus} style={{ width: 20, height: 20, marginLeft: 43,marginTop:8 }} />
+              </TouchableOpacity>
+              <Text className="text-2xl ml-4 mr-4 mt-1 ">{walking}</Text>
+              <TouchableOpacity onPress={handleWalkingPlus}>
+                <Image source={plus} style={{ width: 20, height: 20 ,marginTop:8 }} />
+              </TouchableOpacity>
           </View>
-          <View className="flex flex-row ml-4 mt-12 justify-center items-center">
-            <Text className="text-3xl justify-center items-center">Push-up</Text>
-            <TouchableOpacity onPress={handlePushUpMinus}>
-              <Image source={minus} style={{ width: 20, height: 20, marginLeft: 37,marginTop:8 }} />
+          <View className="flex flex-row ml-4 mt-12 mr-3  justify-between items-center">
+            <Text  className="text-3xl justify-center items-center">Push-up</Text>
+            <TouchableOpacity  onPress={handlePushUpMinus}>
+              <Image source={minus} style={{ width: 20, height: 20, marginLeft: 35,marginTop:8 }} />
             </TouchableOpacity>
             <Text className="text-2xl ml-4 mr-4 mt-1">{pushUp}</Text>
-            <TouchableOpacity onPress={handlePushUpPlus}>
+            <TouchableOpacity  onPress={handlePushUpPlus}>
               <Image source={plus} style={{ width: 20, height: 20 ,marginTop:8 }} />
             </TouchableOpacity>
           </View>
-          <View className="flex flex-row ml-4 mt-12 justify-center items-center">
+          <View className="flex flex-row ml-4 mt-10 mb-1 mr-3 justify-between items-center">
             <Text className="text-3xl justify-center items-center">Sit-up</Text>
-            <TouchableOpacity onPress={handleSitUpMinus}>
-              <Image source={minus} style={{ width: 20, height: 20, marginLeft: 70,marginTop:8 }} />
+            <TouchableOpacity  onPress={handleSitUpMinus}>
+              <Image source={minus} style={{ width: 20, height: 20, marginLeft: 66,marginTop:8 }} />
             </TouchableOpacity>
             <Text className="text-2xl ml-4 mr-4 mt-1">{sitUp}</Text>
-            <TouchableOpacity onPress={handleSitUpPlus}>
+            <TouchableOpacity  onPress={handleSitUpPlus}>
               <Image source={plus} style={{ width: 20, height: 20 ,marginTop:8 }} />
             </TouchableOpacity>
           </View>
         </View>
       </View>
-      <View className="justify-center items-center mt-4">
-        <Button radius={"sm"} type="solid" buttonStyle={{ width: 100, height: 50, }} >
-          save
-          <Icon name="save" color="white" />
+      <View className="justify-center items-center mt-12">
+      <Button  
+            radius={"sm"} 
+            type="solid" 
+            buttonStyle={styles.buttonStyle}
+            // onPress={() => navigation.navigate(ROUTES.PROFILE)}
+        >
+            <Text className="mr-8 text-2xl text-white font-bold ">Confirme</Text> 
+            <Icon name="save" color="white" />
         </Button>
-      </View>
+    </View>
     </View>
   );
 };
@@ -113,6 +118,7 @@ const styles = StyleSheet.create({
     // Other styles for your container
     // Shadow properties
     shadowColor: '#000000',
+    justifyContent: 'space-between',
     shadowOffset: {
       width: 2,
       height: 10,
@@ -122,6 +128,27 @@ const styles = StyleSheet.create({
     // Elevation (for Android)
     elevation: 5,
   },
+  touchableOpacityStyle: {
+    justifyContent: 'flex-start',
+  },
+  buttonStyle: {
+    width: 280,
+    height: 50,
+    backgroundColor: "#4B6EF5",
+    borderRadius: 25,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowOffset: {
+      width: 0,  
+      height: 4,  
+    },
+    shadowOpacity: 0.25,   
+    shadowRadius: 3,    
+    elevation: 4,          
+  },
+  
 });
 
 export default MyGoals
