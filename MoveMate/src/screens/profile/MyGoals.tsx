@@ -64,31 +64,31 @@ const MyGoals = () => {
       <View className="items-center mt-12">
         <View style={styles.container}>
           <View className="flex flex-row ml-4 mt-10 mr-3 justify-between items-center">
-              <Text  className="text-3xl justify-center items-center">Walking</Text>
+              <Text  className="text-3xl justify-center items-center font-bold">Walking</Text>
               <TouchableOpacity onPress={handleWalkingMinus}>
                 <Image source={minus} style={{ width: 20, height: 20, marginLeft: 43,marginTop:8 }} />
               </TouchableOpacity>
-              <Text className="text-2xl ml-4 mr-4 mt-1 ">{walking}</Text>
+              <Text className="text-2xl ml-4 mr-4 mt-1 font-semibold">{walking}</Text>
               <TouchableOpacity onPress={handleWalkingPlus}>
                 <Image source={plus} style={{ width: 20, height: 20 ,marginTop:8 }} />
               </TouchableOpacity>
           </View>
           <View className="flex flex-row ml-4 mt-12 mr-3  justify-between items-center">
-            <Text  className="text-3xl justify-center items-center">Push-up</Text>
+            <Text  className="text-3xl justify-center items-center font-bold">Push-up</Text>
             <TouchableOpacity  onPress={handlePushUpMinus}>
               <Image source={minus} style={{ width: 20, height: 20, marginLeft: 35,marginTop:8 }} />
             </TouchableOpacity>
-            <Text className="text-2xl ml-4 mr-4 mt-1">{pushUp}</Text>
+            <Text className="text-2xl ml-4 mr-4 mt-1 font-semibold">{pushUp}</Text>
             <TouchableOpacity  onPress={handlePushUpPlus}>
               <Image source={plus} style={{ width: 20, height: 20 ,marginTop:8 }} />
             </TouchableOpacity>
           </View>
           <View className="flex flex-row ml-4 mt-10 mb-1 mr-3 justify-between items-center">
-            <Text className="text-3xl justify-center items-center">Sit-up</Text>
+            <Text className="text-3xl justify-center items-center font-bold">Sit-up</Text>
             <TouchableOpacity  onPress={handleSitUpMinus}>
               <Image source={minus} style={{ width: 20, height: 20, marginLeft: 66,marginTop:8 }} />
             </TouchableOpacity>
-            <Text className="text-2xl ml-4 mr-4 mt-1">{sitUp}</Text>
+            <Text className="text-2xl ml-4 mr-4 mt-1 font-semibold">{sitUp}</Text>
             <TouchableOpacity  onPress={handleSitUpPlus}>
               <Image source={plus} style={{ width: 20, height: 20 ,marginTop:8 }} />
             </TouchableOpacity>
