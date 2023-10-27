@@ -14,7 +14,7 @@ function BottomTabNavigator() {
       <Tab.Screen name={ROUTES.HOME} component={HomeNavigator} />
       <Tab.Screen name={ROUTES.DASHBOARD} component={DashboardNavigator} />
       <Tab.Screen
-        name={ROUTES.PROFILE}
+        name={ROUTES.PROFILE_NAVIGATION}
         component={ProfileNavigator}
         options={{
           tabBarIcon: ({ color }) => (

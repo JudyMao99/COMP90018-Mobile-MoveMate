@@ -2,9 +2,11 @@ import { View, Text, TextInput, TouchableOpacity, Image, SafeAreaView } from 're
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
-import { Button } from '@rneui/themed';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../config/firebase';
+import { Button, Dialog } from '@rneui/themed';
+import { UserCredential, createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth, db } from '../../config/firebase';
+import { setDoc, doc } from "firebase/firestore"; 
+
 
 const Register = () => {
   const navigation = useNavigation();
@@ -12,21 +14,41 @@ const Register = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
+  const [dialogVisible, setDialogVisible] = useState<boolean>(false);
+
+
   const handleSubmit = async () => {
     if (email && password) {
-      try {
-        await createUserWithEmailAndPassword(auth, email, password);
-      } catch (err: any) {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((cred: UserCredential) => {
+          // // set up user photo
+          // setDialogVisible(true);
+          // return setDoc(doc(db, 'users', cred.user.uid), {
+          //   goal: "5000 steps"
+          // })
+        }).catch((err: any) => {
         console.log('got error: ', err.message);
-      }
+      })
     } else {
-      // TODO: error handling 
       console.log("please provide valid email address and password.")
     }
   }
 
   return (
     <>
+      <Dialog
+        isVisible={dialogVisible}
+        // onBackdropPress={toggleDialog2}
+      >
+        <Dialog.Title title="Upload Avatar"/>
+        <View className="flex flex-row">
+          <Text className="text-gray-500">Welcome! Please upload your avatar!</Text>
+        </View>
+
+        <Dialog.Actions>
+          <Dialog.Button title="Skip" onPress={() => setDialogVisible(false)}/>
+        </Dialog.Actions>
+      </Dialog>
       <View className="flex-1 bg-white px-8 pt-8 justify-center">
         <SafeAreaView className="flex justify-center items-center mb-4">
           <Text className="font-extrabold text-4xl  text-sky-600">
@@ -34,12 +56,12 @@ const Register = () => {
           </Text>
         </SafeAreaView>
         <View className="form space-y-2">
-          <Text className="text-gray-700 ml-4">Full Name</Text>
+          <Text className="text-gray-700 ml-4">User Name</Text>
           <TextInput
             className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
             value={username}
             onChangeText={(val: string) => setUsername(val)}
-            placeholder='Enter Name'
+            placeholder='Enter User Name'
           />
           <Text className="text-gray-700 ml-4">Email Address</Text>
           <TextInput

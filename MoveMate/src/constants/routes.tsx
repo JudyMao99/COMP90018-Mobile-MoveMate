@@ -4,6 +4,9 @@ export default {
   REGISTER: 'Register'  as never,
   FORGOT_PASSWORD: 'Forgot Password'  as never,
 
+  SETUP_GOAL: 'Set Up Goal' as never,
+  SETUP_AVATAR: 'Set Up Avatar' as never,
+
   APP: 'App' as never,
 
   HOME: 'Home' as never,
@@ -14,6 +17,7 @@ export default {
   DASHBOARD_MAIN: 'Dashboard Main Page' as never,
   DASHBOARD_DETAIL: 'Dashboard Detail' as never,
 
+  PROFILE_NAVIGATION: 'Profile Navigation' as never,
   PROFILE: 'Profile' as never,
   PROFILE_MAIN: 'Profile Main Page' as never,
   PROFILE_DETAIL: 'Profile Detail' as never,

@@ -4,6 +4,9 @@ import { Avatar, Badge, Icon, withBadge } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
 import { Button } from '@rneui/themed';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../../config/firebase';
+import useAuth from '../../hook/useAuth';
 
 
 
@@ -13,13 +16,17 @@ const minus = require('../../assets/icons/minus-icon.png');
 
 const plus = require('../../assets/icons/plus-icon.png');
 
-const MyGoals = () => {
+type MyGoalsProps = {
+  handleSignUp?: () => {};
+}
+const MyGoals = ({ handleSignUp }: MyGoalsProps) => {
 
   const navigation = useNavigation();
-
-  const [walking, setWalking] = useState(1000);
-  const [pushUp, setPushUp] = useState(50);
-  const [sitUp, setSitUp] = useState(50);
+  const { user } = useAuth();
+  
+  const [walking, setWalking] = useState<number>(1000);
+  const [pushUp, setPushUp] = useState<number>(50);
+  const [sitUp, setSitUp] = useState<number>(50);
 
   const handleWalkingMinus = () => {
     if (walking > 0) {
@@ -50,6 +57,25 @@ const MyGoals = () => {
   const handleSitUpPlus = () => {
     setSitUp(sitUp + 1);
   };
+
+  const handleGoalsSubmit = () => {
+    const goalsObj = {
+      walking: walking,
+      push_up: pushUp,
+      sit_up: sitUp
+    }
+
+    // Update goals to fire store database
+    if (user) {
+      setDoc(doc(db, 'users', user?.uid), {
+        goals: goalsObj
+      }).then(() => {
+        console.log("success!");
+      }).catch((e) => {
+        console.log("got error:" , e);
+      })
+    }
+  }
 
   return (
     <View className="flex ">
@@ -96,10 +122,7 @@ const MyGoals = () => {
         </View>
       </View>
       <View className="justify-center items-center mt-4">
-        <Button radius={"sm"} type="solid" buttonStyle={{ width: 100, height: 50, }} >
-          save
-          <Icon name="save" color="white" />
-        </Button>
+        <Button size="lg" radius="md" title="Confirm" onPress={() => handleGoalsSubmit()} />
       </View>
     </View>
   );
