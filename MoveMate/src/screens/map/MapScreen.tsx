@@ -1,7 +1,10 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import { View, StyleSheet, Dimensions, Text } from 'react-native';
 import MapView, { Marker, Callout, Circle, Polyline } from 'react-native-maps';
 import * as Location from 'expo-location';
+
+
+
 
 const MapScreen = () => {
   const [pin, setPin] = React.useState({
@@ -10,6 +13,10 @@ const MapScreen = () => {
   });
 
   const [path, setPath] = React.useState<{ latitude: number; longitude: number; }[]>([]);
+
+  const [distance, setDistance] = useState(0);
+  const [duration, setDuration] = useState(0);
+
 
 
   React.useEffect(() => {
@@ -21,7 +28,7 @@ const MapScreen = () => {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
+      let location = await Location.getCurrentPositionAsync({ distanceInterval: 2 });
       console.log(location);
 
       const initialCoordinate = {
@@ -34,6 +41,9 @@ const MapScreen = () => {
 
     })();
   }, []);
+
+
+  
 
   return (
     <View style={styles.container}>
@@ -60,6 +70,11 @@ const MapScreen = () => {
       >
         <Marker
           coordinate={pin}
+          image={{
+            uri: "",
+            width: 3,
+            height: 3,
+          }}
           pinColor='blue'
           draggable={true}
           onDragStart={(e)=> {
@@ -79,8 +94,8 @@ const MapScreen = () => {
         </Marker>
         <Polyline
             coordinates={path}
-            strokeWidth={2}
-            strokeColor="red"
+            strokeWidth={5}
+            strokeColor="black"
         />
         <Circle 
           center={pin}
