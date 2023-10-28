@@ -1,8 +1,6 @@
 import React,{ useState } from 'react';
-import { Text, View, ScrollView, StyleSheet,Image,TouchableOpacity } from 'react-native';
-import { Avatar, Badge, Icon, withBadge } from '@rneui/themed';
+import { Text, View, StyleSheet,Image,TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { ROUTES } from '../../constants';
 import { Button } from '@rneui/themed';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
@@ -17,9 +15,9 @@ const minus = require('../../assets/icons/minus-icon.png');
 const plus = require('../../assets/icons/plus-icon.png');
 
 type MyGoalsProps = {
-  handleSignUp?: () => {};
+  nextStep?: () => void;
 }
-const MyGoals = ({ handleSignUp }: MyGoalsProps) => {
+const MyGoals = ({ nextStep }: MyGoalsProps) => {
 
   const navigation = useNavigation();
   const { user } = useAuth();
@@ -70,10 +68,15 @@ const MyGoals = ({ handleSignUp }: MyGoalsProps) => {
       setDoc(doc(db, 'users', user?.uid), {
         goals: goalsObj
       }).then(() => {
-        console.log("success!");
+        console.log("goals updated!");
       }).catch((e) => {
         console.log("got error:" , e);
       })
+    }
+
+    // set up process only
+    if (nextStep) {
+      nextStep();
     }
   }
 

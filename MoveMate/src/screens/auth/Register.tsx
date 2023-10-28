@@ -3,10 +3,9 @@ import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
 import { Button, Dialog } from '@rneui/themed';
-import { UserCredential, createUserWithEmailAndPassword } from 'firebase/auth';
+import { UserCredential, createUserWithEmailAndPassword, updateCurrentUser, updateProfile } from 'firebase/auth';
 import { auth, db } from '../../config/firebase';
 import { setDoc, doc } from "firebase/firestore"; 
-
 
 const Register = () => {
   const navigation = useNavigation();
@@ -16,17 +15,16 @@ const Register = () => {
 
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
 
-
   const handleSubmit = async () => {
     if (email && password) {
       createUserWithEmailAndPassword(auth, email, password)
         .then((cred: UserCredential) => {
-          // // set up user photo
-          // setDialogVisible(true);
-          // return setDoc(doc(db, 'users', cred.user.uid), {
-          //   goal: "5000 steps"
-          // })
-        }).catch((err: any) => {
+          updateProfile(cred.user, {
+            displayName : username
+          })
+        })
+        .then(() => console.log("username added!"))
+        .catch((err: any) => {
         console.log('got error: ', err.message);
       })
     } else {
