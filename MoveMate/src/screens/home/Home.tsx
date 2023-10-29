@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
 import { FAB, ButtonGroup, Chip, CheckBox, Card } from '@rneui/themed';
 import { Button } from 'react-native-paper';
+import useAuth from '../../hook/useAuth';
 
 
 
@@ -12,13 +13,14 @@ const Home = () => {
   const navigation = useNavigation();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [selectedDuration, setSelectedDuration] = React.useState(15);
+  const { user } = useAuth();
   
   return (
     <View className="flex flex-1 items-center w-screen h-screen ">
       
       <View className="bg-white h-3/5 w-full rounded-2xl flex-col items-center justify-center ">
         <View className='flex-col items-start w-4/5 gap-y-4 mb-10'>
-          <Text style={styles.title}>Hello,Vera</Text>
+          <Text style={styles.title}>Hello,{user?.displayName??undefined}</Text>
           <Text style={styles.working_hour}>4 Hours 0 Min</Text>
         </View>
         
