@@ -53,6 +53,12 @@ const MapScreen = () => {
       return () => clearInterval(interval);
     }, [startTime]);
 
+    const [initialRegion, setInitialRegion] = useState({
+      latitude: -37.7993,
+      longitude: 144.9629,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    });
 
 
 
@@ -76,6 +82,11 @@ const MapScreen = () => {
 
       setPin(initialCoordinate);
       setPath([initialCoordinate]);
+      setInitialRegion({
+        ...initialRegion,
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
 
     })();
   }, []);
@@ -100,7 +111,7 @@ const MapScreen = () => {
             return prevPath; 
           }
           
-          // 更新总距离
+          // Update the total distance
           setDistance((currentDistance) => currentDistance + (newDistance / 1000));
         }
         
@@ -119,12 +130,13 @@ const MapScreen = () => {
     <View style={styles.container}>
       <MapView
         style={styles.map}
-        initialRegion={{
-          latitude: -37.7993,
-          longitude: 144.9629,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
+        initialRegion={initialRegion}
+        // initialRegion={{
+        //   latitude: -37.7993,
+        //   longitude: 144.9629,
+        //   latitudeDelta: 0.0922,
+        //   longitudeDelta: 0.0421,
+        // }}
         showsUserLocation={true}
         
         onUserLocationChange={onUserLocationChange}
