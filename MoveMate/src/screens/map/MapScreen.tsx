@@ -1,10 +1,13 @@
 import React,{ useState } from 'react';
-import { View, StyleSheet, Dimensions, Text } from 'react-native';
+import { View, StyleSheet, Dimensions, Text, Image } from 'react-native';
 import MapView, { Marker, Callout, Circle, Polyline, UserLocationChangeEvent } from 'react-native-maps';
 import * as Location from 'expo-location';
+import { Magnetometer, MagnetometerUncalibrated } from 'expo-sensors';
+import * as Svg from 'react-native-svg';
 
 
 
+const compassNeedle = require('../../assets/needle.png');
 
 const MapScreen = () => {
   const [pin, setPin] = React.useState({
@@ -12,11 +15,26 @@ const MapScreen = () => {
     longitude: 144.9629,
   });
 
+  
+
+  const [magnetometerData, setMagnetometerData] = useState({ x: 0, y: 0, z: 0 });
+  const [directionAngle, setDirectionAngle] = useState(0); // angle in direction
+
+
   const [path, setPath] = React.useState<{ latitude: number; longitude: number; }[]>([]);
 
   const [distance, setDistance] = useState(0);
   const [startTime, setStartTime] = useState(new Date());
   const [duration, setDuration] = useState(0);
+
+  React.useEffect(() => {
+    Magnetometer.setUpdateInterval(300); // in milliseconds update interval
+    const subscription = Magnetometer.addListener(data => {
+      setMagnetometerData(data);
+    });
+
+    return () => subscription.remove();
+  }, []);
 
     // Function to calculate distance between two coordinates
     const cosineDistanceBetweenPoints = (lat1: number, lon1: number, lat2: number, lon2: number) => {
@@ -94,6 +112,9 @@ const MapScreen = () => {
   const onUserLocationChange = (e: UserLocationChangeEvent) => {
     const { latitude, longitude, accuracy } = e.nativeEvent.coordinate as { latitude: number; longitude: number; accuracy: number };
     const newCoordinate = { latitude, longitude };
+
+    const angle = calculateAngle(magnetometerData);
+    setDirectionAngle(angle);
   
     if (accuracy < 20) {
       setPath((prevPath) => {
@@ -121,6 +142,19 @@ const MapScreen = () => {
       setPin(newCoordinate);
     }
   };
+
+    // 计算角度的函数
+    const calculateAngle = (magnetometer: { x: any; y: any; z?: number; }) => {
+      let angle = Math.atan2(magnetometer.y, magnetometer.x) * (180 / Math.PI);
+      if (angle < 0) {
+        angle += 360;
+      }
+      return Math.round(angle);
+    };
+
+
+  
+
   
 
 
@@ -141,6 +175,7 @@ const MapScreen = () => {
         
         onUserLocationChange={onUserLocationChange}
       >
+        
         <Marker
           coordinate={pin}
           image={{
@@ -179,11 +214,25 @@ const MapScreen = () => {
           fillColor={"rgba(170,170,255,0.3)"} 
         />
       </MapView>
+      {/* Compass Needle Image */}
+      <View style={styles.compassContainer}>
+        <Image
+          source={compassNeedle}
+          style={{
+            ...styles.compassNeedle,
+            transform: [{ rotate: `${directionAngle}deg` }],
+          }}
+        />
+      </View>
+
+      
       
       <View style={styles.bottomPanel}>
         <Text className="font-bold " style={styles.bottomText}>Distance: {distance.toFixed(2)} Km</Text>
         <Text className="font-bold " style={styles.bottomText}>Duration: {formatDuration(duration)}</Text>
       </View>
+
+      
     </View>
   );
 };
@@ -208,10 +257,23 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     padding: 10,
     // backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    backgroundColor: 'transparent', // 背景颜色透明
+    backgroundColor: 'transparent', // transparent background
   },
   bottomText: {
     fontSize: 16,
+  },
+  compassContainer: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  compassNeedle: {
+    width: 40,
+    height: 40,
   },
 });
 
