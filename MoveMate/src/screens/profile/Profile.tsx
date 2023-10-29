@@ -5,7 +5,6 @@ import { ROUTES } from '../../constants';
 import useAuth from '../../hook/useAuth';
 import { User } from 'firebase/auth';
 
-
 // useful icons
 const arrowRight = require('../../assets/icons/arrow_right.png');
 

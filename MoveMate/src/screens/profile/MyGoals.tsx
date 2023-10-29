@@ -4,6 +4,10 @@ import { Avatar, Badge, Icon, withBadge } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
 import { Button } from '@rneui/themed';
+import useAuth from '../../hook/useAuth';
+import { User } from 'firebase/auth';
+import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from '../../config/firebase'; 
 
 
 
@@ -14,42 +18,51 @@ const minus = require('../../assets/icons/minus-icon.png');
 const plus = require('../../assets/icons/plus-icon.png');
 
 const MyGoals = () => {
+  const { user } = useAuth();
+  const [walking, setWalking] = useState<number>();
+  const [pushUp, setPushUp] = useState<number>();
+  const [sitUp, setSitUp] = useState<number>();
 
-  const navigation = useNavigation();
+  React.useEffect(() => {
+    if (user && user.uid) {
+      const userDocRef = doc(db, 'users', user.uid);
+      getDoc(userDocRef).then(docSnap => {
+        if (docSnap.exists()) {
+          const userData = docSnap.data();
+          setWalking(userData.goals.walking !== undefined ? userData.goals.walking : 1000);
+          setPushUp(userData.goals.push_up !== undefined ? userData.goals.push_up : 50);
+          setSitUp(userData.goals.sit_up !== undefined ? userData.goals.sit_up : 50);
+        } else {
+          // TODO: handle user not found
+          setWalking(1000);
+          setPushUp(50);
+          setSitUp(50);
+        }
+      }).catch(error => {
+        console.error('Error fetching user data:', error);
+       
+      });
+    }
+  }, [user]);
 
-  const [walking, setWalking] = useState(1000);
-  const [pushUp, setPushUp] = useState(50);
-  const [sitUp, setSitUp] = useState(50);
-
-  const handleWalkingMinus = () => {
-    if (walking > 0) {
-      setWalking(walking - 1);
+  const updateUserData = () => {
+    if (user && user.uid) {
+      const userDocRef = doc(db, 'users', user.uid);
+      updateDoc(userDocRef, { 'goals.walking': walking, 'goals.push_up':pushUp, 'goals.sit_up':sitUp }).catch(error => {
+        console.error('Error updating user data:', error);
+      });
     }
   };
 
-  const handleWalkingPlus = () => {
-    setWalking(walking + 1);
+  const handleGoalChange = (setter: { (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (arg0: (prev: any) => number): void; }, increment: number) => {
+    setter(prev => Math.max(prev + increment, 0));
   };
 
-  const handlePushUpMinus = () => {
-    if (pushUp > 0) {
-      setPushUp(pushUp - 1);
-    }
+  const handleSubmit = () => {
+    updateUserData();
   };
 
-  const handlePushUpPlus = () => {
-    setPushUp(pushUp + 1);
-  };
 
-  const handleSitUpMinus = () => {
-    if (sitUp > 0) {
-      setSitUp(sitUp - 1);
-    }
-  };
-
-  const handleSitUpPlus = () => {
-    setSitUp(sitUp + 1);
-  };
 
   return (
     <View className="flex ">
@@ -63,52 +76,48 @@ const MyGoals = () => {
       </View>
       <View className="items-center mt-12">
         <View style={styles.container}>
-          <View className="flex flex-row ml-4 mt-10 mr-3 justify-between items-center">
-              <Text  className="text-3xl justify-center items-center font-bold">Walking</Text>
-              <TouchableOpacity onPress={handleWalkingMinus}>
-                <Image source={minus} style={{ width: 20, height: 20, marginLeft: 43,marginTop:8 }} />
-              </TouchableOpacity>
-              <Text className="text-2xl ml-4 mr-4 mt-1 font-semibold">{walking}</Text>
-              <TouchableOpacity onPress={handleWalkingPlus}>
-                <Image source={plus} style={{ width: 20, height: 20 ,marginTop:8 }} />
-              </TouchableOpacity>
-          </View>
-          <View className="flex flex-row ml-4 mt-12 mr-3  justify-between items-center">
-            <Text  className="text-3xl justify-center items-center font-bold">Push-up</Text>
-            <TouchableOpacity  onPress={handlePushUpMinus}>
-              <Image source={minus} style={{ width: 20, height: 20, marginLeft: 35,marginTop:8 }} />
-            </TouchableOpacity>
-            <Text className="text-2xl ml-4 mr-4 mt-1 font-semibold">{pushUp}</Text>
-            <TouchableOpacity  onPress={handlePushUpPlus}>
-              <Image source={plus} style={{ width: 20, height: 20 ,marginTop:8 }} />
-            </TouchableOpacity>
-          </View>
-          <View className="flex flex-row ml-4 mt-10 mb-1 mr-3 justify-between items-center">
-            <Text className="text-3xl justify-center items-center font-bold">Sit-up</Text>
-            <TouchableOpacity  onPress={handleSitUpMinus}>
-              <Image source={minus} style={{ width: 20, height: 20, marginLeft: 66,marginTop:8 }} />
-            </TouchableOpacity>
-            <Text className="text-2xl ml-4 mr-4 mt-1 font-semibold">{sitUp}</Text>
-            <TouchableOpacity  onPress={handleSitUpPlus}>
-              <Image source={plus} style={{ width: 20, height: 20 ,marginTop:8 }} />
-            </TouchableOpacity>
-          </View>
+          <GoalSection title="Walking" currentValue={walking} onMinus={() => handleGoalChange(setWalking, -1)} onPlus={() => handleGoalChange(setWalking, 1)} />
+          <GoalSection title="Push-up" currentValue={pushUp} onMinus={() => handleGoalChange(setPushUp, -1)} onPlus={() => handleGoalChange(setPushUp, 1)} />
+          <GoalSection title="Sit-up" currentValue={sitUp} onMinus={() => handleGoalChange(setSitUp, -1)} onPlus={() => handleGoalChange(setSitUp, 1)} />
         </View>
       </View>
       <View className="justify-center items-center mt-12">
+
       <Button  
             radius={"sm"} 
             type="solid" 
             buttonStyle={styles.buttonStyle}
-            // onPress={() => navigation.navigate(ROUTES.PROFILE)}
+            onPress={handleSubmit} // TODO: handle submit
         >
-            <Text className="mr-8 text-2xl text-white font-bold ">Confirme</Text> 
+            <Text className="mr-8 text-2xl text-white font-bold ">Confirm</Text> 
             <Icon name="save" color="white" />
         </Button>
+
     </View>
     </View>
   );
 };
+
+type GoalSectionProps = {
+  title: string;
+  currentValue: number;
+  onMinus: () => void;
+  onPlus: () => void;
+};
+
+const GoalSection = ({ title, currentValue, onMinus, onPlus }: GoalSectionProps) => (
+  <View className="flex flex-row ml-4 mt-10 mr-3 justify-between items-center">
+    <Text className="text-3xl justify-center items-center font-bold">{title}</Text>
+    <TouchableOpacity onPress={onMinus}>
+      <Image source={minus} style={{ width: 20, height: 20, marginLeft: 35, marginTop: 8 }} />
+    </TouchableOpacity>
+    <Text className="text-2xl ml-4 mr-4 mt-1 font-semibold">{currentValue}</Text>
+    <TouchableOpacity onPress={onPlus}>
+      <Image source={plus} style={{ width: 20, height: 20, marginTop: 8 }} />
+    </TouchableOpacity>
+  </View>
+);
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',

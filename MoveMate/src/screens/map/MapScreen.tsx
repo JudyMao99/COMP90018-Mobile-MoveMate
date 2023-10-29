@@ -131,11 +131,11 @@ const MapScreen = () => {
       >
         <Marker
           coordinate={pin}
-          // image={{
-          //   uri: "",
-          //   width: 3,
-          //   height: 3,
-          // }}
+          image={{
+            uri: "",
+            width: 3,
+            height: 3,
+          }}
 
           pinColor='blue'
           draggable={true}
