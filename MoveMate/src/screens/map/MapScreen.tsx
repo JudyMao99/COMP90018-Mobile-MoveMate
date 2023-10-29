@@ -18,7 +18,7 @@ const MapScreen = () => {
   
 
   const [magnetometerData, setMagnetometerData] = useState({ x: 0, y: 0, z: 0 });
-  const [directionAngle, setDirectionAngle] = useState(0); // 新增方向角度状态
+  const [directionAngle, setDirectionAngle] = useState(0); // angle in direction
 
 
   const [path, setPath] = React.useState<{ latitude: number; longitude: number; }[]>([]);
@@ -28,7 +28,7 @@ const MapScreen = () => {
   const [duration, setDuration] = useState(0);
 
   React.useEffect(() => {
-    Magnetometer.setUpdateInterval(1000); // 设置磁力计的更新间隔
+    Magnetometer.setUpdateInterval(300); // in milliseconds update interval
     const subscription = Magnetometer.addListener(data => {
       setMagnetometerData(data);
     });
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     padding: 10,
     // backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    backgroundColor: 'transparent', // 背景颜色透明
+    backgroundColor: 'transparent', // transparent background
   },
   bottomText: {
     fontSize: 16,
