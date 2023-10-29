@@ -8,7 +8,7 @@ const InitGoals = () => {
   const navigation = useNavigation();
   return (
     <View className="flex justify-center items-center">
-      <MyGoals/>
+      <MyGoals nextStep={() => navigation.navigate(ROUTES.APP)}/>
     </View>
   )
 }

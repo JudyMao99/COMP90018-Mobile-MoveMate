@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, Image, Alert, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { Camera } from 'expo-camera';
+import { Camera, CameraType } from 'expo-camera';
 
 import 'firebase/storage';
 import useAuth from '../../hook/useAuth';
@@ -9,16 +9,17 @@ import { updateProfile } from 'firebase/auth';
 import { Avatar, BottomSheet, Button, ListItem } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
+import TakePhotoCamera from '../../components/TakePhotoCamera';
 
 const InitAvatar = () => {
   const { user } = useAuth();
-  const [image, setImage] = useState<string>();
-  const [isVisible, setIsVisible] = useState<boolean>(false);
   const navigation = useNavigation();
+  const [image, setImage] = useState<string>();
+  const [bottomSheetVisible, setBottomSheetVisible] = useState<boolean>(false);
+  const [cameraVisible, setCameraVisible] = useState<boolean>(false);
 
   useEffect(() => {
     if (user && user.photoURL) {
-      // get photoUrl from user
       setImage(user.photoURL)
     }
   }, [user]);
@@ -41,12 +42,8 @@ const InitAvatar = () => {
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
-      setIsVisible(false);
+      setBottomSheetVisible(false);
     }
-  };
-  
-  const takePhoto = async () => {
-    // TODO
   };
 
   const uploadImage = async () => {
@@ -65,12 +62,16 @@ const InitAvatar = () => {
       console.log("No photo provided, skip for now!");
       navigation.navigate(ROUTES.SETUP_GOAL);
     }
-
-
   };
 
+  // handle take photo
+  const takePhoto = () => {
+    setBottomSheetVisible(false);
+    setCameraVisible(true);
+  }
+
   const handleChangeAvatar = () => {
-    setIsVisible(true);
+    setBottomSheetVisible(true);
   }
 
   // list of upload options
@@ -89,45 +90,50 @@ const InitAvatar = () => {
     },
     {
       title: "Cancel",
-      onPress: () => setIsVisible(false)
+      onPress: () => setBottomSheetVisible(false)
     }
   ]
 
   return (
-    <View className="flex-1 bg-white justify-center items-center">
-      <BottomSheet
-        isVisible={isVisible}
-        onBackdropPress={() => setIsVisible(false)}
-      >
-        {uploadOpts.map((opt: UploadOption, idx: number) => (
-          <ListItem
-            key={idx}
-            onPress={opt.onPress}
-            containerStyle={{
-              borderBottomWidth: 1,
-              borderColor: "#ccc"
-            }}
+    <>
+      {cameraVisible ?
+        <TakePhotoCamera setImage={setImage} setCameraVisible={setCameraVisible} /> :
+        <View className="flex-1 bg-white justify-center items-center">
+          <BottomSheet
+            isVisible={bottomSheetVisible}
+            onBackdropPress={() => setBottomSheetVisible(false)}
           >
-            <ListItem.Content className="py-2.5 pl-1">
-              <ListItem.Title>{opt.title}</ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
-        ))}
-      </BottomSheet>
-      
-      <View className="flex items-center mb-4">
-        <Text className="text-4xl">Welcome!</Text>
-        <Text>Please upload your avatar!</Text>
-      </View>
-      <View className="mb-6">
-        <Avatar containerStyle={{ backgroundColor: "#EDEDED" }} source={{ uri: image }} size="xlarge" rounded>
-          <View className="bg-gray-500"></View>
-          <Avatar.Accessory size={36} onPress={handleChangeAvatar}/>
-        </Avatar>
-      </View>
-      <Button size="lg" radius="md" title={image ? "Upload Image" : "Skip For Now"} onPress={uploadImage} />
+            {uploadOpts.map((opt: UploadOption, idx: number) => (
+              <ListItem
+                key={idx}
+                onPress={opt.onPress}
+                containerStyle={{
+                  borderBottomWidth: 1,
+                  borderColor: "#ccc"
+                }}
+              >
+                <ListItem.Content className="py-2.5 pl-1">
+                  <ListItem.Title>{opt.title}</ListItem.Title>
+                </ListItem.Content>
+              </ListItem>
+            ))}
+          </BottomSheet>
+          
+          <View className="flex items-center mb-4">
+            <Text className="text-4xl">Welcome!</Text>
+            <Text>Please upload your avatar!</Text>
+          </View>
+          <View className="mb-6">
+            <Avatar containerStyle={{ backgroundColor: "#EDEDED" }} source={{ uri: image }} size="xlarge" rounded>
+              <View className="bg-gray-500"></View>
+              <Avatar.Accessory size={36} onPress={handleChangeAvatar}/>
+            </Avatar>
+          </View>
+          <Button size="lg" radius="md" title={image ? "Upload Image" : "Skip For Now"} onPress={uploadImage} />
+        </View>
+      }
+    </>
 
-    </View>
   )
 }
 

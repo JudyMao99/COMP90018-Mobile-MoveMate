@@ -13,7 +13,7 @@ function AppNavigator() {
 
   useEffect(() => {
     if (user) {
-      // TODO: use global variable to check if the user is a new user
+      // Check if goals have been set by the user
       getDoc(doc(db, "users", user.uid))
         .then((docSnap: DocumentSnapshot) => {
           if (!docSnap.exists()) {

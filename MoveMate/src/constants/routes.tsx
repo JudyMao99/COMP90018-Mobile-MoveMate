@@ -6,7 +6,6 @@ export default {
 
   SETUP_GOAL: 'Set Up Goal' as never,
   SETUP_AVATAR: 'Set Up Avatar' as never,
-
   APP: 'App' as never,
 
   HOME: 'Home' as never,
