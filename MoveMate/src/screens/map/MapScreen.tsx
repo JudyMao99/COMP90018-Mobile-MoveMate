@@ -3,9 +3,6 @@ import { View, StyleSheet, Dimensions, Text, Image } from 'react-native';
 import MapView, { Marker, Callout, Circle, Polyline, UserLocationChangeEvent } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { Magnetometer, MagnetometerUncalibrated } from 'expo-sensors';
-import * as Svg from 'react-native-svg';
-
-
 
 const compassNeedle = require('../../assets/needle.png');
 
@@ -14,12 +11,8 @@ const MapScreen = () => {
     latitude: -37.7993,
     longitude: 144.9629,
   });
-
-  
-
   const [magnetometerData, setMagnetometerData] = useState({ x: 0, y: 0, z: 0 });
   const [directionAngle, setDirectionAngle] = useState(0); // angle in direction
-
 
   const [path, setPath] = React.useState<{ latitude: number; longitude: number; }[]>([]);
 
