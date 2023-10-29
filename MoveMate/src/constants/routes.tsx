@@ -6,7 +6,7 @@ export default {
 
   APP: 'App' as never,
 
-  HOME: 'Home' as never,
+  HOME_NAV: 'Home' as never,
   HOME_MAIN: 'Home Main Page' as never,
   WORKING_MODE: 'Working Mode Page' as never,
   WORKING_FINISH: 'Working Finish Page' as never,

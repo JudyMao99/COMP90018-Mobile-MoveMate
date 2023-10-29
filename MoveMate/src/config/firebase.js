@@ -14,11 +14,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
-// Initialize Cloud Firestore and get a reference to the service
-export const db = getFirestore(app);
-
-export { auth };
+export { auth, db };
 
 // IOS: 567092706586-8tlk7ariv0erl08nb9bmn69mhva2ncof.apps.googleusercontent.com
 // Android: 567092706586-23l8rda3a1a2a4fcnrnss0u4ehpcbiob.apps.googleusercontent.com
