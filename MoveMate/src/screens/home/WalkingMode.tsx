@@ -7,8 +7,7 @@ import { FAB, Button, Dialog, Icon} from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
 import { db } from '../../config/firebase';
-import { collection, addDoc, doc, setDoc,Timestamp} from "firebase/firestore";
-import moment from "moment";
+import { collection, addDoc, doc, getDoc,Timestamp} from "firebase/firestore";
 
 const WalkingMode = ({route}: any) => {
     const [isPedometerAvailable, setIsPedometerAvailable] = useState('checking');
@@ -20,40 +19,47 @@ const WalkingMode = ({route}: any) => {
     const [visible, setVisible] = React.useState(false);
     const [iconName, setIconName] = React.useState('pause');
     const [running, setRunning] = React.useState(true);
-    const [currentTimeStamp, setCurrentTimeStamp] = useState('')
-    //const lastStep = 5
+    const [pastStepCount, setPastStepCount] = useState(0);
 
     // Handle the pause function
     const pauseHandler = () => {
     if (iconName === 'pause') {
       setIconName('play');
       setRunning(false);
-    }
-    else {
+    } else {
       setIconName('pause');
       setRunning(true);
+        }
     }
-  }
 
 
     // Subscirbe the Pedometer and update it 
-    // TODO: 问题： 当前stepcounter应该只能在每一次应用程序重启后，才能做到重头开始计算step count，要不然就会继续记录上一次step count的数据
     const subscribe = async () => {
-    const isPermissionsAvailable = await Pedometer.getPermissionsAsync();
-    setIsPermissionsAvailable(String(isPermissionsAvailable));
-    const isAvailable = await Pedometer.isAvailableAsync();
-    setIsPedometerAvailable(String(isAvailable));
-    if (isAvailable) {
-    Pedometer.watchStepCount((result) => {
-        updateStepCount(result.steps);
-        console.log(result.steps) })
+        const isPermissionsAvailable = await Pedometer.getPermissionsAsync();
+        setIsPermissionsAvailable(String(isPermissionsAvailable));
+        const isAvailable = await Pedometer.isAvailableAsync();
+        setIsPedometerAvailable(String(isAvailable));
+        if (isAvailable) {
+            // const end = new Date();
+            // const start = new Date();
+            // console.log(end)
+            // console.log(start)
+            // start.setDate(end.getDate()-1)
+            // const pastStepCountResult = await Pedometer.getStepCountAsync(start, end);
+            // if (pastStepCountResult) {
+            //     setPastStepCount(pastStepCountResult.steps);
+            //     console.log("PAST step count: " + pastStepCount)
+            // }
+        Pedometer.watchStepCount((result) => {
+           updateStepCount(result.steps);
+            })
         }
-    };
+    }
 
     
     // Update the step count data to the firebase
     async function writeWalkingRecord() {
-        
+
         const walkingData = {
             count: stepCount,
             duration: 10,
@@ -76,7 +82,8 @@ const WalkingMode = ({route}: any) => {
 
 
     useEffect(() => {
-    subscribe();
+        const subscription = subscribe();
+        return () => subscription && subscription.remove();
     },[]);
 
     // TODO: Write the step count down into the view
@@ -84,7 +91,7 @@ const WalkingMode = ({route}: any) => {
     <View className="flex flex-1 items-center w-screen h-screen ">  
       <View className="bg-amber-400 h-3/4 w-full flex items-center justify-around ">
         <Text fontSize="24">WALKING</Text>
-        <Text fontSize="30">steps: {stepCount}</Text>
+        <Text fontSize="30">steps: {stepCount - pastStepCount}</Text>
       </View>
       <View className='flex-row w-full justify-around relative bottom-12'>
 
@@ -139,6 +146,8 @@ const WalkingMode = ({route}: any) => {
           <Dialog.Button title="Yes" onPress={() => {
             navigation.navigate(ROUTES.HOME)
             writeWalkingRecord();
+            setPastStepCount(0);
+            updateStepCount(0);
             }
         }/>
           <Dialog.Button title="Close" onPress={() => {
