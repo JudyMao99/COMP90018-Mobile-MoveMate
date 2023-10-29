@@ -66,7 +66,7 @@ const MapScreen = () => {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({ distanceInterval: 1 });
+      let location = await Location.getCurrentPositionAsync({ distanceInterval: 10 });
       console.log(location);
 
       const initialCoordinate = {
@@ -81,32 +81,34 @@ const MapScreen = () => {
   }, []);
 
   const onUserLocationChange = (e: UserLocationChangeEvent) => {
-    const { latitude, longitude } = e.nativeEvent.coordinate as { latitude: number; longitude: number };
+    const { latitude, longitude, accuracy } = e.nativeEvent.coordinate as { latitude: number; longitude: number; accuracy: number };
     const newCoordinate = { latitude, longitude };
   
-    setPath((prevPath) => {
-      let newDistance = 0;
-      if (prevPath.length > 0) {
-        const lastCoordinate = prevPath[prevPath.length - 1];
-        newDistance = cosineDistanceBetweenPoints(
-          lastCoordinate.latitude,
-          lastCoordinate.longitude,
-          newCoordinate.latitude,
-          newCoordinate.longitude
-        );
-        
-        if (newDistance < 5) {
-          return prevPath; 
+    if (accuracy < 20) {
+      setPath((prevPath) => {
+        let newDistance = 0;
+        if (prevPath.length > 0) {
+          const lastCoordinate = prevPath[prevPath.length - 1];
+          newDistance = cosineDistanceBetweenPoints(
+            lastCoordinate.latitude,
+            lastCoordinate.longitude,
+            newCoordinate.latitude,
+            newCoordinate.longitude
+          );
+          
+          if (newDistance < 10) {
+            return prevPath; 
+          }
+          
+          // 更新总距离
+          setDistance((currentDistance) => currentDistance + (newDistance / 1000));
         }
         
-        // Update the total distance here
-        setDistance((currentDistance) => currentDistance + (newDistance / 1000));
-      }
-      
-      return [...prevPath, newCoordinate];
-    });
+        return [...prevPath, newCoordinate];
+      });
   
-    setPin(newCoordinate);
+      setPin(newCoordinate);
+    }
   };
   
 
@@ -129,11 +131,12 @@ const MapScreen = () => {
       >
         <Marker
           coordinate={pin}
-          image={{
-            uri: "",
-            width: 3,
-            height: 3,
-          }}
+          // image={{
+          //   uri: "",
+          //   width: 3,
+          //   height: 3,
+          // }}
+
           pinColor='blue'
           draggable={true}
           onDragStart={(e)=> {
