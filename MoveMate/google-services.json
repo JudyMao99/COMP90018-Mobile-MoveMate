@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "303461517165",
+    "project_id": "mobile-movemate",
+    "storage_bucket": "mobile-movemate.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:303461517165:android:b31710637dcab8dd3bfc64",
+        "android_client_info": {
+          "package_name": "com.movemate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCKf7Ea-K2DCFcpzMealh5a3RtP-6q0DY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

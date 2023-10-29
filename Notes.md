@@ -87,3 +87,11 @@
 
 3. https://docs.expo.dev/build-reference/apk/
 
+- Issues:
+  - 弹出键盘会把界面push上去
+  - screen传参中的type报错
+  - Google icon的样式
+  - profile photo
+    - ？是否出现在signup流程里
+    - ？如果出现是否 skip
+    - 

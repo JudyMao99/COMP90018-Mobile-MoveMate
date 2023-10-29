@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
 import { db } from '../../config/firebase';
 import { collection, addDoc, doc, getDoc,Timestamp} from "firebase/firestore";
+import useAuth from '../../hook/useAuth';
 
 const WalkingMode = ({route}: any) => {
     const [isPedometerAvailable, setIsPedometerAvailable] = useState('checking');
@@ -20,6 +21,9 @@ const WalkingMode = ({route}: any) => {
     const [iconName, setIconName] = React.useState('pause');
     const [running, setRunning] = React.useState(true);
     const [pastStepCount, setPastStepCount] = useState(0);
+
+    const { user } = useAuth();
+    
 
     // Handle the pause function
     const pauseHandler = () => {
@@ -59,18 +63,17 @@ const WalkingMode = ({route}: any) => {
     
     // Update the step count data to the firebase
     async function writeWalkingRecord() {
-
+      if (user && user.uid){
         const walkingData = {
-            count: stepCount,
-            duration: 10,
-            exercise_id: 2,
-            exercise_type: "Walking",
+            step_count: stepCount,
             start_date: Timestamp.fromDate(new Date()),
-            uid: ""  
+            uid: user.uid,  
         }
-
-    const newDoc = await addDoc(collection(db, "exercise"), walkingData);
+    const newDoc = await addDoc(collection(db, "exercise_walking"), walkingData);
     console.log("Document written with ID: ", newDoc.id);
+
+      }
+        
 
     }
 
@@ -144,7 +147,7 @@ const WalkingMode = ({route}: any) => {
         <Text>Sure to terminate Walking?</Text>
         <Dialog.Actions>
           <Dialog.Button title="Yes" onPress={() => {
-            navigation.navigate(ROUTES.HOME)
+            navigation.navigate(ROUTES.HOME_MAIN)
             writeWalkingRecord();
             setPastStepCount(0);
             updateStepCount(0);
