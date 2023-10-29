@@ -1,9 +1,9 @@
-import { View, Text, Button as RNButton,TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, Button as RNButton,TouchableOpacity, Image, StyleSheet,Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
 import useAuth from '../../hook/useAuth';
-import { User } from 'firebase/auth';
+import { User,getAuth,signOut } from 'firebase/auth';
 
 // useful icons
 const arrowRight = require('../../assets/icons/arrow_right.png');
@@ -17,10 +17,21 @@ const Profile = () => {
   const [userDetail, setUserDetail] = useState<User>();
   const { user } = useAuth();
 
+  const handleSignOut = () => {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        navigation.navigate(ROUTES.LOGIN);
+      })
+      .catch((error) => {
+        Alert.alert('Error', error.message);
+      });
+  };
+
   return (
     <View className="flex-1">
       <View className="bg-indigo-500 w-97 h-64 flex flex-col justify-center items-center rounded-lg shadow-xl ">
-        <Text className="text-6xl font-black mt-20 pt-12">{userDetail?.displayName ?? "Undefined"}</Text>
+        <Text className="text-6xl font-black mt-20 pt-12">{user?.displayName ?? "Undefined"}</Text>
           <View className="bg-white flex-col justify-center items-center w-32 border-2 rounded-lg mt-20">
             <Text className="rounded-lg border-inherit border-solid text-base ">Profile</Text>
           </View>
@@ -55,7 +66,7 @@ const Profile = () => {
         </View>
       </View>
       <View className='flex flex-row justify-center items-center '>
-          <TouchableOpacity onPress={() => navigation.navigate(ROUTES.LOGIN)} style={styles.touchable}>
+          <TouchableOpacity  onPress={handleSignOut} style={styles.touchable}>
               <Text className="text-neutral-50 text-center">Sign Out</Text>
           </TouchableOpacity>
       </View>

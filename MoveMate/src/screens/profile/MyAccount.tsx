@@ -79,9 +79,9 @@ const MyAccount = () => {
         <Text style={styles.buttonText}>Update Password</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={handleSignOut} style={styles.touchable}>
+      {/* <TouchableOpacity onPress={handleSignOut} style={styles.touchable}>
         <Text style={styles.buttonText}>Switch Account</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };

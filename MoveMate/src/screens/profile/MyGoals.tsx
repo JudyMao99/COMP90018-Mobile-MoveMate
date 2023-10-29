@@ -19,9 +19,9 @@ const plus = require('../../assets/icons/plus-icon.png');
 
 const MyGoals = () => {
   const { user } = useAuth();
-  const [walking, setWalking] = useState<number>();
-  const [pushUp, setPushUp] = useState<number>();
-  const [sitUp, setSitUp] = useState<number>();
+  const [walking, setWalking] = useState<number>(1000);
+  const [pushUp, setPushUp] = useState<number>(50);
+  const [sitUp, setSitUp] = useState<number>(50);
 
   React.useEffect(() => {
     if (user && user.uid) {
