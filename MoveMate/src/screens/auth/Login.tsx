@@ -12,7 +12,7 @@ const Login = () => {
     <>
       <View className="flex flex-1 items-center justify-center">
         <Text>Login</Text>
-        <Button title="Go to App" onPress={() => navigation.navigate(ROUTES.APP)}/>
+        <Button title="Go to Home" onPress={() => navigation.navigate(ROUTES.HOME)}/>
         <Button title="Go to Register" onPress={() => navigation.navigate(ROUTES.REGISTER)}/>
         <Button title="Go to Forgot Password" onPress={() => navigation.navigate(ROUTES.FORGOT_PASSWORD)}/>
       </View>
