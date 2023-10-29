@@ -25,11 +25,11 @@ const FocusChart = () => {
           data: FocusData.focusHistory.map(item => item.duration)
         }]
       }}
-      width={Dimensions.get("window").width} // from react-native
+      width={Dimensions.get("window").width} 
       height={220}
       yAxisLabel=""
       yAxisSuffix=" min"
-      yAxisInterval={1} // optional, defaults to 1
+      yAxisInterval={1}
       chartConfig={{
         backgroundColor: "#e26a00",
         backgroundGradientFrom: "#fb8c00",
