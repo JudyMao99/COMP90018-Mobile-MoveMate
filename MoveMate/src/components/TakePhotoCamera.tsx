@@ -29,6 +29,7 @@ export default function TakePhotoCamera({ setImage, setCameraVisible } : TakePho
   const takePicture = async () => {
     if (cameraRef) {
       try {
+        // @ts-ignore
         const data = await cameraRef.current?.takePictureAsync();
         console.log(data);
         setPhoto(data.uri);
@@ -102,15 +103,5 @@ export default function TakePhotoCamera({ setImage, setCameraVisible } : TakePho
       )}
     </View>
   </View>
-
-    // <View className="flex-1 justify-center">
-    //   <Camera className="flex-1" type={type}>
-    //     <View className="flex-1 flex-row bg-transparent my-16 mx-8">
-    //       <TouchableOpacity className="flex-1 self-end items-end" onPress={toggleCameraType}>
-    //         <Text className="text-2xl font-bold text-white">Flip Camera</Text>
-    //       </TouchableOpacity>
-    //     </View>
-    //   </Camera>
-    // </View>
   );
 }

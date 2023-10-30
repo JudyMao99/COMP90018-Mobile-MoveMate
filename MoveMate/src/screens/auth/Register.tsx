@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, Image, SafeAreaView } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Image, SafeAreaView, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
@@ -27,7 +27,7 @@ const Register = () => {
         console.log('got error: ', err.message);
       })
     } else {
-      console.log("please provide valid email address and password.")
+      Alert.alert("please provide valid email address and password.")
     }
   }
 
