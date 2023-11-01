@@ -15,7 +15,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.MoveMate"
     },
     "android": {
       "adaptiveIcon": {
@@ -26,10 +27,16 @@
         "android.permission.health.READ_STEPS",
         "android.permission.health.READ_FLOORS_CLIMBED",
         "android.permission.health.READ_DISTANCE"
-      ]
+      ],
+      "package": "com.anonymous.MoveMate"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9e883142-0a25-4429-a694-69925a46193c"
+      }
     }
   }
 }
