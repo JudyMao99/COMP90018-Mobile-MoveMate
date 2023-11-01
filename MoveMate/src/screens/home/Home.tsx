@@ -5,6 +5,8 @@ import { ROUTES } from '../../constants';
 import { FAB, ButtonGroup, Chip, CheckBox, Card } from '@rneui/themed';
 import { Button } from 'react-native-paper';
 import useAuth from '../../hook/useAuth';
+import { getDoc, doc, setDoc, collection, query, where, getDocs, Timestamp } from "firebase/firestore";
+import { db } from '../../config/firebase';
 
 
 
@@ -14,6 +16,78 @@ const Home = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [selectedDuration, setSelectedDuration] = React.useState(15);
   const { user } = useAuth();
+  const [stepCount, setStepCount] = React.useState(0);
+  const [focusDuration, setFocusDuration] = React.useState(0);
+  const [walkingGoal, setWalkingGoal] = React.useState(0);
+  const [pushupGoal, setPushupGoal] = React.useState(0);
+  const [situpGoal, setSitupGoal] = React.useState(0);
+
+  async function queryStep() {
+    if (user && user.uid) {
+
+      const q = query(collection(db, "exercise_walking"), where("uid", "==", user.uid));
+
+      const querySnapshot =  await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        // console.log(new Date().toDateString());
+        if(doc.data().start_date.toDate().toDateString() === new Date().toDateString()) {
+          setStepCount(stepCount + doc.data().step_count);
+          // console.log(doc.id, " => ", doc.data().start_date.toDate().toDateString());
+        }
+      });
+    }
+    
+  }
+
+  async function queryGoal() {
+    if (user && user.uid) {
+      const userDocRef = doc(db, 'users', user.uid);
+      getDoc(userDocRef).then(docSnap => {
+        if (docSnap.exists()) {
+          const userData = docSnap.data();
+          setWalkingGoal(userData.goals.walking !== undefined ? userData.goals.walking : 1000);
+          setPushupGoal(userData.goals.push_up !== undefined ? userData.goals.push_up : 50);
+          setSitupGoal(userData.goals.sit_up !== undefined ? userData.goals.sit_up : 50);
+        } else {
+          // TODO: handle user not found
+          setWalkingGoal(1000);
+          setPushupGoal(50);
+          setSitupGoal(50);
+        }
+      }).catch(error => {
+        console.error('Error fetching user data:', error);
+       
+      });
+    }
+    
+  }
+
+  async function queryFocus() {
+    if (user && user.uid) {
+
+      const q = query(collection(db, "focus"), where("uid", "==", user.uid));
+
+      const querySnapshot =  await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        // console.log(new Date().toDateString());
+        if(doc.data().start_date.toDate().toDateString() === new Date().toDateString()) {
+          setFocusDuration(focusDuration + doc.data().duration);
+          // console.log(doc.id, " => ", doc.data().start_date.toDate().toDateString());
+        }
+      });
+    }
+    
+  }
+
+
+  React.useEffect(() => {
+    queryFocus();
+    queryStep();
+    queryGoal();
+
+  },[])
   
   return (
     <View className="flex flex-1 items-center w-screen h-screen ">
@@ -21,7 +95,7 @@ const Home = () => {
       <View className="bg-white h-3/5 w-full rounded-2xl flex-col items-center justify-center ">
         <View className='flex-col items-start w-4/5 gap-y-4 mb-10'>
           <Text style={styles.title}>Hello,{user?.displayName??undefined}</Text>
-          <Text style={styles.working_hour}>4 Hours 0 Min</Text>
+          <Text style={styles.working_hour}>{focusDuration / 3600} Hours {focusDuration % 60} Min</Text>
         </View>
         
         <ButtonGroup
@@ -63,21 +137,21 @@ const Home = () => {
         <Card containerStyle={{width: '25%', borderColor: 'transparent'}}>
           <Card.Title>walking</Card.Title>
           <Card.Divider/>
-          <Text>50/5000</Text>
+          <Text>{stepCount}/{walkingGoal}</Text>
         </Card>
         <Card containerStyle={{width: '25%', borderColor: 'transparent'}}>
           <Card.Title>PushUp</Card.Title>
           <Card.Divider/>
-          <Text>50/5000</Text>
+          <Text>50/{pushupGoal}</Text>
         </Card>
         <Card containerStyle={{width: '25%', borderColor: 'transparent'}}>
           <Card.Title>SitUp</Card.Title>
           <Card.Divider/>
-          <Text>50/5000</Text>
+          <Text>50/{situpGoal}</Text>
         </Card>
       </View>
-      <Button 
-        onPress = {() => navigation.navigate(ROUTES.WORKING_FINISH)}>finish</Button>
+      {/* <Button 
+        onPress = {() => navigation.navigate(ROUTES.WORKING_FINISH)}>finish</Button> */}
     </View>
   )
 }
