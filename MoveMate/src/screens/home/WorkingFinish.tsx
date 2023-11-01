@@ -85,7 +85,7 @@ const WorkingFinish = () => {
             </View>
             <View className='w-full top-40 '>
                 <Button 
-                    onPress={() => navigation.navigate(ROUTES.HOME)}>back to home</Button>
+                    onPress={() => navigation.navigate(ROUTES.HOME_MAIN)}>back to home</Button>
             </View>
             
         </View>
