@@ -148,7 +148,7 @@ const MapScreen = () => {
     }
   };
 
-    // 计算角度的函数
+    // Function to calculate the angle of the compass
     const calculateAngle = (magnetometer: { x: any; y: any; z?: number; }) => {
       let angle = Math.atan2(magnetometer.y, magnetometer.x) * (180 / Math.PI);
       if (angle < 0) {
@@ -314,8 +314,8 @@ const styles = StyleSheet.create({
     bottom: 50,
     padding: 10,
     borderRadius: 5,
-    backgroundColor: 'red',  // 使用明显的颜色
-    zIndex: 1000,  // 确保在最上层
+    backgroundColor: 'red',  // red background
+    zIndex: 1000,  // to be on the top of all views important
   },
 });
 
