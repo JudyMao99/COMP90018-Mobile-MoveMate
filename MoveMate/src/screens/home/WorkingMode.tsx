@@ -5,6 +5,9 @@ import { FAB, Button, Dialog} from '@rneui/themed';
 import { Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
+import useAuth from '../../hook/useAuth';
+import { db } from '../../config/firebase';
+import { collection, addDoc, doc, getDoc,Timestamp} from "firebase/firestore";
 
 
 const WorkingMode = ({route} : any) => {
@@ -13,6 +16,7 @@ const WorkingMode = ({route} : any) => {
   const [visible, setVisible] = React.useState(false);
   const [iconName, setIconName] = React.useState('pause');
   const [running, setRunning] = React.useState(true);
+  const { user } = useAuth();
 
   const pauseHandler = () => {
     if (iconName === 'pause') {
@@ -23,6 +27,22 @@ const WorkingMode = ({route} : any) => {
       setIconName('pause');
       setRunning(true);
     }
+  }
+
+  // Update the step count data to the firebase
+  async function writeFocusRecord() {
+    if (user && user.uid){
+      const focusData = {
+          duration: duration*60,
+          start_date: Timestamp.fromDate(new Date()),
+          uid: user.uid,  
+      }
+  const newDoc = await addDoc(collection(db, "focus"), focusData);
+  console.log("Document written with ID: ", newDoc.id);
+
+    }
+      
+
   }
 
   // console.log(duration);
@@ -38,7 +58,10 @@ const WorkingMode = ({route} : any) => {
           digitStyle={{backgroundColor: '#FFF'}}
           digitTxtStyle={{color: '#0ea5e9'}}
           showSeparator
-          onFinish={() => navigation.navigate(ROUTES.WORKING_FINISH)}
+          onFinish={() => {
+            navigation.navigate(ROUTES.WORKING_FINISH)
+            writeFocusRecord();
+          }}
           running = {running}
         />
       </View>
