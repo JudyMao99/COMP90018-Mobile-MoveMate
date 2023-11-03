@@ -2,7 +2,7 @@ export default {
   WELCOME: 'Welcome' as never,
   LOGIN: 'Login' as never,
   REGISTER: 'Register'  as never,
-  FORGOT_PASSWORD: 'Forgot Password'  as never,
+  FORGOT_PASSWORD: 'Forgot Password' as never,
 
   SETUP_GOAL: 'Set Up Goal' as never,
   SETUP_AVATAR: 'Set Up Avatar' as never,
