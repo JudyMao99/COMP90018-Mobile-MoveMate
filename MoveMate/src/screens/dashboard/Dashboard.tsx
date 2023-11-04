@@ -24,6 +24,7 @@ const Dashboard = () => {
       {/* <BarChart /> */}
       <FocusStatsChart />
       <Button title="Dashboard Detail" onPress={() => navigation.navigate(ROUTES.DASHBOARD_DETAIL) }/>
+      <Button title="Map" onPress={() => navigation.navigate(ROUTES.MAP) }/>
     </View>
   )
 
