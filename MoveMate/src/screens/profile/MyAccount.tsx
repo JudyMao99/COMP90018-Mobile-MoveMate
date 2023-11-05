@@ -154,17 +154,17 @@ const MyAccount = () => {
           />
 
           <View className="flex items-center gap-y-3">
-            <TouchableOpacity className="py-2 bg-brand rounded-md w-48" onPress={handleUpdateProfile}>
+            <TouchableOpacity className="py-2 bg-blue-brand rounded-md w-48" onPress={handleUpdateProfile}>
               <Text className=" text-sm font-bold text-center text-white">
                 Update Profile
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity className="py-2 bg-brand rounded-md w-48" onPress={handleUpdateEmail}>
+            <TouchableOpacity className="py-2 bg-blue-brand rounded-md w-48" onPress={handleUpdateEmail}>
               <Text className="font-bold text-center text-white">
                 Update Email
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity className="py-2 bg-brand rounded-md w-48" onPress={handleUpdatePassword}>
+            <TouchableOpacity className="py-2 bg-blue-brand rounded-md w-48" onPress={handleUpdatePassword}>
               <Text className="font-bold text-center text-white">
                 Update Password
               </Text>

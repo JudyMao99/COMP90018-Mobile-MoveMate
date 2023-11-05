@@ -28,7 +28,7 @@ const Profile = () => {
 
   return (
     <View className="flex-1">
-      <View className="relative bg-brand h-64 flex justify-center items-center rounded-lg shadow-xl">
+      <View className="relative bg-blue-brand h-64 flex justify-center items-center rounded-lg shadow-xl">
         <Text className="text-6xl font-black mt-16 text-white">
           {user?.displayName ?? "Undefined"}
         </Text>
@@ -58,7 +58,7 @@ const Profile = () => {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity className="py-3 bg-brand rounded-full w-48 mt-56" onPress={handleSignOut}>
+        <TouchableOpacity className="py-3 bg-blue-brand rounded-full w-48 mt-56" onPress={handleSignOut}>
           <Text className="text-xl font-bold text-center text-white">
             Sign Out
           </Text>
