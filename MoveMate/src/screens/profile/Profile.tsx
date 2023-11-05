@@ -60,7 +60,7 @@ const Profile = () => {
         </View>
 
         <TouchableOpacity className="py-3 bg-indigo-500 rounded-full w-48 mt-56" onPress={handleSignOut}>
-          <Text className="text-xl font-bold text-center text-white">
+          <Text className="text-2xl font-bold text-center text-white">
             Sign Out
           </Text>
         </TouchableOpacity>

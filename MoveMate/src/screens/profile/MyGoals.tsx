@@ -1,19 +1,18 @@
 import React,{ useState } from 'react';
-import { Text, View, StyleSheet,Image,TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet,Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button, Icon } from '@rneui/themed';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import useAuth from '../../hook/useAuth';
 import { getDoc } from "firebase/firestore";
+import { SafeAreaView } from 'react-native-safe-area-context';
+import GoalSection from '../../components/GoalSection';
 
 
 
 const badge = require('../../assets/images/badge.png');
 
-const minus = require('../../assets/icons/minus-icon.png');
-
-const plus = require('../../assets/icons/plus-icon.png');
 
 type MyGoalsProps = {
   nextStep?: () => void;
@@ -79,98 +78,23 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
   }
 
   return (
-    <View className="flex ">
-      <View className="flex flex-row">
-        <View className="basis-8/12">
-          <Text className="text-3xl mt-20 ml-6 font-black">Set Up Goals!</Text>
-        </View>
-        <View className="basis-4/12 mt-16 ml-6 ">
-          <Image source={badge} style={{ width: 90, height: 90 }} />
-        </View>
+    <View className="flex-1 flex-col items-center m-4 justify-between pb-8">
+      <View className="flex flex-row items-center justify-center gap-x-6">
+        <Text className="text-3xl font-black">Set Up Goals!</Text>
+        <Image source={badge} style={{ width: 90, height: 90 }} />
       </View>
-      <View className="items-center mt-12">
-        <View style={styles.container}>
-          <GoalSection title="Walking" currentValue={walking} onMinus={() => handleGoalChange(setWalking, -1)} onPlus={() => handleGoalChange(setWalking, 1)} />
-          <GoalSection title="Push-up" currentValue={pushUp} onMinus={() => handleGoalChange(setPushUp, -1)} onPlus={() => handleGoalChange(setPushUp, 1)} />
-          <GoalSection title="Sit-up" currentValue={sitUp} onMinus={() => handleGoalChange(setSitUp, -1)} onPlus={() => handleGoalChange(setSitUp, 1)} />
-        </View>
+      <View className="w-80 h-80 bg-white border-0.5 rounded-lg flex flex-col py-8 px-6 justify-between">
+        <GoalSection title="Walking" currentValue={walking} onMinus={() => handleGoalChange(setWalking, -1)} onPlus={() => handleGoalChange(setWalking, 1)} />
+        <GoalSection title="Push-up" currentValue={pushUp} onMinus={() => handleGoalChange(setPushUp, -1)} onPlus={() => handleGoalChange(setPushUp, 1)} />
+        <GoalSection title="Sit-up" currentValue={sitUp} onMinus={() => handleGoalChange(setSitUp, -1)} onPlus={() => handleGoalChange(setSitUp, 1)} />
       </View>
-      <View className="justify-center items-center mt-12">
-
-      <Button  
-        radius={"sm"} 
-        type="solid" 
-        buttonStyle={styles.buttonStyle}
-        onPress={handleGoalsSubmit} // TODO: handle submit
-      >
-        <Text className="mr-8 text-2xl text-white font-bold ">Confirm</Text> 
-        <Icon name="save" color="white" />
-      </Button>
-    </View>
+      <TouchableOpacity className="py-2 bg-indigo-500 rounded-full w-64 h-12" onPress={handleGoalsSubmit}>
+        <Text className="text-2xl font-bold text-center text-white">
+          Confirm
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
-
-type GoalSectionProps = {
-  title: string;
-  currentValue: number;
-  onMinus: () => void;
-  onPlus: () => void;
-};
-
-const GoalSection = ({ title, currentValue, onMinus, onPlus }: GoalSectionProps) => (
-  <View className="flex flex-row ml-4 mt-10 mr-3 justify-between items-center">
-    <Text className="text-3xl justify-center items-center font-bold">{title}</Text>
-    <TouchableOpacity onPress={onMinus}>
-      <Image source={minus} style={{ width: 20, height: 20, marginLeft: 35, marginTop: 8 }} />
-    </TouchableOpacity>
-    <Text className="text-2xl ml-4 mr-4 mt-1 font-semibold">{currentValue}</Text>
-    <TouchableOpacity onPress={onPlus}>
-      <Image source={plus} style={{ width: 20, height: 20, marginTop: 8 }} />
-    </TouchableOpacity>
-  </View>
-);
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
-    width: 300,
-    height: 330,
-    borderRadius: 10,
-    // Other styles for your container
-    // Shadow properties
-    shadowColor: '#000000',
-    justifyContent: 'space-between',
-    shadowOffset: {
-      width: 2,
-      height: 10,
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: 4.59,
-    // Elevation (for Android)
-    elevation: 5,
-  },
-  touchableOpacityStyle: {
-    justifyContent: 'flex-start',
-  },
-  buttonStyle: {
-    width: 280,
-    height: 50,
-    backgroundColor: "#4B6EF5",
-    borderRadius: 25,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowOffset: {
-      width: 0,  
-      height: 4,  
-    },
-    shadowOpacity: 0.25,   
-    shadowRadius: 3,    
-    elevation: 4,          
-  },
-  
-});
 
 export default MyGoals
