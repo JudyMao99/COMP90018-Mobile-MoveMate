@@ -49,6 +49,8 @@ const Dashboard = () => {
           const data = doc.data();
           const date: Date = data.start_date.toDate();
           const duration: number = data.duration;
+          // Convert duration from seconds to minutes
+          const durationInMinutes: number = data.duration / 60; 
           const dateKey = moment(date).format('MM-DD');
 
           console.log(`Processing document for date: ${dateKey}, duration: ${duration}`);
@@ -56,7 +58,7 @@ const Dashboard = () => {
           // Find the corresponding date and accumulate the duration
           const day = dateRange.find(d => d.date === dateKey);
           if (day) {
-            day.totalDuration += duration;
+            day.totalDuration += durationInMinutes;
           }
         });
 
@@ -82,7 +84,7 @@ const Dashboard = () => {
       {focusSummaryData.length > 0 ? (
         focusSummaryData.map((data) => (
           <Text key={data.date}>
-            {data.date}: {data.totalDuration} minutes
+            {data.date}: {data.totalDuration} mins
           </Text>
         ))
       ) : (
