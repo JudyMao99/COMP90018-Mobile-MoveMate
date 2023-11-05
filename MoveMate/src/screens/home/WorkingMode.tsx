@@ -50,8 +50,8 @@ const WorkingMode = ({route} : any) => {
     <View className="flex flex-1 items-center w-screen h-screen ">
       <View className="bg-sky-500 h-3/4 w-full flex items-center justify-around ">
         <CountDown
-          until={duration*60}
-          // until={10}
+          //until={duration*60}
+          until={10}
           size={60}
           timeToShow={['M', 'S']}
           timeLabels={{m: null, s: null}}
@@ -71,17 +71,17 @@ const WorkingMode = ({route} : any) => {
             name: 'close',
             type: 'font-awesome',
             color: '#0ea5e9',
-            size: 40
+            size: 32
           }}
           buttonStyle={{
             backgroundColor: 'white',
-            height: 100,
-            width: 100,
+            height: 80,
+            width: 80,
             borderColor: '#0ea5e9',
-            borderWidth: 5
+            borderWidth: 5,
+            marginTop:'10%'
           }}
-          raised
-          radius={50}
+          radius={40}
           onPress={() => {
             setVisible(true);
             setRunning(false);

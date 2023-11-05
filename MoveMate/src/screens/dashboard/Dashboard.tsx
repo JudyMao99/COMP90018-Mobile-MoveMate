@@ -54,13 +54,13 @@ const Dashboard = () => {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       <Text style={styles.header}>Focus Summary (Last 7 Days)</Text>
-      <FocusChart focusSummaryData={focusSummaryData} />
+      {/* <FocusChart focusSummaryData={focusSummaryData} /> */}
 
       <Text style={styles.header}>Cycling Summary (Last 7 Days)</Text>
-      <CyclingChart cyclingSummaryData={cyclingSummaryData} />
+      {/* <CyclingChart cyclingSummaryData={cyclingSummaryData} /> */}
 
       <Text style={styles.header}>Walking Summary (Last 7 Days)</Text>
-      <WalkingChart walkingSummaryData={walkingSummaryData} />
+      {/* <WalkingChart walkingSummaryData={walkingSummaryData} /> */}
     </ScrollView>
   );
 };

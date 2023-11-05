@@ -10,11 +10,11 @@ const Stack = createStackNavigator();
 function AuthNavigator() {
 
   return (
-    <Stack.Navigator screenOptions={{}} initialRouteName={ROUTES.WELCOME}>
+    <Stack.Navigator screenOptions={{ gestureEnabled: false }} initialRouteName={ROUTES.WELCOME} >
       <Stack.Screen name={ROUTES.WELCOME} component={Welcome} options={{ headerShown: false }} />
-      <Stack.Screen name={ROUTES.LOGIN} component={Login} />
-      <Stack.Screen name={ROUTES.FORGOT_PASSWORD} component={ForgotPassword}/>
-      <Stack.Screen name={ROUTES.REGISTER} component={Register} />
+      <Stack.Screen name={ROUTES.LOGIN} component={Login} options={{ headerShown: false }} />
+      <Stack.Screen name={ROUTES.FORGOT_PASSWORD} component={ForgotPassword}  options={{ headerShown: false }} />
+      <Stack.Screen name={ROUTES.REGISTER} component={Register} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
