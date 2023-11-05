@@ -15,7 +15,13 @@ const ProfileNavigator = () => {
     screenOptions={{ headerShown: false }}
     initialRouteName={ROUTES.PROFILE}>
       <Stack.Screen name={ROUTES.PROFILE} component={Profile} />
-      <Stack.Screen name={ROUTES.MY_ACCOUNT} component={MyAccount} />
+      <Stack.Screen name={ROUTES.MY_ACCOUNT} component={MyAccount} 
+        options={{
+          headerShown: true,
+          title: "",
+          headerBackTitle: " "
+        }}
+      />
       <Stack.Screen
         name={ROUTES.MY_GOALS}
         component={MyGoals}
