@@ -11,7 +11,7 @@ const DashboardNavigator = () => {
     <Stack.Navigator screenOptions={{}} initialRouteName={ROUTES.DASHBOARD_MAIN}>
       <Stack.Screen name={ROUTES.DASHBOARD_MAIN} component={Dashboard} />
       <Stack.Screen name={ROUTES.DASHBOARD_DETAIL} component={DashboardDetail}/>
-      {/* <Stack.Screen name={ROUTES.MAP} component={MapScreen} /> */}
+      <Stack.Screen name={ROUTES.MAP} component={MapScreen} />
     </Stack.Navigator>
   )
 }

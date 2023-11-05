@@ -1,9 +1,9 @@
 import { View, Text, Button as RNButton,TouchableOpacity, Image, StyleSheet,Alert } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
 import useAuth from '../../hook/useAuth';
-import { User,getAuth,signOut } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 
 // useful icons
 const arrowRight = require('../../assets/icons/arrow_right.png');
@@ -14,7 +14,6 @@ const goal = require('../../assets/icons/goal.png');
 
 const Profile = () => {
   const navigation = useNavigation();
-  const [userDetail, setUserDetail] = useState<User>();
   const { user } = useAuth();
 
   const handleSignOut = () => {
@@ -30,58 +29,45 @@ const Profile = () => {
 
   return (
     <View className="flex-1">
-      <View className="bg-indigo-500 w-97 h-64 flex flex-col justify-center items-center rounded-lg shadow-xl ">
-        <Text className="text-6xl font-black mt-20 pt-12">{user?.displayName ?? "Undefined"}</Text>
-          <View className="bg-white flex-col justify-center items-center w-32 border-2 rounded-lg mt-20">
-            <Text className="rounded-lg border-inherit border-solid text-base ">Profile</Text>
-          </View>
+      <View className="relative bg-indigo-500 h-64 flex justify-center items-center rounded-lg shadow-xl">
+        <Text className="text-6xl font-black mt-16 text-white">
+          {user?.displayName ?? "Undefined"}
+        </Text>
+        <View className="absolute -bottom-6 flex justify-center items-center bg-white w-44 h-12 rounded-full">
+          <Text className="font-bold text-lg">
+            Profile
+          </Text>
+        </View>
       </View>
-
-      <View className=" mt-4 flex flex-row items-center">
-        <View className="basis-1/12 ml-2">
+      <View className="mt-20 flex-1 flex-col px-6 items-center">
+        <View className="flex flex-row items-center gap-x-5 mb-8">
           <Image source={user_icon} />
+          <TouchableOpacity className="flex-1 flex-row items-center justify-between" onPress={() => navigation.navigate(ROUTES.MY_ACCOUNT)}>
+            <Text className="font-extrabold text-lg">
+              My Account
+            </Text>
+            <Image source={arrowRight} />
+          </TouchableOpacity>
+        </View>
+        <View className="flex flex-row items-center gap-x-5">
+          <Image source={goal} />
+          <TouchableOpacity className="flex-1 flex-row items-center justify-between" onPress={() => navigation.navigate(ROUTES.MY_GOALS)}>
+            <Text className="font-extrabold text-lg">
+              My Goals
+            </Text>
+            <Image source={arrowRight} />
+          </TouchableOpacity>
         </View>
 
-        <View className="basis-10/12 mt-4 text-white py-2 px-2 rounded-l-lg mb-4">
-          <TouchableOpacity onPress={() => navigation.navigate(ROUTES.MY_ACCOUNT)} style={styles.touchable}>
-              <Text className="text-neutral-50 text-center">My Account</Text>
-          </TouchableOpacity>
-        </View>
-        
-        <View className="basis-1/12">
-          <Image  source={arrowRight} />
-        </View>
-      </View>
-      <View className="flex flex-row  items-center">
-        <View className="basis-1/12 ml-2">
-          <Image source={goal} />
-        </View>
-        <View className="basis-10/12 mt-4 text-white py-2 px-2 rounded-l-lg mb-4">
-        <TouchableOpacity onPress={() => navigation.navigate(ROUTES.MY_GOALS)} style={styles.touchable}>
-              <Text className="text-neutral-50 text-center">My Goals</Text>
-          </TouchableOpacity>
-        </View>
-        <View className="basis-1/12">
-          <Image  source={arrowRight} />
-        </View>
-      </View>
-      <View className='flex flex-row justify-center items-center '>
-          <TouchableOpacity  onPress={handleSignOut} style={styles.touchable}>
-              <Text className="text-neutral-50 text-center">Sign Out</Text>
-          </TouchableOpacity>
+        <TouchableOpacity className="py-3 bg-indigo-500 rounded-full w-48 mt-56" onPress={handleSignOut}>
+          <Text className="text-xl font-bold text-center text-white">
+            Sign Out
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
     
   );
 }
-const styles = StyleSheet.create({
-  touchable: {
-      backgroundColor: "#020617",
-      padding: 10,
-      borderRadius: 5,
-  },
-});
-
-
 
 export default Profile
