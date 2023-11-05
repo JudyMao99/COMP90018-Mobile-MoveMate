@@ -1,13 +1,12 @@
 import React,{ useState, useEffect } from 'react';
-import { Text, View,Image, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { Timestamp, addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import useAuth from '../../hook/useAuth';
 import { getDoc } from "firebase/firestore";
 import GoalSection from '../../components/GoalSection';
 import LoadingOverlay from '../../components/LoadingOverlay';
-
-const goal = require('../../assets/icons/goal.png');
+import { Icon } from '@rneui/themed';
 
 type MyGoalsProps = {
   nextStep?: () => void;
@@ -111,7 +110,6 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
             goals: goalsObj,
             uid: user.uid
           });
-
         }
       } catch (e) {
         console.log("Got error:", e);
@@ -131,7 +129,7 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
       <View className="flex-1 flex-col items-center m-4 justify-between pb-8">
         <View className="flex flex-row items-center justify-center gap-x-6">
           <Text className="text-3xl font-black">Set Up Goals!</Text>
-          <Image source={goal} style={{ width: 90, height: 90 }} />
+          <Icon name='medal' type='font-awesome-5' color='#2089DC' size={90} />
         </View>
         <View className="w-80 h-80 bg-white border-0.5 rounded-lg flex flex-col py-8 px-6 justify-between">
           <GoalSection title="Walking" currentValue={walking} onMinus={() => walking && setWalking(walking - 1)} onPlus={() => walking && setWalking(walking + 1)} />

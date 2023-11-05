@@ -1,15 +1,10 @@
-import { View, Text,TouchableOpacity, Image, Alert } from 'react-native';
+import { View, Text,TouchableOpacity, Alert } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
 import useAuth from '../../hook/useAuth';
 import { getAuth, signOut } from 'firebase/auth';
 import { Icon } from '@rneui/themed';
-
-// icons
-const arrowRight = require('../../assets/icons/arrow_right.png');
-const user_icon = require('../../assets/icons/user.png');
-const goal = require('../../assets/icons/goal.png');
 
 const Profile = () => {
   const navigation = useNavigation();
@@ -37,21 +32,21 @@ const Profile = () => {
       </View>
       <View className="mt-20 flex-1 flex-col px-6 items-center">
         <View className="flex flex-row items-center gap-x-5 mb-8">
-          <Image source={user_icon} />
+          <Icon name='user' type='font-awesome' color='#2089DC' size={32} />
           <TouchableOpacity className="flex-1 flex-row items-center justify-between" onPress={() => navigation.navigate(ROUTES.MY_ACCOUNT)}>
             <Text className="font-extrabold text-lg">
               My Account
             </Text>
-            <Image source={arrowRight} />
+            <Icon name='right' type='ant-design' color='#777' size={24} />
           </TouchableOpacity>
         </View>
         <View className="flex flex-row items-center gap-x-5">
-          <Image source={goal} style={{ width: 28, height: 28 }} />
+          <Icon name='medal' type='font-awesome-5' color='#2089DC' size={28} />
           <TouchableOpacity className="flex-1 flex-row items-center justify-between" onPress={() => navigation.navigate(ROUTES.MY_GOALS)}>
             <Text className="font-extrabold text-lg">
               My Goals
             </Text>
-            <Image source={arrowRight} />
+            <Icon name='right' type='ant-design' color='#777' size={24} />
           </TouchableOpacity>
         </View>
 
