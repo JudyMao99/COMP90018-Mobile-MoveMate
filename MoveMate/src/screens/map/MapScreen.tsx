@@ -165,7 +165,6 @@ const MapScreen = () => {
           uid: user.uid,  
         };
         const newDoc = await addDoc(collection(db, "exercise_cycling"), cyclingData);
-        console.log("Document written with ID: ", newDoc.id);
       }
     };
 

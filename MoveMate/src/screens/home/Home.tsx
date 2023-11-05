@@ -55,12 +55,8 @@ const Home = () => {
 
       const querySnapshot =  await getDocs(q);
       querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        // console.log(new Date().toDateString());
         if(doc.data().start_date.toDate().toDateString() === new Date().toDateString()) {
           tmpStep += doc.data().step_count;
-          // setStepCount(stepCount + doc.data().step_count);
-          // console.log(doc.id, " => ", doc.data().start_date.toDate().toDateString());
         }
       });
       setStepCount(tmpStep);
@@ -80,10 +76,6 @@ const Home = () => {
           tmpWalkingGoal = userData.goals.walking ;
           tmpPushupGoal = userData.goals.push_up ;
           tmpSitupGoal = userData.goals.sit_up;
-          console.log(tmpWalkingGoal, tmpPushupGoal, tmpSitupGoal);
-          // setWalkingGoal(userData.goals.walking !== undefined ? userData.goals.walking : 1000);
-          // setPushupGoal(userData.goals.push_up !== undefined ? userData.goals.push_up : 50);
-          // setSitupGoal(userData.goals.sit_up !== undefined ? userData.goals.sit_up : 50);
         } else {
           // TODO: handle user not found
           tmpWalkingGoal = 1000;
@@ -109,12 +101,8 @@ const Home = () => {
 
       const querySnapshot =  await getDocs(q);
       querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        // console.log(new Date().toDateString());
         if(doc.data().start_date.toDate().toDateString() === new Date().toDateString()) {
           tmpDuration += doc.data().duration;
-          // setFocusDuration(focusDuration + doc.data().duration);
-          // console.log(doc.id, " => ", doc.data().start_date.toDate().toDateString());
         }
       });
       setFocusDuration(tmpDuration);
