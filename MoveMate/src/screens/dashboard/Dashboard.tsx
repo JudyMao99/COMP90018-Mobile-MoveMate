@@ -16,13 +16,13 @@ type FocusSummaryData = {
 type WalkingSummaryData = {
   date: string;
   totalCount: number;
-  dailyGoal: number;
+  currentGoal: number;
 };
 
 type CyclingSummaryData = {
   date: string;
   totalDistance: number;
-  dailyGoal: number;
+  totalDuration: number;
 };
 
 const Dashboard = () => {
@@ -32,13 +32,13 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchFocusSummary = async (uid: string): Promise<FocusSummaryData[]> => {
       // Set the start date to 6 days before today
-      const start_date = moment().subtract(6, 'days').startOf('day');
+      const startDate = moment().subtract(6, 'days').startOf('day');
       // Set the end date to the end of today
-      const end_date = moment().endOf('day');
+      const endDate = moment().endOf('day');
 
       // Initialise the date range array
       const dateRange: FocusSummaryData[] = [];
-      for (let m = moment(start_date); m.isSameOrBefore(end_date, 'day'); m.add(1, 'days')) {
+      for (let m = moment(startDate); m.isSameOrBefore(endDate, 'day'); m.add(1, 'days')) {
         dateRange.push({
           date: m.format('MM-DD'),
           totalDuration: 0,
@@ -50,8 +50,8 @@ const Dashboard = () => {
       const q = query(
         collection(db, 'focus'),
         where('uid', '==', uid),
-        where('start_date', '>=', start_date.toDate()),
-        where('start_date', '<=', end_date.toDate()),
+        where('start_date', '>=', startDate.toDate()),
+        where('start_date', '<=', endDate.toDate()),
         orderBy('start_date')
       );
 
