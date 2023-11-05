@@ -107,6 +107,7 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
         const docSnap = await getDoc(userDocRef);
   
         if (docSnap.exists()) {
+          // update if exists
           const userData = docSnap.data();
           const lastUpdated = userData.lastUpdated || Timestamp.fromDate(new Date(0)); // Default to a very old date as a Timestamp
           console.log("Last updated:", lastUpdated.toDate());
@@ -128,6 +129,22 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
           });
           setIsButtonDisabled(true);
           console.log("Goals updated!");
+        } else {
+          // User doc doesn't exist, set default values
+          const now = Timestamp.fromDate(new Date()); 
+          await setDoc(userDocRef, {
+            goals: goalsObj,
+            lastUpdated: Timestamp.fromDate(new Date())
+          });
+          setIsButtonDisabled(true);
+          console.log("users Goals created!");
+          
+          await addDoc(collection(db, "goal_history"), {
+            date: now,
+            goals: goalsObj,
+            uid: user.uid
+          });
+
         }
       } catch (e) {
         console.log("Got error:", e);
