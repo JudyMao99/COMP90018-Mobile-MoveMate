@@ -2,12 +2,9 @@ import React,{ useState } from 'react';
 import { Text, View, StyleSheet,Image,TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button, Icon } from '@rneui/themed';
-import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import useAuth from '../../hook/useAuth';
-import { getDoc } from "firebase/firestore";
-
-
+import { collection, addDoc, doc, getDoc,setDoc,Timestamp} from "firebase/firestore";
 
 const badge = require('../../assets/images/badge.png');
 
@@ -26,6 +23,9 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
   const [walking, setWalking] = useState<number>(1000);
   const [pushUp, setPushUp] = useState<number>(50);
   const [sitUp, setSitUp] = useState<number>(50);
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
+  
+
 
   React.useEffect(() => {
     if (user && user.uid) {
@@ -36,48 +36,110 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
           setWalking(userData.goals.walking !== undefined ? userData.goals.walking : 1000);
           setPushUp(userData.goals.push_up !== undefined ? userData.goals.push_up : 50);
           setSitUp(userData.goals.sit_up !== undefined ? userData.goals.sit_up : 50);
+          
+          const lastUpdated = userData.lastUpdated ? userData.lastUpdated.toDate() : new Date(0);
+          const now = new Date();
+          const timeDiff = now.getTime() - lastUpdated.getTime();
+          
+          // If last update was less than 10 seconds ago, disable the button  24 * 60 * 60 * 1000
+          if (timeDiff < 10000) {
+            setIsButtonDisabled(true);
+            console.log("Button disabled, will enable in:", 10000 - timeDiff, "ms");
+
+            // Enable the button after 10 seconds
+            setTimeout(() => {
+              setIsButtonDisabled(false);
+              console.log("Button enabled");
+            }, 10000 - timeDiff);
+          }
         } else {
-          // TODO: handle user not found
+          // User doc doesn't exist, set default values
           setWalking(1000);
           setPushUp(50);
           setSitUp(50);
         }
       }).catch(error => {
         console.error('Error fetching user data:', error);
-       
       });
     }
   }, [user]);
+  
 
   const handleGoalChange = (setter: { (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (arg0: (prev: any) => number): void; }, increment: number) => {
     setter(prev => Math.max(prev + increment, 0));
   };
 
 
-  const handleGoalsSubmit = () => {
+  // const handleGoalsSubmit = () => {
+  //   const goalsObj = {
+  //     walking: walking,
+  //     push_up: pushUp,
+  //     sit_up: sitUp
+  //   }
+
+  //   // Update goals to fire store database
+  //   if (user) {
+  //     setDoc(doc(db, 'users', user?.uid), {
+  //       goals: goalsObj
+  //     }).then(() => {
+  //       console.log("goals updated!");
+  //     }).catch((e) => {
+  //       console.log("got error:" , e);
+  //     })
+  //   }
+
+  //   // set up process only
+  //   if (nextStep) {
+  //     nextStep();
+  //   }
+  // }
+
+  const handleGoalsSubmit = async () => {
     const goalsObj = {
       walking: walking,
       push_up: pushUp,
       sit_up: sitUp
-    }
-
-    // Update goals to fire store database
+    };
+  
     if (user) {
-      setDoc(doc(db, 'users', user?.uid), {
-        goals: goalsObj
-      }).then(() => {
-        console.log("goals updated!");
-      }).catch((e) => {
-        console.log("got error:" , e);
-      })
+      const userDocRef = doc(db, 'users', user.uid);
+      try {
+        const docSnap = await getDoc(userDocRef);
+  
+        if (docSnap.exists()) {
+          const userData = docSnap.data();
+          const lastUpdated = userData.lastUpdated || Timestamp.fromDate(new Date(0)); // Default to a very old date as a Timestamp
+          console.log("Last updated:", lastUpdated.toDate());
+          const now = Timestamp.fromDate(new Date()); 
+          
+          // Check if last update was more than 24 hours ago  24 * 60 * 60 * 1000
+          if (now.toMillis() - lastUpdated.toMillis() > 10000) {
+            // More than 24 hours ago, add to goal_history and update current goals
+            await addDoc(collection(db, "goal_history"), {
+              date: now,
+              goals: goalsObj,
+              uid: user.uid
+            });
+          }
+          // Update current goals
+          await setDoc(userDocRef, {
+            goals: goalsObj,
+            lastUpdated: now
+          });
+          setIsButtonDisabled(true);
+          console.log("Goals updated!");
+        }
+      } catch (e) {
+        console.log("Got error:", e);
+      }
     }
-
-    // set up process only
+  
     if (nextStep) {
       nextStep();
     }
-  }
-
+  };
+  
+  
   return (
     <View className="flex ">
       <View className="flex flex-row">
@@ -97,13 +159,14 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
       </View>
       <View className="justify-center items-center mt-12">
 
-      <Button  
-        radius={"sm"} 
-        type="solid" 
+      <Button
+        radius={"sm"}
+        type="solid"
         buttonStyle={styles.buttonStyle}
-        onPress={handleGoalsSubmit} // TODO: handle submit
+        onPress={handleGoalsSubmit}
+        disabled={isButtonDisabled}  // TODO: disable button if last update was less than 24 hours ago
       >
-        <Text className="mr-8 text-2xl text-white font-bold ">Confirm</Text> 
+        <Text className="mr-8 text-2xl text-white font-bold ">Confirm</Text>
         <Icon name="save" color="white" />
       </Button>
     </View>
