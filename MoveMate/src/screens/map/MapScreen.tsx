@@ -121,7 +121,7 @@ const MapScreen = () => {
     const angle = calculateAngle(magnetometerData);
     setDirectionAngle(angle);
   
-    if (accuracy < 20) {
+    if (accuracy < 10) {
       setPath((prevPath) => {
         let newDistance = 0;
         if (prevPath.length > 0) {
@@ -190,8 +190,8 @@ const MapScreen = () => {
     
     <View style={styles.container}>
 
-      <TouchableOpacity style={styles.button} onPress={handleEndCycling}>
-        <Text>End Cycling</Text>
+      <TouchableOpacity className = "absolute bottom-12 p-2.5 justify-center items-center w-28 rounded bg-emerald-300 z-50 text-center " onPress={handleEndCycling}>
+        <Text>End</Text>
       </TouchableOpacity>
 
       <MapView
@@ -306,16 +306,6 @@ const styles = StyleSheet.create({
   compassNeedle: {
     width: 40,
     height: 40,
-  },
-  button: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    bottom: 50,
-    padding: 10,
-    borderRadius: 5,
-    backgroundColor: 'red',  // red background
-    zIndex: 1000,  // to be on the top of all views important
   },
 });
 
