@@ -7,7 +7,7 @@ const plus = require('../assets/icons/plus-icon.png');
 
 type GoalSectionProps = {
   title: string;
-  currentValue: number;
+  currentValue?: number;
   onMinus: () => void;
   onPlus: () => void;
 };
@@ -24,7 +24,7 @@ const GoalSection = ({
         <Text className="text-3xl justify-center items-center font-bold">
           {title}
         </Text>
-        <View className="flex flex-row items-center gap-x-4">
+        <View className="flex flex-row items-center justify-between w-28">
           <TouchableOpacity onPress={onMinus}>
             <Image source={minus} style={{ width: 20, height: 20}} />
           </TouchableOpacity>

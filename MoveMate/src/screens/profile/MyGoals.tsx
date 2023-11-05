@@ -1,18 +1,13 @@
 import React,{ useState } from 'react';
-import { Text, View, StyleSheet,Image, TouchableOpacity } from 'react-native';
+import { Text, View,Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Button, Icon } from '@rneui/themed';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import useAuth from '../../hook/useAuth';
 import { getDoc } from "firebase/firestore";
-import { SafeAreaView } from 'react-native-safe-area-context';
 import GoalSection from '../../components/GoalSection';
 
-
-
 const badge = require('../../assets/images/badge.png');
-
 
 type MyGoalsProps = {
   nextStep?: () => void;
@@ -22,9 +17,9 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
   const navigation = useNavigation();
   const { user } = useAuth();
   
-  const [walking, setWalking] = useState<number>(1000);
-  const [pushUp, setPushUp] = useState<number>(50);
-  const [sitUp, setSitUp] = useState<number>(50);
+  const [walking, setWalking] = useState<number | undefined>();
+  const [pushUp, setPushUp] = useState<number>();
+  const [sitUp, setSitUp] = useState<number>();
 
   React.useEffect(() => {
     if (user && user.uid) {
@@ -48,7 +43,8 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
     }
   }, [user]);
 
-  const handleGoalChange = (setter: { (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (arg0: (prev: any) => number): void; }, increment: number) => {
+  const handleGoalChange = (
+    setter: { (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (arg0: (prev: any) => number): void; }, increment: number) => {
     setter(prev => Math.max(prev + increment, 0));
   };
 
@@ -84,9 +80,9 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
         <Image source={badge} style={{ width: 90, height: 90 }} />
       </View>
       <View className="w-80 h-80 bg-white border-0.5 rounded-lg flex flex-col py-8 px-6 justify-between">
-        <GoalSection title="Walking" currentValue={walking} onMinus={() => handleGoalChange(setWalking, -1)} onPlus={() => handleGoalChange(setWalking, 1)} />
-        <GoalSection title="Push-up" currentValue={pushUp} onMinus={() => handleGoalChange(setPushUp, -1)} onPlus={() => handleGoalChange(setPushUp, 1)} />
-        <GoalSection title="Sit-up" currentValue={sitUp} onMinus={() => handleGoalChange(setSitUp, -1)} onPlus={() => handleGoalChange(setSitUp, 1)} />
+        <GoalSection title="Walking" currentValue={walking} onMinus={() => walking && setWalking(walking - 1)} onPlus={() => walking && setWalking(walking + 1)} />
+        <GoalSection title="Push-up" currentValue={pushUp} onMinus={() => pushUp && setPushUp(pushUp - 1)} onPlus={() => pushUp && setPushUp(pushUp + 1)} />
+        <GoalSection title="Sit-up" currentValue={sitUp} onMinus={() => sitUp && setSitUp(sitUp - 1)} onPlus={() => sitUp && setSitUp(sitUp + 1)} />
       </View>
       <TouchableOpacity className="py-2 bg-indigo-500 rounded-full w-64 h-12" onPress={handleGoalsSubmit}>
         <Text className="text-2xl font-bold text-center text-white">
