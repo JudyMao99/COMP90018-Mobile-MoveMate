@@ -1,114 +1,86 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
-import moment from 'moment';
-import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import useAuth from '../../hook/useAuth';
-import { db } from '../../config/firebase';
 import FocusChart from '../../components/FocusChart';
 import WalkingChart from '../../components/WalkingChart';
 import CyclingChart from '../../components/CyclingChart';
+import { useSummaryData } from '../../hook/useSummaryData';
+import moment from 'moment';
+import { QueryDocumentSnapshot } from 'firebase/firestore';
 
-type FocusSummaryData = {
+type SummaryDataItem = {
   date: string;
-  totalDuration: number;
-};
-
-type WalkingSummaryData = {
-  date: string;
-  totalCount: number;
-  currentGoal: number;
-};
-
-type CyclingSummaryData = {
-  date: string;
-  totalDistance: number;
-  totalDuration: number;
+  totalDuration?: number;
+  totalDistance?: number;
+  totalCount?: number;
 };
 
 const Dashboard = () => {
   const { user } = useAuth();
-  const [focusSummaryData, setFocusSummaryData] = useState<FocusSummaryData[]>([]);
-
-  useEffect(() => {
-    const fetchFocusSummary = async (uid: string): Promise<FocusSummaryData[]> => {
-      // Set the start date to 6 days before today
-      const startDate = moment().subtract(6, 'days').startOf('day');
-      // Set the end date to the end of today
-      const endDate = moment().endOf('day');
-
-      // Initialise the date range array
-      const dateRange: FocusSummaryData[] = [];
-      for (let m = moment(startDate); m.isSameOrBefore(endDate, 'day'); m.add(1, 'days')) {
-        dateRange.push({
-          date: m.format('MM-DD'),
-          totalDuration: 0,
-        });
-      }
-
-      console.log(`Date range for summary: ${dateRange.map(d => d.date).join(', ')}`);
-
-      const q = query(
-        collection(db, 'focus'),
-        where('uid', '==', uid),
-        where('start_date', '>=', startDate.toDate()),
-        where('start_date', '<=', endDate.toDate()),
-        orderBy('start_date')
-      );
-
-      try {
-        const querySnapshot = await getDocs(q);
-        console.log(`Documents found: ${querySnapshot.size}`);
-
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          const date: Date = data.start_date.toDate();
-          const duration: number = data.duration;
-          // Convert duration from seconds to minutes
-          const durationInMinutes: number = Math.floor(data.duration / 60); 
-          const dateKey = moment(date).format('MM-DD');
-
-          console.log(`Processing document for date: ${dateKey}, duration: ${duration}`);
-
-          // Find the corresponding date and accumulate the duration
-          const day = dateRange.find(d => d.date === dateKey);
-          if (day) {
-            day.totalDuration += durationInMinutes;
-          }
-        });
-
-        return dateRange;
-      } catch (error) {
-        console.error("Error fetching focus summary: ", error);
-        return [];
-      }
-    };
-
-    if (user?.uid) {
-      (async () => {
-        const summaries = await fetchFocusSummary(user.uid);
-        console.log('Summaries received:', summaries);
-        setFocusSummaryData(summaries);
-      })();
+  const processFocusData = (docSnapshot: QueryDocumentSnapshot, dateRange: SummaryDataItem[]) => {
+    const data = docSnapshot.data();
+    const date = moment(data.start_date.toDate()).format('MM-DD');
+    const durationInMinutes = Math.floor(data.duration / 60);
+    const day = dateRange.find(d => d.date === date);
+    if (day) {
+      day.totalDuration = (day.totalDuration || 0) + durationInMinutes;
     }
-  }, [user?.uid]);
+  };
+
+  const processCyclingData = (docSnapshot: QueryDocumentSnapshot, dateRange: SummaryDataItem[]) => {
+    const data = docSnapshot.data();
+    const date = moment(data.start_date.toDate()).format('MM-DD');
+    const distance = parseFloat(data.distance.toFixed(2));
+    const day = dateRange.find(d => d.date === date);
+    if (day) {
+      day.totalDistance = (day.totalDistance || 0) + distance;
+    }
+  };
+
+  const processWalkingData = (docSnapshot: QueryDocumentSnapshot, dateRange: SummaryDataItem[]) => {
+    const data = docSnapshot.data();
+    const date = moment(data.start_date.toDate()).format('MM-DD');
+    const stepCount = data.step_count;
+    const day = dateRange.find(d => d.date === date);
+    if (day) {
+      day.totalCount = (day.totalCount || 0) + stepCount;
+    }
+  };
+
+  const focusSummaryData = useSummaryData(user?.uid || '', 'focus', processFocusData);
+  const cyclingSummaryData = useSummaryData(user?.uid || '', 'exercise_cycling', processCyclingData);
+  const walkingSummaryData = useSummaryData(user?.uid || '', 'exercise_walking', processWalkingData);
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Focus Summary (Last 7 Days)</Text>
-      {focusSummaryData.length > 0 ? (
-        focusSummaryData.map((data) => (
-          <Text key={data.date}>
-            {data.date}: {data.totalDuration} mins
-          </Text>
-        ))
-      ) : (
-        <Text>No focus data available for the last 7 days.</Text>
-      )}
+    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+      <Text style={styles.header}>Focus Summary (Last 7 Days)</Text>
       <FocusChart focusSummaryData={focusSummaryData} />
-      <WalkingChart />
-      <CyclingChart />
-    </View>
+
+      <Text style={styles.header}>Cycling Summary (Last 7 Days)</Text>
+      <CyclingChart cyclingSummaryData={cyclingSummaryData} />
+
+      <Text style={styles.header}>Walking Summary (Last 7 Days)</Text>
+      <WalkingChart walkingSummaryData={walkingSummaryData} />
+    </ScrollView>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  contentContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  header: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 20,
+    marginBottom: 10,
+  },
+});
+
 export default Dashboard;
+
