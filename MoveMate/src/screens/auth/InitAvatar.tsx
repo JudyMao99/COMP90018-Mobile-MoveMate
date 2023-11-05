@@ -25,7 +25,7 @@ const InitAvatar = () => {
   }, [user]);
 
   
-  const pickImage = async () => {
+  const handlePickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permissionResult.granted === false) {
@@ -65,7 +65,7 @@ const InitAvatar = () => {
   };
 
   // handle take photo
-  const takePhoto = () => {
+  const handleTakePhoto = () => {
     setBottomSheetVisible(false);
     setCameraVisible(true);
   }
@@ -79,14 +79,15 @@ const InitAvatar = () => {
     title: string,
     onPress: () => void
   }
+
   const uploadOpts: UploadOption[] = [
     {
       title: "Take a photo",
-      onPress: takePhoto
+      onPress: handleTakePhoto
     },
     {
       title: "Pick an image from camera roll",
-      onPress: pickImage
+      onPress: handlePickImage
     },
     {
       title: "Cancel",
@@ -99,19 +100,9 @@ const InitAvatar = () => {
       {cameraVisible ?
         <TakePhotoCamera setImage={setImage} setCameraVisible={setCameraVisible} /> :
         <View className="flex-1 bg-white justify-center items-center">
-          <BottomSheet
-            isVisible={bottomSheetVisible}
-            onBackdropPress={() => setBottomSheetVisible(false)}
-          >
+          <BottomSheet isVisible={bottomSheetVisible} onBackdropPress={() => setBottomSheetVisible(false)}>
             {uploadOpts.map((opt: UploadOption, idx: number) => (
-              <ListItem
-                key={idx}
-                onPress={opt.onPress}
-                containerStyle={{
-                  borderBottomWidth: 1,
-                  borderColor: "#ccc"
-                }}
-              >
+              <ListItem key={idx} onPress={opt.onPress} containerStyle={{ borderBottomWidth: 1, borderColor: "#ccc" }} >
                 <ListItem.Content className="py-2.5 pl-1">
                   <ListItem.Title>{opt.title}</ListItem.Title>
                 </ListItem.Content>
@@ -125,7 +116,6 @@ const InitAvatar = () => {
           </View>
           <View className="mb-6">
             <Avatar containerStyle={{ backgroundColor: "#EDEDED" }} source={{ uri: image }} size="xlarge" rounded>
-              <View className="bg-gray-500"></View>
               <Avatar.Accessory size={36} onPress={handleChangeAvatar}/>
             </Avatar>
           </View>

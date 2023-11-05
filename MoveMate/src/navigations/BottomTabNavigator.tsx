@@ -6,7 +6,6 @@ import { ROUTES } from '../constants';
 import HomeNavigator from './HomeNavigator';
 import ProfileNavigator from './ProfileNavigator';
 import DashboardNavigator from './DashboardNavigator';
-import Home from '../screens/home/Home';
 import { Image } from 'react-native';
 import { RouteProp, ParamListBase, getFocusedRouteNameFromRoute } from '@react-navigation/native';
 

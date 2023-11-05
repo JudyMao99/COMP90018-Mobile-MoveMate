@@ -3,28 +3,24 @@ import { View, StyleSheet, Dimensions, Text, Image,TouchableOpacity } from 'reac
 import MapView, { Marker, Callout, Circle, Polyline, UserLocationChangeEvent } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { useNavigation } from '@react-navigation/native';
-import { Magnetometer, MagnetometerUncalibrated } from 'expo-sensors';
-import * as Svg from 'react-native-svg';
+import { Magnetometer } from 'expo-sensors';
 import { db } from '../../config/firebase';
 import useAuth from '../../hook/useAuth';
-import { collection, addDoc, doc, getDoc,setDoc,Timestamp} from "firebase/firestore";
+import { collection, addDoc,Timestamp} from "firebase/firestore";
 import { ROUTES } from '../../constants';
 
 const compassNeedle = require('../../assets/needle.png');
 
 const MapScreen = () => {
   const navigation = useNavigation();
-  const [pin, setPin] = React.useState({
-    latitude: -37.7993,
-    longitude: 144.9629,
-  });
+  const [pin, setPin] = useState<{ latitude: number; longitude: number; } | null>(null);
+
 
   const { user } = useAuth();
   
 
   const [magnetometerData, setMagnetometerData] = useState({ x: 0, y: 0, z: 0 });
   const [directionAngle, setDirectionAngle] = useState(0); // angle in direction
-
 
   const [path, setPath] = React.useState<{ latitude: number; longitude: number; }[]>([]);
 
@@ -98,17 +94,19 @@ const MapScreen = () => {
       let location = await Location.getCurrentPositionAsync({ distanceInterval: 10 });
       console.log(location);
 
-      const initialCoordinate = {
+      const newCoordinate = {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
       };
 
-      setPin(initialCoordinate);
-      setPath([initialCoordinate]);
+      setPin(newCoordinate);
+      setPath([newCoordinate]);
+      const { latitude, longitude } = newCoordinate;
       setInitialRegion({
-        ...initialRegion,
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
+        latitude,
+        longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
       });
 
     })();
@@ -208,10 +206,9 @@ const MapScreen = () => {
       >
         
         <Marker
-          coordinate={pin}
+          coordinate={pin ? pin : { latitude: 0, longitude: 0 }}
           image={{
-            uri: "",
-            width: 3,
+            uri: "", // URL of the image
             height: 3,
           }}
 
@@ -228,9 +225,11 @@ const MapScreen = () => {
             });
           }}
         >
-          <Callout>
-            <Text>My Current Place</Text>
-          </Callout>
+        <Callout>
+          <View>
+            <Text className='w-18 text-l text-center font-semibold'>{user?.displayName ?? "Unknown User"}</Text>
+          </View>
+        </Callout>
         </Marker>
         <Polyline
             coordinates={path}
@@ -238,7 +237,7 @@ const MapScreen = () => {
             strokeColor="black"
         />
         <Circle 
-          center={pin}
+          center={pin!}
           radius={100}
           strokeWidth={1}
           strokeColor={"#1a66ff"}
