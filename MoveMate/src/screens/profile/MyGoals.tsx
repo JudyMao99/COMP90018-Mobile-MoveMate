@@ -136,7 +136,9 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
           <GoalSection title="Push-up" currentValue={pushUp} onMinus={() => pushUp && setPushUp(pushUp - 1)} onPlus={() => pushUp && setPushUp(pushUp + 1)} />
           <GoalSection title="Sit-up" currentValue={sitUp} onMinus={() => sitUp && setSitUp(sitUp - 1)} onPlus={() => sitUp && setSitUp(sitUp + 1)} />
         </View>
-        <TouchableOpacity className="py-2 bg-blue-brand rounded-full w-64 h-12" onPress={handleGoalsSubmit} disabled={isButtonDisabled}>
+        <TouchableOpacity className="py-2 bg-blue-brand rounded-full w-64 h-12" onPress={handleGoalsSubmit} disabled={isButtonDisabled} style={{
+            backgroundColor: isButtonDisabled ? '#cccccc' : '#2089DC'
+          }}>
           <Text className="text-xl font-bold text-center text-white">
             Confirm
           </Text>
