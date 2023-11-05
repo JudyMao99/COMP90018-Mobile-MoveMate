@@ -48,17 +48,17 @@ const WorkingMode = ({route} : any) => {
             name: 'close',
             type: 'font-awesome',
             color: '#0ea5e9',
-            size: 40
+            size: 32
           }}
           buttonStyle={{
             backgroundColor: 'white',
-            height: 100,
-            width: 100,
+            height: 80,
+            width: 80,
             borderColor: '#0ea5e9',
-            borderWidth: 5
+            borderWidth: 5,
+            marginTop:'10%'
           }}
-          raised
-          radius={50}
+          radius={40}
           onPress={() => {
             setVisible(true);
             setRunning(false);

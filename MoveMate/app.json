@@ -23,19 +23,14 @@
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": [
-        "android.permission.ACTIVITY_RECOGNITION"
-      ],
       "package": "com.anonymous.MoveMate"
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
     },
-    "plugins": [
-      "./android-manifest.plugin.js"
-    ],
     "extra": {
       "eas": {
+        "projectId": "9e7ebab8-523d-47d2-8a57-372a9ab3754f"
       }
     }
   }
