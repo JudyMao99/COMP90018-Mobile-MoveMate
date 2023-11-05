@@ -13,10 +13,8 @@ const compassNeedle = require('../../assets/needle.png');
 
 const MapScreen = () => {
   const navigation = useNavigation();
-  const [pin, setPin] = React.useState({
-    latitude: -37.7993,
-    longitude: 144.9629,
-  });
+  const [pin, setPin] = useState<{ latitude: number; longitude: number; } | null>(null);
+
 
   const { user } = useAuth();
   
@@ -96,17 +94,19 @@ const MapScreen = () => {
       let location = await Location.getCurrentPositionAsync({ distanceInterval: 10 });
       console.log(location);
 
-      const initialCoordinate = {
+      const newCoordinate = {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
       };
 
-      setPin(initialCoordinate);
-      setPath([initialCoordinate]);
+      setPin(newCoordinate);
+      setPath([newCoordinate]);
+      const { latitude, longitude } = newCoordinate;
       setInitialRegion({
-        ...initialRegion,
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
+        latitude,
+        longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
       });
 
     })();
@@ -207,10 +207,9 @@ const MapScreen = () => {
       >
         
         <Marker
-          coordinate={pin}
+          coordinate={pin ? pin : { latitude: 0, longitude: 0 }}
           image={{
-            uri: "",
-            width: 3,
+            uri: "", // URL of the image
             height: 3,
           }}
 
@@ -227,9 +226,11 @@ const MapScreen = () => {
             });
           }}
         >
-          <Callout>
-            <Text>My Current Place</Text>
-          </Callout>
+        <Callout>
+          <View>
+            <Text className='w-18 text-l text-center font-semibold'>{user?.displayName ?? "Unknown User"}</Text>
+          </View>
+        </Callout>
         </Marker>
         <Polyline
             coordinates={path}
@@ -237,7 +238,7 @@ const MapScreen = () => {
             strokeColor="black"
         />
         <Circle 
-          center={pin}
+          center={pin!}
           radius={100}
           strokeWidth={1}
           strokeColor={"#1a66ff"}
