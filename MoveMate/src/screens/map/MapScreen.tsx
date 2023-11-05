@@ -1,16 +1,26 @@
 import React,{ useState } from 'react';
-import { View, StyleSheet, Dimensions, Text, Image } from 'react-native';
+import { View, StyleSheet, Dimensions, Text, Image,TouchableOpacity } from 'react-native';
 import MapView, { Marker, Callout, Circle, Polyline, UserLocationChangeEvent } from 'react-native-maps';
 import * as Location from 'expo-location';
-import { Magnetometer, MagnetometerUncalibrated } from 'expo-sensors';
+import { useNavigation } from '@react-navigation/native';
+import { Magnetometer } from 'expo-sensors';
+import { db } from '../../config/firebase';
+import useAuth from '../../hook/useAuth';
+import { collection, addDoc,Timestamp} from "firebase/firestore";
+import { ROUTES } from '../../constants';
 
 const compassNeedle = require('../../assets/needle.png');
 
 const MapScreen = () => {
+  const navigation = useNavigation();
   const [pin, setPin] = React.useState({
     latitude: -37.7993,
     longitude: 144.9629,
   });
+
+  const { user } = useAuth();
+  
+
   const [magnetometerData, setMagnetometerData] = useState({ x: 0, y: 0, z: 0 });
   const [directionAngle, setDirectionAngle] = useState(0); // angle in direction
 
@@ -109,7 +119,7 @@ const MapScreen = () => {
     const angle = calculateAngle(magnetometerData);
     setDirectionAngle(angle);
   
-    if (accuracy < 20) {
+    if (accuracy < 10) {
       setPath((prevPath) => {
         let newDistance = 0;
         if (prevPath.length > 0) {
@@ -136,13 +146,34 @@ const MapScreen = () => {
     }
   };
 
-    // 计算角度的函数
+    // Function to calculate the angle of the compass
     const calculateAngle = (magnetometer: { x: any; y: any; z?: number; }) => {
       let angle = Math.atan2(magnetometer.y, magnetometer.x) * (180 / Math.PI);
       if (angle < 0) {
         angle += 360;
       }
       return Math.round(angle);
+    };
+
+    // Update the map data to the firebase
+    async function writeCyclingRecord() {
+      if (user && user.uid){
+        const cyclingData = {
+          distance: distance, // Use the actual distance calculated
+          duration: duration, // Use the actual duration calculated
+          start_date: Timestamp.fromDate(new Date()),
+          uid: user.uid,  
+        };
+        const newDoc = await addDoc(collection(db, "exercise_cycling"), cyclingData);
+        console.log("Document written with ID: ", newDoc.id);
+      }
+    };
+
+    const handleEndCycling = async () => {
+      await writeCyclingRecord();
+  
+      // return to home page
+      navigation.navigate(ROUTES.DASHBOARD_MAIN);
     };
 
 
@@ -154,7 +185,13 @@ const MapScreen = () => {
   
 
   return (
+    
     <View style={styles.container}>
+
+      <TouchableOpacity className = "absolute bottom-12 p-2.5 justify-center items-center w-28 rounded bg-emerald-300 z-50 text-center " onPress={handleEndCycling}>
+        <Text>End</Text>
+      </TouchableOpacity>
+
       <MapView
         style={styles.map}
         initialRegion={initialRegion}

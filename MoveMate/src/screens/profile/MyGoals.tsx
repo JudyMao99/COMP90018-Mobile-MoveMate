@@ -150,4 +150,3 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
 };
 
 export default MyGoals
-
