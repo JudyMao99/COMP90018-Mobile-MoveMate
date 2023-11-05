@@ -7,7 +7,7 @@ import { getDoc } from "firebase/firestore";
 import GoalSection from '../../components/GoalSection';
 import LoadingOverlay from '../../components/LoadingOverlay';
 
-const badge = require('../../assets/images/badge.png');
+const goal = require('../../assets/icons/goal.png');
 
 type MyGoalsProps = {
   nextStep?: () => void;
@@ -75,14 +75,14 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
       <View className="flex-1 flex-col items-center m-4 justify-between pb-8">
         <View className="flex flex-row items-center justify-center gap-x-6">
           <Text className="text-3xl font-black">Set Up Goals!</Text>
-          <Image source={badge} style={{ width: 90, height: 90 }} />
+          <Image source={goal} style={{ width: 90, height: 90 }} />
         </View>
         <View className="w-80 h-80 bg-white border-0.5 rounded-lg flex flex-col py-8 px-6 justify-between">
           <GoalSection title="Walking" currentValue={walking} onMinus={() => walking && setWalking(walking - 1)} onPlus={() => walking && setWalking(walking + 1)} />
           <GoalSection title="Push-up" currentValue={pushUp} onMinus={() => pushUp && setPushUp(pushUp - 1)} onPlus={() => pushUp && setPushUp(pushUp + 1)} />
           <GoalSection title="Sit-up" currentValue={sitUp} onMinus={() => sitUp && setSitUp(sitUp - 1)} onPlus={() => sitUp && setSitUp(sitUp + 1)} />
         </View>
-        <TouchableOpacity className="py-2 bg-indigo-500 rounded-full w-64 h-12" onPress={handleGoalsSubmit}>
+        <TouchableOpacity className="py-2 bg-brand rounded-full w-64 h-12" onPress={handleGoalsSubmit}>
           <Text className="text-2xl font-bold text-center text-white">
             Confirm
           </Text>

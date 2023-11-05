@@ -1,15 +1,14 @@
-import { View, Text, Button as RNButton,TouchableOpacity, Image, StyleSheet,Alert } from 'react-native';
+import { View, Text,TouchableOpacity, Image, Alert } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
 import useAuth from '../../hook/useAuth';
 import { getAuth, signOut } from 'firebase/auth';
+import { Icon } from '@rneui/themed';
 
-// useful icons
+// icons
 const arrowRight = require('../../assets/icons/arrow_right.png');
-
 const user_icon = require('../../assets/icons/user.png');
-
 const goal = require('../../assets/icons/goal.png');
 
 const Profile = () => {
@@ -29,7 +28,7 @@ const Profile = () => {
 
   return (
     <View className="flex-1">
-      <View className="relative bg-indigo-500 h-64 flex justify-center items-center rounded-lg shadow-xl">
+      <View className="relative bg-brand h-64 flex justify-center items-center rounded-lg shadow-xl">
         <Text className="text-6xl font-black mt-16 text-white">
           {user?.displayName ?? "Undefined"}
         </Text>
@@ -50,7 +49,7 @@ const Profile = () => {
           </TouchableOpacity>
         </View>
         <View className="flex flex-row items-center gap-x-5">
-          <Image source={goal} />
+          <Image source={goal} style={{ width: 28, height: 28 }} />
           <TouchableOpacity className="flex-1 flex-row items-center justify-between" onPress={() => navigation.navigate(ROUTES.MY_GOALS)}>
             <Text className="font-extrabold text-lg">
               My Goals
@@ -59,7 +58,7 @@ const Profile = () => {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity className="py-3 bg-indigo-500 rounded-full w-48 mt-56" onPress={handleSignOut}>
+        <TouchableOpacity className="py-3 bg-brand rounded-full w-48 mt-56" onPress={handleSignOut}>
           <Text className="text-2xl font-bold text-center text-white">
             Sign Out
           </Text>
