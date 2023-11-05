@@ -41,17 +41,17 @@ const FocusChart: React.FC<FocusChartProps> = ({ focusSummaryData }) => {
 
   return (
     // <View style={styles.chartContainer}>
-      <LineChart
-        data={chartData}
-        width={screenWidth}
-        height={220}
-        yAxisLabel=""
-        yAxisSuffix=" mins"
-        yAxisInterval={1}
-        chartConfig={chartConfig}
-        bezier
-        // style={styles.chartStyle}
-      />
+    <LineChart
+      data={chartData}
+      width={screenWidth}
+      height={220}
+      yAxisLabel=""
+      yAxisSuffix=" mins"
+      yAxisInterval={1}
+      chartConfig={chartConfig}
+      bezier
+      // style={styles.chartStyle}
+    />
     // </View>
   );
 };

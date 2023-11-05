@@ -15,25 +15,25 @@ const WalkingChart: React.FC<WalkingChartProps> = ({ walkingSummaryData }) => {
     labels: walkingSummaryData.map(item => formatDate(item.date)),
     datasets: [
       {
-        data: walkingSummaryData.map(item => item.totalCount || 0)
+        data: walkingSummaryData.map(item => item.totalCount || 0),
       },
     ],
   };
 
   const chartConfig = {
-    backgroundGradientFrom: "#1E2923",
-    backgroundGradientTo: "#08130D",
+    backgroundGradientFrom: '#1E2923',
+    backgroundGradientTo: '#08130D',
     decimalPlaces: 0,
     color: (opacity = 0.7) => `rgba(26, 255, 146, ${opacity})`,
     labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
     style: {
-      borderRadius: 16
+      borderRadius: 16,
     },
     propsForDots: {
-      r: "6",
-      strokeWidth: "2",
-      stroke: "#ffa726"
-    }
+      r: '6',
+      strokeWidth: '2',
+      stroke: '#ffa726',
+    },
   };
 
   const screenWidth = Dimensions.get('window').width;

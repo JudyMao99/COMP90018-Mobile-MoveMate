@@ -17,7 +17,11 @@ type SummaryDataItem = {
 
 const Dashboard = () => {
   const { user } = useAuth();
-  const processFocusData = (docSnapshot: QueryDocumentSnapshot, dateRange: SummaryDataItem[]) => {
+
+  const processFocusData = (
+    docSnapshot: QueryDocumentSnapshot,
+    dateRange: SummaryDataItem[]
+  ) => {
     const data = docSnapshot.data();
     const date = moment(data.start_date.toDate()).format('MM-DD');
     const durationInMinutes = Math.floor(data.duration / 60);
@@ -27,7 +31,10 @@ const Dashboard = () => {
     }
   };
 
-  const processCyclingData = (docSnapshot: QueryDocumentSnapshot, dateRange: SummaryDataItem[]) => {
+  const processCyclingData = (
+    docSnapshot: QueryDocumentSnapshot,
+    dateRange: SummaryDataItem[]
+  ) => {
     const data = docSnapshot.data();
     const date = moment(data.start_date.toDate()).format('MM-DD');
     const distance = parseFloat(data.distance.toFixed(2));
@@ -37,7 +44,10 @@ const Dashboard = () => {
     }
   };
 
-  const processWalkingData = (docSnapshot: QueryDocumentSnapshot, dateRange: SummaryDataItem[]) => {
+  const processWalkingData = (
+    docSnapshot: QueryDocumentSnapshot,
+    dateRange: SummaryDataItem[]
+  ) => {
     const data = docSnapshot.data();
     const date = moment(data.start_date.toDate()).format('MM-DD');
     const stepCount = data.step_count;
@@ -47,20 +57,36 @@ const Dashboard = () => {
     }
   };
 
-  const focusSummaryData = useSummaryData(user?.uid || '', 'focus', processFocusData);
-  const cyclingSummaryData = useSummaryData(user?.uid || '', 'exercise_cycling', processCyclingData);
-  const walkingSummaryData = useSummaryData(user?.uid || '', 'exercise_walking', processWalkingData);
+  const focusSummaryData = useSummaryData(
+    user?.uid || '',
+    'focus',
+    processFocusData
+  );
+  const cyclingSummaryData = useSummaryData(
+    user?.uid || '',
+    'exercise_cycling',
+    processCyclingData
+  );
+  const walkingSummaryData = useSummaryData(
+    user?.uid || '',
+    'exercise_walking',
+    processWalkingData
+  );
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+    >
       <Text style={styles.header}>Focus Summary (Last 7 Days)</Text>
-      {/* <FocusChart focusSummaryData={focusSummaryData} /> */}
-
-      <Text style={styles.header}>Cycling Summary (Last 7 Days)</Text>
-      {/* <CyclingChart cyclingSummaryData={cyclingSummaryData} /> */}
+      <FocusChart focusSummaryData={focusSummaryData} />
 
       <Text style={styles.header}>Walking Summary (Last 7 Days)</Text>
-      {/* <WalkingChart walkingSummaryData={walkingSummaryData} /> */}
+      <WalkingChart walkingSummaryData={walkingSummaryData} />  
+      
+      <Text style={styles.header}>Cycling Summary (Last 7 Days)</Text>
+      <CyclingChart cyclingSummaryData={cyclingSummaryData} />
+      
     </ScrollView>
   );
 };
@@ -83,4 +109,3 @@ const styles = StyleSheet.create({
 });
 
 export default Dashboard;
-
