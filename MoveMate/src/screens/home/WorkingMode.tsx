@@ -38,14 +38,9 @@ const WorkingMode = ({route} : any) => {
           uid: user.uid,  
       }
   const newDoc = await addDoc(collection(db, "focus"), focusData);
-  console.log("Document written with ID: ", newDoc.id);
-
     }
-      
-
   }
-
-  // console.log(duration);
+  
   return (
     <View className="flex flex-1 items-center w-screen h-screen ">
       <View className="bg-sky-500 h-3/4 w-full flex items-center justify-around ">
