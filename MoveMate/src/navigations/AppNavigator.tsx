@@ -5,14 +5,10 @@ import { useEffect, useState } from 'react';
 import UserSetupNavigator from './UserSetupNavigator';
 import { DocumentSnapshot, doc, getDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import LoadingOverlay from '../components/LoadingOverlay';
-
 function AppNavigator() {
   const { user } = useAuth();
 
   const [isNewUser, setIsNewUser] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
   useEffect(() => {
     if (user) {
       console.log("Checking new user...")
@@ -24,7 +20,6 @@ function AppNavigator() {
           } else {
             setIsNewUser(false);
           }
-          setIsLoading(false);
         }).catch((e) => {
           console.log(e);
         })
@@ -33,10 +28,8 @@ function AppNavigator() {
 
   return (
     user ? 
-      <>
-        <LoadingOverlay isVisible={isLoading}/>
-        {isNewUser ? <UserSetupNavigator/> : <BottomTabNavigator />}
-      </> :  <AuthNavigator />
+      (isNewUser ? <UserSetupNavigator/> : <BottomTabNavigator />)
+      : <AuthNavigator />
   )
 }
 

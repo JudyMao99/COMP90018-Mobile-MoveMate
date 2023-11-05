@@ -1,11 +1,11 @@
 import React,{ useState } from 'react';
 import { Text, View,Image, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import useAuth from '../../hook/useAuth';
 import { getDoc } from "firebase/firestore";
 import GoalSection from '../../components/GoalSection';
+import LoadingOverlay from '../../components/LoadingOverlay';
 
 const badge = require('../../assets/images/badge.png');
 
@@ -13,11 +13,10 @@ type MyGoalsProps = {
   nextStep?: () => void;
 }
 const MyGoals = ({ nextStep }: MyGoalsProps) => {
-
-  const navigation = useNavigation();
   const { user } = useAuth();
   
-  const [walking, setWalking] = useState<number | undefined>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [walking, setWalking] = useState<number>();
   const [pushUp, setPushUp] = useState<number>();
   const [sitUp, setSitUp] = useState<number>();
 
@@ -25,11 +24,12 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
     if (user && user.uid) {
       const userDocRef = doc(db, 'users', user.uid);
       getDoc(userDocRef).then(docSnap => {
+        setIsLoading(false);
         if (docSnap.exists()) {
           const userData = docSnap.data();
-          setWalking(userData.goals.walking !== undefined ? userData.goals.walking : 1000);
-          setPushUp(userData.goals.push_up !== undefined ? userData.goals.push_up : 50);
-          setSitUp(userData.goals.sit_up !== undefined ? userData.goals.sit_up : 50);
+          setWalking(userData.goals.walking ? userData.goals.walking : 1000);
+          setPushUp(userData.goals.push_up ? userData.goals.push_up : 50);
+          setSitUp(userData.goals.sit_up ? userData.goals.sit_up : 50);
         } else {
           // TODO: handle user not found
           setWalking(1000);
@@ -42,12 +42,6 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
       });
     }
   }, [user]);
-
-  const handleGoalChange = (
-    setter: { (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (value: React.SetStateAction<number>): void; (arg0: (prev: any) => number): void; }, increment: number) => {
-    setter(prev => Math.max(prev + increment, 0));
-  };
-
 
   const handleGoalsSubmit = () => {
     const goalsObj = {
@@ -74,22 +68,28 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
   }
 
   return (
-    <View className="flex-1 flex-col items-center m-4 justify-between pb-8">
-      <View className="flex flex-row items-center justify-center gap-x-6">
-        <Text className="text-3xl font-black">Set Up Goals!</Text>
-        <Image source={badge} style={{ width: 90, height: 90 }} />
+    <>
+    {isLoading ? 
+      <LoadingOverlay />
+      :
+      <View className="flex-1 flex-col items-center m-4 justify-between pb-8">
+        <View className="flex flex-row items-center justify-center gap-x-6">
+          <Text className="text-3xl font-black">Set Up Goals!</Text>
+          <Image source={badge} style={{ width: 90, height: 90 }} />
+        </View>
+        <View className="w-80 h-80 bg-white border-0.5 rounded-lg flex flex-col py-8 px-6 justify-between">
+          <GoalSection title="Walking" currentValue={walking} onMinus={() => walking && setWalking(walking - 1)} onPlus={() => walking && setWalking(walking + 1)} />
+          <GoalSection title="Push-up" currentValue={pushUp} onMinus={() => pushUp && setPushUp(pushUp - 1)} onPlus={() => pushUp && setPushUp(pushUp + 1)} />
+          <GoalSection title="Sit-up" currentValue={sitUp} onMinus={() => sitUp && setSitUp(sitUp - 1)} onPlus={() => sitUp && setSitUp(sitUp + 1)} />
+        </View>
+        <TouchableOpacity className="py-2 bg-indigo-500 rounded-full w-64 h-12" onPress={handleGoalsSubmit}>
+          <Text className="text-2xl font-bold text-center text-white">
+            Confirm
+          </Text>
+        </TouchableOpacity>
       </View>
-      <View className="w-80 h-80 bg-white border-0.5 rounded-lg flex flex-col py-8 px-6 justify-between">
-        <GoalSection title="Walking" currentValue={walking} onMinus={() => walking && setWalking(walking - 1)} onPlus={() => walking && setWalking(walking + 1)} />
-        <GoalSection title="Push-up" currentValue={pushUp} onMinus={() => pushUp && setPushUp(pushUp - 1)} onPlus={() => pushUp && setPushUp(pushUp + 1)} />
-        <GoalSection title="Sit-up" currentValue={sitUp} onMinus={() => sitUp && setSitUp(sitUp - 1)} onPlus={() => sitUp && setSitUp(sitUp + 1)} />
-      </View>
-      <TouchableOpacity className="py-2 bg-indigo-500 rounded-full w-64 h-12" onPress={handleGoalsSubmit}>
-        <Text className="text-2xl font-bold text-center text-white">
-          Confirm
-        </Text>
-      </TouchableOpacity>
-    </View>
+      }
+    </>
   );
 };
 
