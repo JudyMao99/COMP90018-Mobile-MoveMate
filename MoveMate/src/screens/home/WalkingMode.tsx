@@ -51,7 +51,6 @@ const WalkingMode = ({route}: any) => {
           const userData = docSnap.data();
           tmpWalkingGoal = userData.goals.walking ;
         } else {
-          // TODO: handle user not found
           tmpWalkingGoal = 1000;
         }
       }).catch(error => {
@@ -180,4 +179,3 @@ const WalkingMode = ({route}: any) => {
 }
 
 export default WalkingMode
-  
