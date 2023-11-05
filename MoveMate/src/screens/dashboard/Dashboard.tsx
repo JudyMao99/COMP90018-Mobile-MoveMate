@@ -5,10 +5,24 @@ import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import useAuth from '../../hook/useAuth';
 import { db } from '../../config/firebase';
 import FocusChart from '../../components/FocusChart';
+import WalkingChart from '../../components/WalkingChart';
+import CyclingChart from '../../components/CyclingChart';
 
 type FocusSummaryData = {
   date: string;
   totalDuration: number;
+};
+
+type WalkingSummaryData = {
+  date: string;
+  totalCount: number;
+  dailyGoal: number;
+};
+
+type CyclingSummaryData = {
+  date: string;
+  totalDistance: number;
+  dailyGoal: number;
 };
 
 const Dashboard = () => {
@@ -50,7 +64,7 @@ const Dashboard = () => {
           const date: Date = data.start_date.toDate();
           const duration: number = data.duration;
           // Convert duration from seconds to minutes
-          const durationInMinutes: number = data.duration / 60; 
+          const durationInMinutes: number = Math.floor(data.duration / 60); 
           const dateKey = moment(date).format('MM-DD');
 
           console.log(`Processing document for date: ${dateKey}, duration: ${duration}`);
@@ -91,6 +105,8 @@ const Dashboard = () => {
         <Text>No focus data available for the last 7 days.</Text>
       )}
       <FocusChart focusSummaryData={focusSummaryData} />
+      <WalkingChart />
+      <CyclingChart />
     </View>
   );
 };
