@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import { Text, View} from 'react-native';
+import { Text, View, Image} from 'react-native';
 import { useState, useEffect } from 'react';
 import { Pedometer } from 'expo-sensors';
 import React from 'react';
@@ -10,20 +10,20 @@ import { db } from '../../config/firebase';
 import { collection, addDoc, doc, getDoc,Timestamp} from "firebase/firestore";
 import useAuth from '../../hook/useAuth';
 
-const WalkingMode = ({route}: any) => {
-    const [isPedometerAvailable, setIsPedometerAvailable] = useState('checking');
-    const [isPermissionsAvailable, setIsPermissionsAvailable] = useState('Checking')
-    //const [permissionRequst, setPermissionRequsts] = useState('')
+
+const walkingImage = require('../../assets/images/walking.png')
+const WalkingMode = () => {
+    const [isPedometerAvailable, setPedometerAvailable] = useState('checking');
     const [stepCount, updateStepCount] = useState(0);
     //const [subscription, setSubscription] = useState(null);
     const navigation = useNavigation();
     const [visible, setVisible] = React.useState(false);
     const [iconName, setIconName] = React.useState('pause');
     const [running, setRunning] = React.useState(true);
-    const [pastStepCount, setPastStepCount] = useState(0);
 
     const { user } = useAuth();
     
+  
 
     // Handle the pause function
     const pauseHandler = () => {
@@ -38,28 +38,23 @@ const WalkingMode = ({route}: any) => {
 
 
     // Subscirbe the Pedometer and update it 
-    const subscribe = async () => {
-        const isPermissionsAvailable = await Pedometer.getPermissionsAsync();
-        setIsPermissionsAvailable(String(isPermissionsAvailable));
-        const isAvailable = await Pedometer.isAvailableAsync();
-        setIsPedometerAvailable(String(isAvailable));
-        if (isAvailable) {
-            // const end = new Date();
-            // const start = new Date();
-            // console.log(end)
-            // console.log(start)
-            // start.setDate(end.getDate()-1)
-            // const pastStepCountResult = await Pedometer.getStepCountAsync(start, end);
-            // if (pastStepCountResult) {
-            //     setPastStepCount(pastStepCountResult.steps);
-            //     console.log("PAST step count: " + pastStepCount)
-            // }
-        Pedometer.watchStepCount((result) => {
+    const subscribe = () => {
+        //const isPermissionsAvailable = await Pedometer.getPermissionsAsync();
+        //const isAvailable = await Pedometer.isAvailableAsync();
+        //setIsPedometerAvailable(String(isAvailable));
+        const subscription = Pedometer.watchStepCount((result) => {
            updateStepCount(result.steps);
             })
-        }
+        //}
     }
-
+    Pedometer.isAvailableAsync().then(
+      (result) => {
+        setPedometerAvailable(String(result))
+      },
+      (error) => {
+        setPedometerAvailable(String(error))
+      }
+    )
     
     // Update the step count data to the firebase
     async function writeWalkingRecord() {
@@ -71,10 +66,7 @@ const WalkingMode = ({route}: any) => {
         }
     const newDoc = await addDoc(collection(db, "exercise_walking"), walkingData);
     console.log("Document written with ID: ", newDoc.id);
-
       }
-        
-
     }
 
 
@@ -83,37 +75,38 @@ const WalkingMode = ({route}: any) => {
     // setSubscription(null);
     // };
 
-
     useEffect(() => {
-        const subscription = subscribe();
-        return () => subscription && subscription.remove();
+      subscribe();
     },[]);
 
-    // TODO: Write the step count down into the view
+
     return (
     <View className="flex flex-1 items-center w-screen h-screen ">  
-      <View className="bg-amber-400 h-3/4 w-full flex items-center justify-around ">
-        <Text fontSize="24">WALKING</Text>
-        <Text fontSize="30">steps: {stepCount - pastStepCount}</Text>
+      <View className="bg-amber-400 h-3/4 w-full flex items-center justify-between ">
+        <Text className='mt-20 text-2xl font-bold text-white'>WALKING</Text>
+        <Image source={walkingImage} 
+          style={{ width: 300, height: 300 }}
+        />
+        <Text className='mb-20 text-4xl font-bold text-white'>{stepCount}</Text>
       </View>
       <View className='flex-row w-full justify-around relative bottom-12'>
 
-      <Button
+        <Button
           icon={{
             name: 'close',
             type: 'font-awesome',
             color: '#FF7457',
-            size: 40
+            size: 32
           }}
           buttonStyle={{
             backgroundColor: 'white',
-            height: 100,
-            width: 100,
+            height: 80,
+            width: 80,
             borderColor: '#FF7457',
-            borderWidth: 5
+            borderWidth: 5,
+            marginTop:'10%'
           }}
-          raised
-          radius={50}
+          radius={40}
           onPress={() => {
             setVisible(true);
             setRunning(false);
@@ -149,7 +142,6 @@ const WalkingMode = ({route}: any) => {
           <Dialog.Button title="Yes" onPress={() => {
             navigation.navigate(ROUTES.HOME_MAIN)
             writeWalkingRecord();
-            setPastStepCount(0);
             updateStepCount(0);
             }
         }/>
@@ -165,4 +157,3 @@ const WalkingMode = ({route}: any) => {
 }
 
 export default WalkingMode
-  
