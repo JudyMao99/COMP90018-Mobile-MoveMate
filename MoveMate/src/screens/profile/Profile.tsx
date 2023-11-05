@@ -18,9 +18,6 @@ const Profile = () => {
   const handleSignOut = () => {
     const auth = getAuth();
     signOut(auth)
-      .then(() => {
-        navigation.navigate(ROUTES.LOGIN);
-      })
       .catch((error) => {
         Alert.alert('Error', error.message);
       });
