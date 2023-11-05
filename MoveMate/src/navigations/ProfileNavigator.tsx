@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 const ProfileNavigator = () => {
   return (
     <Stack.Navigator 
-    screenOptions={{ headerShown: false }}
+    screenOptions={{ headerShown: false, gestureEnabled: false }}
     initialRouteName={ROUTES.PROFILE}>
       <Stack.Screen name={ROUTES.PROFILE} component={Profile} />
       <Stack.Screen name={ROUTES.MY_ACCOUNT} component={MyAccount} 

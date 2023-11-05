@@ -18,6 +18,8 @@ const Login = () => {
       } catch (err: any) {
         Alert.alert('got error: ', err.message);
       }
+    } else {
+      Alert.alert("please provide valid email address and password.")
     }
   }
 
