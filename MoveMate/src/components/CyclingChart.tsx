@@ -25,7 +25,7 @@ const CyclingChart: React.FC<CyclingChartProps> = ({ cyclingSummaryData }) => {
     backgroundGradientFrom: '#1E2923',
     backgroundGradientTo: '#08130D',
     decimalPlaces: 2,
-    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    color: (opacity = 0.7) => `rgba(255, 255, 255, ${opacity})`,
     labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
     style: {
       borderRadius: 16,

@@ -40,31 +40,31 @@ const FocusChart: React.FC<FocusChartProps> = ({ focusSummaryData }) => {
   const screenWidth = Dimensions.get('window').width;
 
   return (
-    <View style={styles.chartContainer}>
+    // <View style={styles.chartContainer}>
       <LineChart
         data={chartData}
         width={screenWidth}
         height={220}
         yAxisLabel=""
         yAxisSuffix=" mins"
-        yAxisInterval={1} // Optional: adjust the interval of the Y-axis labels
+        yAxisInterval={1}
         chartConfig={chartConfig}
         bezier
-        style={styles.chartStyle}
+        // style={styles.chartStyle}
       />
-    </View>
+    // </View>
   );
 };
 
-const styles = StyleSheet.create({
-  chartContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 10,
-  },
-  chartStyle: {
-    borderRadius: 16,
-  },
-});
+// const styles = StyleSheet.create({
+//   chartContainer: {
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//     marginVertical: 10,
+//   },
+//   chartStyle: {
+//     borderRadius: 16,
+//   },
+// });
 
 export default FocusChart;

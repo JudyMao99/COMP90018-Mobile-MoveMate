@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { Text, StyleSheet, ScrollView } from 'react-native';
 import useAuth from '../../hook/useAuth';
 import FocusChart from '../../components/FocusChart';
 import WalkingChart from '../../components/WalkingChart';

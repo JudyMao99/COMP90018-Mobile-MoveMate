@@ -24,7 +24,7 @@ const WalkingChart: React.FC<WalkingChartProps> = ({ walkingSummaryData }) => {
     backgroundGradientFrom: "#1E2923",
     backgroundGradientTo: "#08130D",
     decimalPlaces: 0,
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    color: (opacity = 0.7) => `rgba(26, 255, 146, ${opacity})`,
     labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
     style: {
       borderRadius: 16
@@ -39,17 +39,15 @@ const WalkingChart: React.FC<WalkingChartProps> = ({ walkingSummaryData }) => {
   const screenWidth = Dimensions.get('window').width;
 
   return (
-    <View>
-      <LineChart
-        data={chartData}
-        width={screenWidth}
-        height={220}
-        yAxisLabel=""
-        yAxisSuffix=""
-        chartConfig={chartConfig}
-        bezier
-      />
-    </View>
+    <LineChart
+      data={chartData}
+      width={screenWidth}
+      height={220}
+      yAxisLabel=""
+      yAxisSuffix=""
+      chartConfig={chartConfig}
+      bezier
+    />
   );
 };
 
