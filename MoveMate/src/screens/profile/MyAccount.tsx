@@ -146,7 +146,7 @@ const MyAccount = () => {
             onChangeText={(val: string) => setEmail(val)}
           />
           <Input
-            title="Password"
+            title="New Password"
             value={newPassword}
             placeholder="Enter New Password"
             onChangeText={(val: string) => setNewPassword(val)}
