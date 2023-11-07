@@ -18,9 +18,11 @@ const Home = () => {
   const { user } = useAuth();
   const [stepCount, setStepCount] = React.useState(0);
   const [focusDuration, setFocusDuration] = React.useState(0);
+  const [cyclingDuration, setCyclingDuration] = React.useState(0);
+  const [cyclingDistance, setCyclingDistance] = React.useState(0);
   const [walkingGoal, setWalkingGoal] = React.useState(0);
-  const [pushupGoal, setPushupGoal] = React.useState(0);
-  const [situpGoal, setSitupGoal] = React.useState(0);
+  const [cyclingDurationGoal, setCyclingDurationGoal] = React.useState(0);
+  const [cyclingDistanceGoal, setCyclingDistanceGoal] = React.useState(0);
   // const [, forceUpdate] = React.useReducer(x => x + 1, 0);
 
 
@@ -29,6 +31,7 @@ const Home = () => {
 
     queryFocus();
     queryStep();
+    queryCycling();
     queryGoal();
     
   });
@@ -64,23 +67,45 @@ const Home = () => {
     
   }
 
+  async function queryCycling() {
+    let tmpCyclingDuration = 0;
+    let tmpCyclingDistance = 0;
+    if (user && user.uid) {
+
+      const q = query(collection(db, "exercise_cycling"), where("uid", "==", user.uid));
+
+      const querySnapshot =  await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        if(doc.data().start_date.toDate().toDateString() === new Date().toDateString()) {
+          tmpCyclingDuration += doc.data().duration;
+          tmpCyclingDistance += doc.data().distance;
+        }
+      });
+      setCyclingDistance(tmpCyclingDistance);
+      setCyclingDuration(Math.floor(tmpCyclingDuration / 60));
+    }
+    
+  }
+
+
+
   async function queryGoal() {
+    let tmpCyclingDurationGoal = 0;
+    let tmpCyclingDistanceGoal = 0;
     let tmpWalkingGoal = 0;
-    let tmpPushupGoal = 0;
-    let tmpSitupGoal = 0;
     if (user && user.uid) {
       const userDocRef = doc(db, 'users', user.uid);
       await getDoc(userDocRef).then(docSnap => {
         if (docSnap.exists()) {
           const userData = docSnap.data();
-          tmpWalkingGoal = userData.goals.walking ;
-          tmpPushupGoal = userData.goals.push_up ;
-          tmpSitupGoal = userData.goals.sit_up;
+          tmpCyclingDurationGoal = userData.goals.duration / 60 ;
+          tmpCyclingDistanceGoal = userData.goals.distance ;
+          tmpWalkingGoal = userData.goals.walking;
         } else {
           // TODO: handle user not found
+          tmpCyclingDurationGoal = 50;
+          tmpCyclingDistanceGoal = 5;
           tmpWalkingGoal = 1000;
-          tmpPushupGoal = 50;
-          tmpSitupGoal = 50;
         }
       }).catch(error => {
         console.error('Error fetching user data:', error);
@@ -88,8 +113,8 @@ const Home = () => {
       });
     }
     setWalkingGoal(tmpWalkingGoal);
-    setPushupGoal(tmpPushupGoal);
-    setSitupGoal(tmpSitupGoal);
+    setCyclingDurationGoal(tmpCyclingDurationGoal);
+    setCyclingDistanceGoal(tmpCyclingDistanceGoal);
     
   }
 
@@ -160,19 +185,22 @@ const Home = () => {
       />
       <View className='w-full flex flex-row flex-even items-center justify-center'>
         <Card containerStyle={{width: '25%', borderColor: 'transparent'}}>
-          <Card.Title>walking</Card.Title>
+          <Card.Title>Walking_Step</Card.Title>
           <Card.Divider/>
           <Text>{stepCount}/{walkingGoal}</Text>
+          
         </Card>
         <Card containerStyle={{width: '25%', borderColor: 'transparent'}}>
-          <Card.Title>PushUp</Card.Title>
+          <Card.Title>Cycling_Distance</Card.Title>
           <Card.Divider/>
-          <Text>50/{pushupGoal}</Text>
+          <Text>{cyclingDistance}/{cyclingDistanceGoal}</Text>
+          
         </Card>
         <Card containerStyle={{width: '25%', borderColor: 'transparent'}}>
-          <Card.Title>SitUp</Card.Title>
+          <Card.Title>Cycling_Duration</Card.Title>
           <Card.Divider/>
-          <Text>50/{situpGoal}</Text>
+          <Text>{cyclingDuration}/{cyclingDurationGoal}</Text>
+          
         </Card>
       </View>
       {/* <Button 
