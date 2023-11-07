@@ -52,14 +52,12 @@ const InitAvatar = () => {
         updateProfile(user, {
           photoURL: image
         }).then(() => {
-          console.log("photo uploaded!");
           navigation.navigate(ROUTES.SETUP_GOAL);
         }).catch(e => {
           console.log("got error when uploading avatar: ", e);
         })
       }
     } else {
-      console.log("No photo provided, skip for now!");
       navigation.navigate(ROUTES.SETUP_GOAL);
     }
   };
