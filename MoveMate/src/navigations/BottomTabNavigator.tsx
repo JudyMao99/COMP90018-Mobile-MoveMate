@@ -33,7 +33,7 @@ function BottomTabNavigator() {
         component={DashboardNavigator}
         options={{
           tabBarIcon: ({ color, size }) => <Ionicons name="bar-chart-sharp" color={color} size={size} />,
-          tabBarLabel: "Dashboard",
+          tabBarLabel: "History",
         }}
       />
       <Tab.Screen
