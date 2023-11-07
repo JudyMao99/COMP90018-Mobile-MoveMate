@@ -4,6 +4,7 @@ import Home from '../screens/home/Home';
 import WorkingMode from '../screens/home/WorkingMode';
 import WorkingFinish from '../screens/home/WorkingFinish';
 import WalkingMode from '../screens/home/WalkingMode';
+import MapScreen from '../screens/map/MapScreen';
 
 const Stack = createNativeStackNavigator();
 function HomeNavigator() {
@@ -13,6 +14,7 @@ function HomeNavigator() {
       <Stack.Screen name={ROUTES.WORKING_MODE} component={WorkingMode} initialParams={{duration: 15}} options={{ headerShown: false, gestureEnabled: false }}/>
       <Stack.Screen name={ROUTES.WORKING_FINISH} component={WorkingFinish} options={{ headerShown: false,gestureEnabled: false }}/>
       <Stack.Screen name={ROUTES.WALKING_MODE} component={WalkingMode} options={{headerShown: false, gestureEnabled: false}}/>
+      <Stack.Screen name={ROUTES.MAP} component={MapScreen} options={{headerShown: false, gestureEnabled: false}}/>
     </Stack.Navigator>
   );
 }
