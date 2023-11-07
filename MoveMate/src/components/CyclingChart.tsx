@@ -45,7 +45,6 @@ const CyclingChart: React.FC<CyclingChartProps> = ({ cyclingSummaryData }) => {
   };
 
   const screenWidth = Dimensions.get('window').width;
-
   return (
     <BarChart
       data={chartData}
@@ -54,10 +53,16 @@ const CyclingChart: React.FC<CyclingChartProps> = ({ cyclingSummaryData }) => {
       yAxisLabel=""
       yAxisSuffix=""
       chartConfig={chartConfig}
-      verticalLabelRotation={30}
+      verticalLabelRotation={90}
       fromZero={true}
       showBarTops={true}
       showValuesOnTopOfBars={true}
+      xLabelsOffset={-16} // move x-axis labels up
+      style={{
+        marginVertical: 8,
+        borderRadius: 16,
+      }}
+
     />
   );
 };

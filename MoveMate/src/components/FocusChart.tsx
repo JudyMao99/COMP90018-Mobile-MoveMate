@@ -56,6 +56,10 @@ const FocusChart: React.FC<FocusChartProps> = ({ focusSummaryData }) => {
       yAxisInterval={1}
       chartConfig={chartConfig}
       bezier
+      style={{
+        marginVertical: 8,
+        borderRadius: 16,
+      }}
     />
   );
 };

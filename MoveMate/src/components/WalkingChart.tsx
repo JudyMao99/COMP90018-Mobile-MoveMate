@@ -54,6 +54,10 @@ const WalkingChart: React.FC<WalkingChartProps> = ({ walkingSummaryData }) => {
       yAxisSuffix=""
       chartConfig={chartConfig}
       bezier
+      style={{
+        marginVertical: 8,
+        borderRadius: 16,
+      }}
     />
   );
 };
