@@ -1,6 +1,7 @@
 # COMP90018-Mobile-MoveMate
 COMP90018 - Mobile Computing Systems Programming - Group Project: MoveMate
 
+<<<<<<< HEAD
 ## MoveMate Team Member
 | Name        | Task                        |
 | :---------- | ----------------------------|
@@ -48,3 +49,5 @@ Android: Use Expo Go app to scan the QR code
     You can see the Focus Summary, Walking Summary and Cycling Summary for the last seven days.
 
 
+=======
+>>>>>>> 4515a20 (Finish the project_info file)
