@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, View } from 'react-native';
+import { Dimensions, View,Text } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { formatDate } from '../utils';
 
@@ -11,6 +11,13 @@ type WalkingChartProps = {
 };
 
 const WalkingChart: React.FC<WalkingChartProps> = ({ walkingSummaryData }) => {
+  if (walkingSummaryData?.length === 0) {
+    return (
+      <View className="flex-1 flex-col items-center">
+        <Text>No chart data to display!</Text>
+      </View>
+    );
+  }
   const chartData = {
     labels: walkingSummaryData.map(item => formatDate(item.date)),
     datasets: [

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, View, StyleSheet } from 'react-native';
+import { Dimensions, View, StyleSheet,Text } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { formatDate } from '../utils';
 
@@ -11,6 +11,13 @@ type FocusChartProps = {
 };
 
 const FocusChart: React.FC<FocusChartProps> = ({ focusSummaryData }) => {
+  if (focusSummaryData?.length === 0) {
+    return (
+      <View className="flex-1 flex-col items-center">
+        <Text>No chart data to display!</Text>
+      </View>
+    );
+  }
   const chartData = {
     labels: focusSummaryData.map(item => formatDate(item.date)),
     datasets: [
