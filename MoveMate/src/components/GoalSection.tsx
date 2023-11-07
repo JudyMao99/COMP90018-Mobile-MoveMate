@@ -17,14 +17,14 @@ const GoalSection = ({
   } : GoalSectionProps) => {
   return (
     <View className="flex flex-row items-center justify-between">
-      <Text className="text-3xl justify-center items-center font-bold">
+      <Text className="text-xl justify-center items-center font-bold">
         {title}
       </Text>
-      <View className="flex flex-row items-center justify-between w-28">
+      <View className="flex flex-row items-center justify-between w-24">
         <TouchableOpacity onPress={onMinus}>
           <Icon name='minussquareo' type='ant-design' size={20} />
         </TouchableOpacity>
-        <Text className="text-2xl font-semibold">{currentValue}</Text>
+        <Text className="text-lg font-semibold">{currentValue}</Text>
         <TouchableOpacity onPress={onPlus}>
           <Icon name='plussquareo' type='ant-design' size={20} />
         </TouchableOpacity>

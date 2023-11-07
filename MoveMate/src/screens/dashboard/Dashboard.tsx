@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, ScrollView } from 'react-native';
+import { Text, StyleSheet, ScrollView, View } from 'react-native';
 import useAuth from '../../hook/useAuth';
 import FocusChart from '../../components/FocusChart';
 import WalkingChart from '../../components/WalkingChart';
@@ -7,6 +7,7 @@ import CyclingChart from '../../components/CyclingChart';
 import { useSummaryData } from '../../hook/useSummaryData';
 import moment from 'moment';
 import { QueryDocumentSnapshot } from 'firebase/firestore';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type SummaryDataItem = {
   date: string;
@@ -74,20 +75,24 @@ const Dashboard = () => {
   );
 
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-    >
-      <Text style={styles.header}>Focus Summary (Last 7 Days)</Text>
-      <FocusChart focusSummaryData={focusSummaryData} />
+    <>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+      >
+        <Text style={styles.header}>Focus Summary (Last 7 Days)</Text>
+        <FocusChart focusSummaryData={focusSummaryData} />
 
-      <Text style={styles.header}>Walking Summary (Last 7 Days)</Text>
-      <WalkingChart walkingSummaryData={walkingSummaryData} />  
-      
-      <Text style={styles.header}>Cycling Summary (Last 7 Days)</Text>
-      <CyclingChart cyclingSummaryData={cyclingSummaryData} />
-      
-    </ScrollView>
+        <Text style={styles.header}>Walking Summary (Last 7 Days)</Text>
+        <WalkingChart walkingSummaryData={walkingSummaryData} />  
+        
+        <Text style={styles.header}>Cycling Summary (Last 7 Days)</Text>
+        <CyclingChart cyclingSummaryData={cyclingSummaryData} />
+        
+      </ScrollView>
+    </>
+
+
   );
 };
 
@@ -103,8 +108,8 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 20,
-    marginBottom: 10,
+    marginBottom: 8,
+    marginTop: 16,
   },
 });
 

@@ -47,7 +47,6 @@ const FocusChart: React.FC<FocusChartProps> = ({ focusSummaryData }) => {
   const screenWidth = Dimensions.get('window').width;
 
   return (
-    // <View style={styles.chartContainer}>
     <LineChart
       data={chartData}
       width={screenWidth}
@@ -57,21 +56,8 @@ const FocusChart: React.FC<FocusChartProps> = ({ focusSummaryData }) => {
       yAxisInterval={1}
       chartConfig={chartConfig}
       bezier
-      // style={styles.chartStyle}
     />
-    // </View>
   );
 };
-
-// const styles = StyleSheet.create({
-//   chartContainer: {
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     marginVertical: 10,
-//   },
-//   chartStyle: {
-//     borderRadius: 16,
-//   },
-// });
 
 export default FocusChart;

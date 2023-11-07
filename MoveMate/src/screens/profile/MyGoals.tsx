@@ -132,9 +132,9 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
           <Icon name='medal' type='font-awesome-5' color='#2089DC' size={90} />
         </View>
         <View className="w-80 h-80 bg-white border-0.5 rounded-lg flex flex-col py-8 px-6 justify-between">
-          <GoalSection title="Walking" currentValue={walking} onMinus={() => walking && setWalking(walking - 1)} onPlus={() => walking && setWalking(walking + 1)} />
-          <GoalSection title="Distance" currentValue={distance} onMinus={() => distance && setDistance(distance - 1)} onPlus={() => distance && setDistance(distance + 1)} />
-          <GoalSection title="Duration" currentValue={duration} onMinus={() => duration && setDuration(duration - 1)} onPlus={() => duration && setDuration(duration + 1)} />
+          <GoalSection title="Step (steps)" currentValue={walking} onMinus={() => walking && setWalking(walking - 1)} onPlus={() => walking && setWalking(walking + 1)} />
+          <GoalSection title="Distance (km)" currentValue={distance} onMinus={() => distance && setDistance(distance - 1)} onPlus={() => distance && setDistance(distance + 1)} />
+          <GoalSection title="Duration (mins)" currentValue={duration} onMinus={() => duration && setDuration(duration - 1)} onPlus={() => duration && setDuration(duration + 1)} />
         </View>
         <TouchableOpacity className="py-2 bg-blue-brand rounded-full w-64 h-12" onPress={handleGoalsSubmit} disabled={isButtonDisabled} style={{
             backgroundColor: isButtonDisabled ? '#cccccc' : '#2089DC'

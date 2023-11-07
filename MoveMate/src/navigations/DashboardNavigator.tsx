@@ -7,9 +7,8 @@ import MapScreen from '../screens/map/MapScreen';
 const Stack = createStackNavigator();
 const DashboardNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ gestureEnabled: false }} initialRouteName={ROUTES.DASHBOARD_MAIN}>
+    <Stack.Navigator screenOptions={{ gestureEnabled: false, headerShown: false }} initialRouteName={ROUTES.DASHBOARD_MAIN}>
       <Stack.Screen name={ROUTES.DASHBOARD_MAIN} component={Dashboard} />
-      <Stack.Screen name={ROUTES.MAP} component={MapScreen} />
     </Stack.Navigator>
   )
 }

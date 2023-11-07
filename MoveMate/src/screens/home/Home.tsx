@@ -185,21 +185,27 @@ const Home = () => {
       />
       <View className='w-full flex flex-row flex-even items-center justify-center'>
         <Card containerStyle={{width: '25%', borderColor: 'transparent'}}>
-          <Card.Title>Walking_Step</Card.Title>
+          <Card.Title>Walking Step</Card.Title>
           <Card.Divider/>
-          <Text>{stepCount}/{walkingGoal}</Text>
+          <View className="flex justify-center items-center">
+            <Text>{stepCount}/{walkingGoal}</Text>
+          </View>
           
         </Card>
         <Card containerStyle={{width: '25%', borderColor: 'transparent'}}>
-          <Card.Title>Cycling_Distance</Card.Title>
+          <Card.Title>Cycling Distance</Card.Title>
           <Card.Divider/>
-          <Text>{cyclingDistance}/{cyclingDistanceGoal}</Text>
+          <View className="flex justify-center items-center">
+            <Text>{cyclingDistance}/{cyclingDistanceGoal}</Text>
+          </View>
           
         </Card>
         <Card containerStyle={{width: '25%', borderColor: 'transparent'}}>
-          <Card.Title>Cycling_Duration</Card.Title>
+          <Card.Title>Cycling Duration</Card.Title>
           <Card.Divider/>
-          <Text>{cyclingDuration}/{cyclingDurationGoal}</Text>
+          <View className="flex justify-center items-center">
+            <Text>{cyclingDuration}/{cyclingDurationGoal}</Text>
+          </View>
           
         </Card>
       </View>
