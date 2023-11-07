@@ -1,5 +1,5 @@
 import React,{ useState } from 'react';
-import { View, StyleSheet, Dimensions, Text, Image,TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Dimensions, Text, Image,TouchableOpacity} from 'react-native';
 import MapView, { Marker, Callout, Circle, Polyline, UserLocationChangeEvent } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { useNavigation } from '@react-navigation/native';
@@ -8,6 +8,7 @@ import { db } from '../../config/firebase';
 import useAuth from '../../hook/useAuth';
 import { collection, addDoc,Timestamp} from "firebase/firestore";
 import { ROUTES } from '../../constants';
+import { Button } from '@rneui/themed';
 
 const compassNeedle = require('../../assets/needle.png');
 
@@ -172,7 +173,7 @@ const MapScreen = () => {
       await writeCyclingRecord();
   
       // return to home page
-      navigation.navigate(ROUTES.DASHBOARD_MAIN);
+      navigation.navigate(ROUTES.HOME_MAIN);
     };
 
 
@@ -187,7 +188,7 @@ const MapScreen = () => {
     
     <View style={styles.container}>
 
-      <TouchableOpacity className = "absolute bottom-12 p-2.5 justify-center items-center w-28 rounded bg-emerald-300 z-50 text-center " onPress={handleEndCycling}>
+      <TouchableOpacity className = "absolute bottom-12 p-2.5 justify-center items-center bg-emerald-300 w-28 rounded z-50 text-center " onPress={handleEndCycling}>
         <Text>End</Text>
       </TouchableOpacity>
 
