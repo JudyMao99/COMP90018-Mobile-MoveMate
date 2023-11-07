@@ -16,8 +16,8 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
   
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [walking, setWalking] = useState<number>();
-  const [pushUp, setPushUp] = useState<number>();
-  const [sitUp, setSitUp] = useState<number>();
+  const [distance, setDistance] = useState<number>();
+  const [duration, setDuration] = useState<number>();
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
 
   useEffect(() => {
@@ -28,8 +28,8 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
         if (docSnap.exists()) {
           const userData = docSnap.data();
           setWalking(userData.goals.walking ? userData.goals.walking : 1000);
-          setPushUp(userData.goals.push_up ? userData.goals.push_up : 50);
-          setSitUp(userData.goals.sit_up ? userData.goals.sit_up : 50);
+          setDistance(userData.goals.distance ? userData.goals.distance : 5);
+          setDuration(userData.goals.duration ? Math.floor(userData.goals.duration / 60) : 10000 / 60);
 
           const lastUpdated = userData.lastUpdated ? userData.lastUpdated.toDate() : new Date(0);
           const now = new Date();
@@ -50,8 +50,8 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
         } else {
           // TODO: handle user not found
           setWalking(1000);
-          setPushUp(50);
-          setSitUp(50);
+          setDistance(5); // Default value in km
+          setDuration(50); // Default value converted to minutes
         }
       }).catch(error => {
         console.error('Error fetching user data:', error);
@@ -63,8 +63,8 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
   const handleGoalsSubmit = async () => {
     const goalsObj = {
       walking: walking,
-      push_up: pushUp,
-      sit_up: sitUp
+      distance: distance,
+      duration: (duration ?? 50) * 60 // Convert to minutes
     };
   
     if (user) {
@@ -133,8 +133,8 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
         </View>
         <View className="w-80 h-80 bg-white border-0.5 rounded-lg flex flex-col py-8 px-6 justify-between">
           <GoalSection title="Walking" currentValue={walking} onMinus={() => walking && setWalking(walking - 1)} onPlus={() => walking && setWalking(walking + 1)} />
-          <GoalSection title="Push-up" currentValue={pushUp} onMinus={() => pushUp && setPushUp(pushUp - 1)} onPlus={() => pushUp && setPushUp(pushUp + 1)} />
-          <GoalSection title="Sit-up" currentValue={sitUp} onMinus={() => sitUp && setSitUp(sitUp - 1)} onPlus={() => sitUp && setSitUp(sitUp + 1)} />
+          <GoalSection title="Distance" currentValue={distance} onMinus={() => distance && setDistance(distance - 1)} onPlus={() => distance && setDistance(distance + 1)} />
+          <GoalSection title="Duration" currentValue={duration} onMinus={() => duration && setDuration(duration - 1)} onPlus={() => duration && setDuration(duration + 1)} />
         </View>
         <TouchableOpacity className="py-2 bg-blue-brand rounded-full w-64 h-12" onPress={handleGoalsSubmit} disabled={isButtonDisabled} style={{
             backgroundColor: isButtonDisabled ? '#cccccc' : '#2089DC'
