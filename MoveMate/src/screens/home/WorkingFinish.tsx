@@ -34,13 +34,15 @@ const WorkingFinish = () => {
                     <Button title='Free' />
                 </View> */}
                 <ButtonGroup
-                    buttons={['Walking', 'PushUp', 'SitUp', 'Free']}
+                    buttons={['Walking','Cycling']}
                     selectedIndex={selectedIndex}
                     onPress={(value) => {
                         setSelectedIndex(value);
                         switch(value){
                           case 0:
                             navigation.navigate(ROUTES.WALKING_MODE);  
+                          case 1:
+                            navigation.navigate(ROUTES.MAP); 
                         }
                         
                       }}
