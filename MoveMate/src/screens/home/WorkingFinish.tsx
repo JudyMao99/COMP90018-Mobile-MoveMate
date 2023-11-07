@@ -40,9 +40,11 @@ const WorkingFinish = () => {
                         setSelectedIndex(value);
                         switch(value){
                           case 0:
-                            navigation.navigate(ROUTES.WALKING_MODE);  
+                            navigation.navigate(ROUTES.WALKING_MODE);
+                            break;
                           case 1:
                             navigation.navigate(ROUTES.MAP); 
+                            break;
                         }
                         
                       }}
