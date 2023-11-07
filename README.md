@@ -34,14 +34,14 @@ Android: Use Expo Go app to scan the QR code
 
 ### 4. Focus Session:
     a. You can select '15 mins', '30 mins' and '60 mins' to start your Focus session
-    b. Then the count down of the time you selected will run, and you can either terminate(Cross Button) the session or stop(Stop Button).
+    b. Then the count down of the time you selected will run, and you can either terminate(Cross Button) the session or pause(Pause Button).
     c. After the finish of the Focus session, you can select the Walking, Cycling or Back to the Home button to either start the exercise session or go back to the home page.
 
 ### 5. Exercise Session - Walking:
-    When you click the Walking Button, you can see the new page and how many steps you walk in this exercise session.
+    When you click the Walking Button, you can see the walking page and how many steps you walk in this exercise session.
 
 ### 6. Exercise Session - Cycling:
-    a. When you click the Cycling Button, you can see the new page and see the map of your current location, the distance and the duration of this Cycling Session.
+    a. When you click the Cycling Button, you can see the cycling page and see the map of your current location, the distance and the duration of this Cycling Session.
     b. The end button can be used to terminate this Exercise Session.
 
 ### 7. History：
