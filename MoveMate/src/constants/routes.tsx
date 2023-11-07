@@ -16,7 +16,6 @@ export default {
 
   DASHBOARD: 'Dashboard' as never,
   DASHBOARD_MAIN: 'Dashboard Main Page' as never,
-  DASHBOARD_DETAIL: 'Dashboard Detail' as never,
 
   PROFILE_NAVIGATION: 'Profile Navigation' as never,
   PROFILE: 'Profile' as never,
