@@ -188,19 +188,13 @@ const MapScreen = () => {
     
     <View style={styles.container}>
 
-      <TouchableOpacity className = "absolute bottom-12 p-2.5 justify-center items-center bg-emerald-300 w-28 rounded z-50 text-center " onPress={handleEndCycling}>
+      <TouchableOpacity className = "absolute bottom-32 p-2.5 justify-center items-center bg-emerald-300 w-28 rounded z-50 text-center " onPress={handleEndCycling}>
         <Text>End</Text>
       </TouchableOpacity>
 
       <MapView
         style={styles.map}
         initialRegion={initialRegion}
-        // initialRegion={{
-        //   latitude: -37.7993,
-        //   longitude: 144.9629,
-        //   latitudeDelta: 0.0922,
-        //   longitudeDelta: 0.0421,
-        // }}
         showsUserLocation={true}
         
         onUserLocationChange={onUserLocationChange}
@@ -281,22 +275,23 @@ const styles = StyleSheet.create({
   },
   bottomPanel: {
     position: 'absolute',
-    bottom: 10,
+    bottom: 80,
     left: 0,
     right: 10,
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 10,
-    // backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    backgroundColor: 'transparent', // transparent background
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    
+    // backgroundColor: 'transparent', // transparent background
   },
   bottomText: {
-    fontSize: 16,
+    fontSize: 16
   },
   compassContainer: {
     position: 'absolute',
-    top: 10,
-    right: 10,
+    top: 56,
+    right: 32,
     width: 50,
     height: 50,
     alignItems: 'center',

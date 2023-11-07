@@ -51,7 +51,7 @@ function BottomTabNavigator() {
 // Get the current screen name and return nones when in specific page
 const getTabBarVisibility = (route: any) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? ROUTES.HOME_NAV;
-  if( routeName == ROUTES.WORKING_MODE || routeName == ROUTES.WORKING_FINISH || routeName == ROUTES.WALKING_MODE) {
+  if( routeName == ROUTES.WORKING_MODE || routeName == ROUTES.WORKING_FINISH || routeName == ROUTES.WALKING_MODE || routeName == ROUTES.MAP) {
     return 'none';
   }
   return 'flex';
