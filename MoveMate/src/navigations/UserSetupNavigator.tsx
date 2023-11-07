@@ -7,7 +7,6 @@ import BottomTabNavigator from './BottomTabNavigator';
 
 const Stack = createStackNavigator();
 
-
 const UserSetupNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ gestureEnabled: false }} initialRouteName={ROUTES.SETUP_AVATAR}>

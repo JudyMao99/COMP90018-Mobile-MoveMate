@@ -1,6 +1,6 @@
 import { View, Text,TouchableOpacity, Alert } from 'react-native';
-import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
 import useAuth from '../../hook/useAuth';
 import { getAuth, signOut } from 'firebase/auth';
@@ -8,7 +8,25 @@ import { Icon } from '@rneui/themed';
 
 const Profile = () => {
   const navigation = useNavigation();
-  const { user } = useAuth();
+  // const { user } = useAuth();
+  
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+
+  const [displayName, setDisplayName] = useState<string>();
+  
+  useFocusEffect(
+    useCallback(() => {
+      setDisplayName(user?.displayName ?? "undefined");
+    }, [])
+  );
+
+  useEffect(() => {
+    setDisplayName(user?.displayName ?? "undefined");
+  }, [])
+  
+  
 
   const handleSignOut = () => {
     const auth = getAuth();
@@ -22,7 +40,7 @@ const Profile = () => {
     <View className="flex-1">
       <View className="relative bg-blue-brand h-64 flex justify-center items-center rounded-lg shadow-xl">
         <Text className="text-6xl font-black mt-16 text-white">
-          {user?.displayName ?? "Undefined"}
+          {displayName}
         </Text>
         <View className="absolute -bottom-6 flex justify-center items-center bg-white w-44 h-12 rounded-full">
           <Text className="font-bold text-lg">
