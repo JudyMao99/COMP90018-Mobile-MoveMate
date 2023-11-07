@@ -9,6 +9,7 @@ import DashboardNavigator from './DashboardNavigator';
 import { Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { RouteProp, ParamListBase, getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -32,7 +33,7 @@ function BottomTabNavigator() {
         component={DashboardNavigator}
         options={{
           tabBarIcon: ({ color, size }) => <Ionicons name="bar-chart-sharp" color={color} size={size} />,
-          tabBarLabel: "Dashboard",
+          tabBarLabel: "History",
         }}
       />
       <Tab.Screen
