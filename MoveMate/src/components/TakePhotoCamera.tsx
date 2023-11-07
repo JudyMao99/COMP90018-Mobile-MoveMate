@@ -31,7 +31,6 @@ export default function TakePhotoCamera({ setImage, setCameraVisible } : TakePho
       try {
         // @ts-ignore
         const data = await cameraRef.current?.takePictureAsync();
-        console.log(data);
         setPhoto(data.uri);
       } catch (error) {
         console.log(error);

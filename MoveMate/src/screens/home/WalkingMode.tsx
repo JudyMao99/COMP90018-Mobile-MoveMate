@@ -69,8 +69,6 @@ const WalkingMode = ({route}: any) => {
 
       const querySnapshot =  await getDocs(q);
       querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        // console.log(new Date().toDateString());
         if(doc.data().start_date.toDate().toDateString() === new Date().toDateString()) {
           tmpStep += doc.data().step_count;
         }

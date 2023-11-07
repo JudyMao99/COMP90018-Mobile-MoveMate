@@ -93,7 +93,6 @@ const MapScreen = () => {
       }
 
       let location = await Location.getCurrentPositionAsync({ distanceInterval: 10 });
-      console.log(location);
 
       const newCoordinate = {
         latitude: location.coords.latitude,
@@ -210,10 +209,8 @@ const MapScreen = () => {
           pinColor='blue'
           draggable={true}
           onDragStart={(e)=> {
-            console.log('Drag start',e.nativeEvent.coordinate);
           }}
           onDragEnd={(e)=> {
-            console.log('Drag end',e.nativeEvent.coordinate);
             setPin({
               latitude: e.nativeEvent.coordinate.latitude,
               longitude: e.nativeEvent.coordinate.longitude

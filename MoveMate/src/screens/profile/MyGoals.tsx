@@ -38,7 +38,6 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
           // If last update was less than 10 seconds ago, disable the button  24 * 60 * 60 * 1000
           if (timeDiff < 10000) {
             setIsButtonDisabled(true);
-            console.log("Button disabled, will enable in:", 10000 - timeDiff, "ms");
 
             // Enable the button after 10 seconds
             setTimeout(() => {
@@ -76,7 +75,6 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
           // update if exists
           const userData = docSnap.data();
           const lastUpdated = userData.lastUpdated || Timestamp.fromDate(new Date(0)); // Default to a very old date as a Timestamp
-          console.log("Last updated:", lastUpdated.toDate());
           const now = Timestamp.fromDate(new Date()); 
           
           // Check if last update was more than 24 hours ago  24 * 60 * 60 * 1000
@@ -94,7 +92,6 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
             lastUpdated: now
           });
           setIsButtonDisabled(true);
-          console.log("Goals updated!");
         } else {
           // User doc doesn't exist, set default values
           const now = Timestamp.fromDate(new Date()); 
@@ -103,7 +100,6 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
             lastUpdated: Timestamp.fromDate(new Date())
           });
           setIsButtonDisabled(true);
-          console.log("users Goals created!");
           
           await addDoc(collection(db, "goal_history"), {
             date: now,
