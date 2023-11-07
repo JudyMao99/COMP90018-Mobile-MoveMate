@@ -8,6 +8,7 @@ import ProfileNavigator from './ProfileNavigator';
 import DashboardNavigator from './DashboardNavigator';
 import { Image } from 'react-native';
 import { RouteProp, ParamListBase, getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -26,8 +27,20 @@ function BottomTabNavigator() {
           tabBarStyle: {
             display: getTabBarVisibility(route),
           },
-        })} />
-      <Tab.Screen name={ROUTES.DASHBOARD} component={DashboardNavigator} />
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        })}
+        />
+      <Tab.Screen 
+        name={"History"} 
+        component={DashboardNavigator} 
+        options = {{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="chart-bar" color={color} size={size} />
+          ),
+        }}
+      />
       <Tab.Screen
         name={ROUTES.PROFILE_NAVIGATION}
         component={ProfileNavigator}
