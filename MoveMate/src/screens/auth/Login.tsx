@@ -47,16 +47,12 @@ const Login = () => {
               onChangeText={(val: string) => setPassword(val)}
               secureTextEntry
             />
-            <TouchableOpacity className="flex items-end w-fit" >
-              <Text className="text-gray-700 mb-5" onPress={() => navigation.navigate(ROUTES.FORGOT_PASSWORD)}>Forgot Password?</Text>
-            </TouchableOpacity>
           </View>
           <TouchableOpacity className="py-3 bg-yellow-400 rounded-2xl" onPress={handleLogin}>
             <Text className="text-xl font-bold text-center text-gray-700">
               Login
             </Text>
           </TouchableOpacity>
-          
         </View>
 
         <View className="flex-row justify-center mt-7">
