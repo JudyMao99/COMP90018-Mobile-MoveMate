@@ -1,58 +1,70 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, View, StyleSheet } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
-import { FocusData, FocusHistoryItem } from '../data';
+import { formatDate } from '../utils';
 
-function formatDate(input: string): string {
-  const months = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-  ];
+type FocusChartProps = {
+  focusSummaryData: {
+    date: string;
+    totalDuration: number;
+  }[];
+};
 
-  const date = new Date(input);
-  const month = months[date.getMonth()];
-  const day = date.getDate();
+const FocusChart: React.FC<FocusChartProps> = ({ focusSummaryData }) => {
+  const chartData = {
+    labels: focusSummaryData.map(item => formatDate(item.date)),
+    datasets: [
+      {
+        data: focusSummaryData.map(item => item.totalDuration || 0),
+      },
+    ],
+  };
 
-  return `${month} ${day}`;
-}
+  const chartConfig = {
+    backgroundColor: '#e26a00',
+    backgroundGradientFrom: '#fb8c00',
+    backgroundGradientTo: '#ffa726',
+    decimalPlaces: 0,
+    color: (opacity = 0.7) => `rgba(255, 255, 255, ${opacity})`,
+    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    style: {
+      borderRadius: 16,
+    },
+    propsForDots: {
+      r: '6',
+      strokeWidth: '2',
+      stroke: '#ffa726',
+    },
+  };
 
-const FocusChart = () => {
+  const screenWidth = Dimensions.get('window').width;
+
   return (
+    // <View style={styles.chartContainer}>
     <LineChart
-      data={{
-        labels: FocusData.focusHistory.map(item => formatDate(item.date)),
-        datasets: [{
-          data: FocusData.focusHistory.map(item => item.duration)
-        }]
-      }}
-      width={Dimensions.get("window").width} 
+      data={chartData}
+      width={screenWidth}
       height={220}
       yAxisLabel=""
-      yAxisSuffix=" min"
+      yAxisSuffix=" mins"
       yAxisInterval={1}
-      chartConfig={{
-        backgroundColor: "#e26a00",
-        backgroundGradientFrom: "#fb8c00",
-        backgroundGradientTo: "#ffa726",
-        decimalPlaces: 0, 
-        color: (opacity = 0.7) => `rgba(255, 255, 255, ${opacity})`,
-        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-        style: {
-          borderRadius: 16
-        },
-        propsForDots: {
-          r: "6",
-          strokeWidth: "2",
-          stroke: "#ffa726"
-        }
-      }}
+      chartConfig={chartConfig}
       bezier
-      style={{
-        marginVertical: 10,
-        borderRadius: 16
-      }}
+      // style={styles.chartStyle}
     />
+    // </View>
   );
 };
+
+// const styles = StyleSheet.create({
+//   chartContainer: {
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//     marginVertical: 10,
+//   },
+//   chartStyle: {
+//     borderRadius: 16,
+//   },
+// });
 
 export default FocusChart;

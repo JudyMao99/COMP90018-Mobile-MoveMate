@@ -45,8 +45,8 @@ const WorkingMode = ({route} : any) => {
     <View className="flex flex-1 items-center w-screen h-screen ">
       <View className="bg-sky-500 h-3/4 w-full flex items-center justify-around ">
         <CountDown
-          //until={duration*60}
-          until={10}
+          until={duration*60}
+          //until={10}
           size={60}
           timeToShow={['M', 'S']}
           timeLabels={{m: null, s: null}}
