@@ -49,7 +49,6 @@ const MyGoals = ({ nextStep }: MyGoalsProps) => {
               // Enable the button after 10 seconds
               setTimeout(() => {
                 setIsButtonDisabled(false);
-                console.log('Button enabled');
               }, 10000 - timeDiff);
             }
           } else {

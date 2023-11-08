@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Image, View } from 'react-native';
+import { Alert, Image, View } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import IconButton from './IconButton';
@@ -34,8 +34,8 @@ export default function TakePhotoCamera({
         // @ts-ignore
         const data = await cameraRef.current?.takePictureAsync();
         setPhoto(data.uri);
-      } catch (error) {
-        console.log(error);
+      } catch (error: any) {
+        Alert.alert(error);
       }
     }
   };

@@ -11,7 +11,6 @@ function AppNavigator() {
   const [isNewUser, setIsNewUser] = useState<boolean>(false);
   useEffect(() => {
     if (user) {
-      console.log('Checking new user...');
       // Check if goals have been set by the user
       getDoc(doc(db, 'users', user.uid))
         .then((docSnap: DocumentSnapshot) => {
