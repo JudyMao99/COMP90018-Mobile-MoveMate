@@ -81,7 +81,7 @@ const Home = () => {
           tmpCyclingDistance += doc.data().distance;
         }
       });
-      setCyclingDistance(tmpCyclingDistance);
+      setCyclingDistance(parseFloat(tmpCyclingDistance.toFixed(2)));
       setCyclingDuration(Math.floor(tmpCyclingDuration / 60));
     }
     

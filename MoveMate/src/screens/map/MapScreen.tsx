@@ -16,7 +16,7 @@ const MapScreen = () => {
   const navigation = useNavigation();
   const [pin, setPin] = useState<{ latitude: number; longitude: number; } | null>(null);
 
-
+  const [heading, setHeading] = useState(null);
   const { user } = useAuth();
   
 
@@ -195,8 +195,14 @@ const MapScreen = () => {
         style={styles.map}
         initialRegion={initialRegion}
         showsUserLocation={true}
-        
+        showsCompass={false} 
+        showsScale = {true}
+        showsBuildings={true}
+        showsTraffic={true}
+        showsIndoors={true}
+        compassOffset={{ x: -10, y: 10 }}
         onUserLocationChange={onUserLocationChange}
+        
       >
         
         <Marker
@@ -243,6 +249,8 @@ const MapScreen = () => {
           style={{
             ...styles.compassNeedle,
             transform: [{ rotate: `${directionAngle}deg` }],
+            borderRadius: 50, // Add this line
+            opacity: 0.85,
           }}
         />
       </View>
