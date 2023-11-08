@@ -11,15 +11,18 @@ const Stack = createStackNavigator();
 
 const ProfileNavigator = () => {
   return (
-    <Stack.Navigator 
-    screenOptions={{ headerShown: false, gestureEnabled: false }}
-    initialRouteName={ROUTES.PROFILE}>
+    <Stack.Navigator
+      screenOptions={{ headerShown: false, gestureEnabled: false }}
+      initialRouteName={ROUTES.PROFILE}
+    >
       <Stack.Screen name={ROUTES.PROFILE} component={Profile} />
-      <Stack.Screen name={ROUTES.MY_ACCOUNT} component={MyAccount} 
+      <Stack.Screen
+        name={ROUTES.MY_ACCOUNT}
+        component={MyAccount}
         options={{
           headerShown: true,
-          title: "",
-          headerBackTitle: " "
+          title: '',
+          headerBackTitle: ' ',
         }}
       />
       <Stack.Screen
@@ -27,14 +30,14 @@ const ProfileNavigator = () => {
         component={MyGoals}
         options={{
           headerShown: true,
-          title: "",
-          headerBackTitle: " ",
+          title: '',
+          headerBackTitle: ' ',
           headerStyle: {
-            backgroundColor: "#f2f2f2"
-          }
+            backgroundColor: '#f2f2f2',
+          },
         }}
       />
-      <Stack.Screen name={ROUTES.LOGIN}component={Login} />
+      <Stack.Screen name={ROUTES.LOGIN} component={Login} />
     </Stack.Navigator>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, View,Text } from 'react-native';
+import { Dimensions, View, Text } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { formatDate } from '../utils';
 

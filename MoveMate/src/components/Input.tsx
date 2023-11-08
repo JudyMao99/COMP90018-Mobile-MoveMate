@@ -1,5 +1,5 @@
-import { Text, TextInput, View } from 'react-native'
-import React from 'react'
+import { Text, TextInput, View } from 'react-native';
+import React from 'react';
 
 type InputProps = {
   title: string;
@@ -7,14 +7,14 @@ type InputProps = {
   placeholder?: string;
   secureTextEntry?: boolean;
   onChangeText: (val?: any) => void;
-}
+};
 const Input = ({
   title,
   value,
   placeholder,
   secureTextEntry,
-  onChangeText
-} : InputProps) => {
+  onChangeText,
+}: InputProps) => {
   return (
     <>
       <Text className="text-gray-700 ml-4 mb-2">{title}</Text>
@@ -26,7 +26,7 @@ const Input = ({
         secureTextEntry={secureTextEntry ?? false}
       />
     </>
-  )
-}
+  );
+};
 
-export default Input
+export default Input;

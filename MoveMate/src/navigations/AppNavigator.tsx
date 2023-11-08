@@ -11,26 +11,31 @@ function AppNavigator() {
   const [isNewUser, setIsNewUser] = useState<boolean>(false);
   useEffect(() => {
     if (user) {
-      console.log("Checking new user...")
+      console.log('Checking new user...');
       // Check if goals have been set by the user
-      getDoc(doc(db, "users", user.uid))
+      getDoc(doc(db, 'users', user.uid))
         .then((docSnap: DocumentSnapshot) => {
           if (!docSnap.exists()) {
             setIsNewUser(true);
           } else {
             setIsNewUser(false);
           }
-        }).catch((e) => {
-          console.log(e);
         })
+        .catch(e => {
+          console.log(e);
+        });
     }
-  }, [user])
+  }, [user]);
 
-  return (
-    user ? 
-      (isNewUser ? <UserSetupNavigator/> : <BottomTabNavigator />)
-      : <AuthNavigator />
-  )
+  return user ? (
+    isNewUser ? (
+      <UserSetupNavigator />
+    ) : (
+      <BottomTabNavigator />
+    )
+  ) : (
+    <AuthNavigator />
+  );
 }
 
 export default AppNavigator;

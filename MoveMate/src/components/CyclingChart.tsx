@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions,View,Text } from 'react-native';
+import { Dimensions, View, Text } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 import { formatDate } from '../utils';
 
@@ -62,7 +62,6 @@ const CyclingChart: React.FC<CyclingChartProps> = ({ cyclingSummaryData }) => {
         marginVertical: 8,
         borderRadius: 16,
       }}
-
     />
   );
 };

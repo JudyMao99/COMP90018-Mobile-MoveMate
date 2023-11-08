@@ -84,15 +84,12 @@ const Dashboard = () => {
         <FocusChart focusSummaryData={focusSummaryData} />
 
         <Text style={styles.header}>Walking Summary (Last 7 Days)</Text>
-        <WalkingChart walkingSummaryData={walkingSummaryData} />  
-        
+        <WalkingChart walkingSummaryData={walkingSummaryData} />
+
         <Text style={styles.header}>Cycling Summary (Last 7 Days)</Text>
         <CyclingChart cyclingSummaryData={cyclingSummaryData} />
-        
       </ScrollView>
     </>
-
-
   );
 };
 
