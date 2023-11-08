@@ -1,48 +1,55 @@
-# COMP90018-Mobile-MoveMate
-COMP90018 - Mobile Computing Systems Programming - Group Project: MoveMate
+# MoveMate: A Mobile App for Balanced Work and Exercise
 
-## MoveMate Team Member
-| Name        | Task                        |
-| :---------- | ----------------------------|
-| Chaoyi Shi  | Backend & Frontend          |
-| Xubin Zou   | Backend & Frontend          |
-| Yiyun Mao   | Backend & Frontend          |
-| Yuan Zhuang | Backend & Frontend          |
-| Yuwei Zhao  | Backend & Frontend & Design |
+## Project Overview
+This collaborative project is part of the COMP90018 Mobile Computing Systems Programming course at The University of Melbourne.
 
+## Application Purpose
+MoveMate is crafted to assist users in achieving a harmonious blend of work and physical activity. It provides a platform that not only helps users focus on their tasks but also motivates them to participate in regular exercise.
 
-## General Information
-MoveMate is an app designed to help users maintain a balance between work and exercise. It enables users to concentrate on their tasks and subsequently encourages them to engage in physical activities.
+## Compilation Instructions
+To compile and run MoveMate, please follow these steps:
 
-## How to Compile
-1. Install Expo Go from Apple Store/Google Play
-2. Navigate to the MoveMate folder and run "npm install" to install all necessary dependencies.
-3. Run "npx expo start" to initiate the project
-4. IOS: Use Camera App to scan the QR code to start the project.     
-Android: Use Expo Go app to scan the QR code
+1. Download the "Expo Go" application from the App Store or Google Play.
+2. Open a terminal, navigate to the MoveMate directory, and execute `npm install` to install all the required dependencies.
+3. Launch the project by running `npx expo start`.
+4. For iOS devices: Scan the displayed QR code using the Camera App to open the project.
+5. For Android devices: Scan the QR code with the Expo Go application to view the app.
 
-## How to Run
-### 1. Sign Up:
-    a. When you open MoveMate, you can see the "Sign Up" Button in the middle of the screen
-    b. Then, you can type your User Name, Email Address, and Password into the text box.
-    c. Then you can set a goal of exercise per day, which includes Walking steps, Distance of Cycling, and Duration of Cycling.
-    d. Then you can use our App in your new Account
-### 2. Login:
-    If you already have an account, you can use it to log in to our App.
-### 3. Main Page: 
-    You can see the main page of MoveMate. It shows the username, how long you focused today, and how much you completed the goal.
+## App Features
+### Sign Up
+- Launch MoveMate to find the "Sign Up" button prominently displayed.
+- Enter your desired Username, Email Address, and Password.
+- Set a daily exercise goal, which may include a target number of walking steps, cycling distance, or cycling duration.
+- Start using the app with your new account.
 
-### 4. Focus Session:
-    a. You can select '15 mins', '30 mins' and '60 mins' to start your Focus session
-    b. Then the count down of the time you selected will run, and you can either terminate(Cross Button) the session or pause(Pause Button).
-    c. After the finish of the Focus session, you can select the Walking, Cycling or Back to the Home button to either start the exercise session or go back to the home page.
+### Login
+- Existing users can log in to MoveMate with their account credentials.
 
-### 5. Exercise Session - Walking:
-    When you click the Walking Button, you can see the walking page and how many steps you walk in this exercise session.
+### Main Page
+- The main page displays your username, today's focus duration, and your progress towards the daily exercise goal.
 
-### 6. Exercise Session - Cycling:
-    a. When you click the Cycling Button, you can see the cycling page and see the map of your current location, the distance and the duration of this Cycling Session.
-    b. The end button can be used to terminate this Exercise Session.
+### Focus Session
+- Choose a focus duration: '15 mins', '30 mins', or '60 mins'.
+- A countdown timer will begin for the selected duration, which you can either pause or end prematurely.
+- Upon completion, opt to begin an exercise session or return to the main page.
 
-### 7. History：
-    You can see the Focus Summary, Walking Summary and Cycling Summary for the last seven days.
+### Exercise Session - Walking
+- Selecting the Walking Button brings up a tracker for the number of steps taken during the session.
+
+### Exercise Session - Cycling
+- The Cycling Button reveals a map with your current location, as well as the distance and duration of your cycling activity.
+- Use the end button to conclude the exercise session.
+
+### History
+- Review a summary of your focus sessions and exercise activities for the past week.
+
+## The Team
+| Name        | Responsibilities                        |
+|-------------|-----------------------------------------|
+| Chaoyi Shi  | Backend & Frontend Development          |
+| Xubin Zou   | Backend & Frontend Development          |
+| Yiyun Mao   | Backend & Frontend Development          |
+| Yuan Zhuang | Backend, Frontend & Project Management  |
+| Yuwei Zhao  | Backend, Frontend Development & Design  |
+
+We hope you enjoy using MoveMate to enhance your productivity and physical well-being!
