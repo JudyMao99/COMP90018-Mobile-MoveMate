@@ -7,7 +7,6 @@ import CyclingChart from '../../components/CyclingChart';
 import { useSummaryData } from '../../hook/useSummaryData';
 import moment from 'moment';
 import { QueryDocumentSnapshot } from 'firebase/firestore';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 type SummaryDataItem = {
   date: string;
@@ -101,6 +100,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+    marginTop: 20,
   },
   header: {
     fontSize: 18,
