@@ -146,11 +146,11 @@ const Home = () => {
       <View className="bg-white h-3/5 w-full rounded-2xl flex-col items-center justify-center ">
         <View className="flex-col items-start w-4/5 gap-y-4 mb-10">
           <Text style={styles.title}>
-            Hello,{user?.displayName ?? undefined}
+            Hello, {user?.displayName ?? undefined}
           </Text>
           <Text style={styles.working_hour}>
-            {Math.floor(focusDuration / 3600)} Hours{' '}
-            {Math.floor((focusDuration % 3600) / 60)} Min
+            {Math.floor(focusDuration / 3600)} hours{' '}
+            {Math.floor((focusDuration % 3600) / 60)} mins
           </Text>
         </View>
 
