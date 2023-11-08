@@ -22,7 +22,9 @@ const Register = () => {
         })
         .then(() => console.log("username added!"))
         .catch((err: any) => {
-          console.log('got error: ', err.message);
+          if (err.message === "Firebase: Error (auth/email-already-in-use).") {
+            Alert.alert("The email entered has already been used, please try another one.");
+          }
         })
     } else {
       Alert.alert("please provide valid email address and password.")
