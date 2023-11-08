@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, ActivityIndicator } from 'react-native'
+import React from 'react';
+import { View, ActivityIndicator } from 'react-native';
 
 const LoadingOverlay = () => {
   return (
@@ -8,7 +8,7 @@ const LoadingOverlay = () => {
         <ActivityIndicator size="large" />
       </View>
     </>
-  )
-}
+  );
+};
 
-export default LoadingOverlay
+export default LoadingOverlay;

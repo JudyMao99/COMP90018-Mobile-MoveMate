@@ -14,7 +14,7 @@ const data = {
       data: [30, 90, 67, 54, 10, 2],
     },
   ],
-}
+};
 
 // Mock data object used for Contribution Graph
 
@@ -30,7 +30,7 @@ const contributionData = [
   { date: '2016-04-02', count: 4 },
   { date: '2016-03-05', count: 2 },
   { date: '2016-02-30', count: 4 },
-]
+];
 
 // Mock data object for Pie Chart
 
@@ -70,10 +70,10 @@ const pieChartData = [
     legendFontColor: '#7F7F7F',
     legendFontSize: 15,
   },
-]
+];
 
 // Mock data object for Progress
 
-const progressChartData = [0.4, 0.6, 0.8]
+const progressChartData = [0.4, 0.6, 0.8];
 
-export { data, contributionData, pieChartData, progressChartData }
+export { data, contributionData, pieChartData, progressChartData };

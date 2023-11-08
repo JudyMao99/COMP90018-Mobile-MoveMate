@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../config/firebase';
 
@@ -15,8 +15,8 @@ const useAuth = () => {
     });
     return unsub;
   }, []);
-  
-  return { user }
-}
 
-export default useAuth
+  return { user };
+};
+
+export default useAuth;

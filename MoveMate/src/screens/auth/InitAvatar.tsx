@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, Alert, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Camera, CameraType } from 'expo-camera';
@@ -20,13 +20,13 @@ const InitAvatar = () => {
 
   useEffect(() => {
     if (user && user.photoURL) {
-      setImage(user.photoURL)
+      setImage(user.photoURL);
     }
   }, [user]);
 
-  
   const handlePickImage = async () => {
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permissionResult.granted === false) {
       Alert.alert('Permission to access photos is required.');
@@ -50,12 +50,14 @@ const InitAvatar = () => {
     if (image) {
       if (user) {
         updateProfile(user, {
-          photoURL: image
-        }).then(() => {
-          navigation.navigate(ROUTES.SETUP_GOAL);
-        }).catch(e => {
-          console.log("got error when uploading avatar: ", e);
+          photoURL: image,
         })
+          .then(() => {
+            navigation.navigate(ROUTES.SETUP_GOAL);
+          })
+          .catch(e => {
+            console.log('got error when uploading avatar: ', e);
+          });
       }
     } else {
       navigation.navigate(ROUTES.SETUP_GOAL);
@@ -66,63 +68,83 @@ const InitAvatar = () => {
   const handleTakePhoto = () => {
     setBottomSheetVisible(false);
     setCameraVisible(true);
-  }
+  };
 
   const handleChangeAvatar = () => {
     setBottomSheetVisible(true);
-  }
+  };
 
   // list of upload options
   type UploadOption = {
-    title: string,
-    onPress: () => void
-  }
+    title: string;
+    onPress: () => void;
+  };
 
   const uploadOpts: UploadOption[] = [
     {
-      title: "Take a photo",
-      onPress: handleTakePhoto
+      title: 'Take a photo',
+      onPress: handleTakePhoto,
     },
     {
-      title: "Pick an image from camera roll",
-      onPress: handlePickImage
+      title: 'Pick an image from camera roll',
+      onPress: handlePickImage,
     },
     {
-      title: "Cancel",
-      onPress: () => setBottomSheetVisible(false)
-    }
-  ]
+      title: 'Cancel',
+      onPress: () => setBottomSheetVisible(false),
+    },
+  ];
 
   return (
     <>
-      {cameraVisible ?
-        <TakePhotoCamera setImage={setImage} setCameraVisible={setCameraVisible} /> :
+      {cameraVisible ? (
+        <TakePhotoCamera
+          setImage={setImage}
+          setCameraVisible={setCameraVisible}
+        />
+      ) : (
         <View className="flex-1 bg-white justify-center items-center">
-          <BottomSheet isVisible={bottomSheetVisible} onBackdropPress={() => setBottomSheetVisible(false)}>
+          <BottomSheet
+            isVisible={bottomSheetVisible}
+            onBackdropPress={() => setBottomSheetVisible(false)}
+          >
             {uploadOpts.map((opt: UploadOption, idx: number) => (
-              <ListItem key={idx} onPress={opt.onPress} containerStyle={{ borderBottomWidth: 1, borderColor: "#ccc" }} >
+              <ListItem
+                key={idx}
+                onPress={opt.onPress}
+                containerStyle={{ borderBottomWidth: 1, borderColor: '#ccc' }}
+              >
                 <ListItem.Content className="py-2.5 pl-1">
                   <ListItem.Title>{opt.title}</ListItem.Title>
                 </ListItem.Content>
               </ListItem>
             ))}
           </BottomSheet>
-          
+
           <View className="flex items-center mb-4">
             <Text className="text-4xl">Welcome!</Text>
             <Text>Please upload your avatar!</Text>
           </View>
           <View className="mb-6">
-            <Avatar containerStyle={{ backgroundColor: "#EDEDED" }} source={{ uri: image }} size="xlarge" rounded>
-              <Avatar.Accessory size={36} onPress={handleChangeAvatar}/>
+            <Avatar
+              containerStyle={{ backgroundColor: '#EDEDED' }}
+              source={{ uri: image }}
+              size="xlarge"
+              rounded
+            >
+              <Avatar.Accessory size={36} onPress={handleChangeAvatar} />
             </Avatar>
           </View>
-          <Button size="lg" radius="md" title={image ? "Upload Image" : "Skip For Now"} onPress={uploadImage} />
+          <Button
+            size="lg"
+            radius="md"
+            title={image ? 'Upload Image' : 'Skip For Now'}
+            onPress={uploadImage}
+          />
         </View>
-      }
+      )}
     </>
+  );
+};
 
-  )
-}
-
-export default InitAvatar
+export default InitAvatar;

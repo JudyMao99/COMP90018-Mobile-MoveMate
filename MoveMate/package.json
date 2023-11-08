@@ -5,7 +5,8 @@
     "start": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "prettier": "prettier --write ."
   },
   "dependencies": {
     "@ant-design/icons-react-native": "^2.3.2",
@@ -53,6 +54,7 @@
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.14",
     "@types/react-native": "^0.72.3",
+    "prettier": "^3.0.3",
     "tailwindcss": "3.3.2",
     "typescript": "^5.1.3"
   },
