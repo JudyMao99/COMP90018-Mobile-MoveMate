@@ -185,9 +185,8 @@ const Home = () => {
         upperCase
         radius={'lg'}
         onPress={() => {
-          navigation.navigate(ROUTES.WORKING_MODE, {
-            duration: selectedDuration,
-          });
+          // @ts-ignore 
+          navigation.navigate(ROUTES.WORKING_MODE, { duration: selectedDuration });
         }}
         style={{ position: 'relative', bottom: 25 }}
       />
