@@ -3,7 +3,7 @@ import { Text, View, Image } from 'react-native';
 import { useState, useEffect } from 'react';
 import { Pedometer } from 'expo-sensors';
 import React from 'react';
-import { FAB, Button, Dialog, Icon } from '@rneui/themed';
+import { Button, Dialog } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
 import { db } from '../../config/firebase';

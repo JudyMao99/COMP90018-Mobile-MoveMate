@@ -2,18 +2,15 @@ import { View, Text, StyleSheet } from 'react-native';
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants';
-import { FAB, ButtonGroup, Chip, CheckBox, Card } from '@rneui/themed';
-import { Button } from 'react-native-paper';
+import { FAB, ButtonGroup, Card } from '@rneui/themed';
 import useAuth from '../../hook/useAuth';
 import {
   getDoc,
   doc,
-  setDoc,
   collection,
   query,
   where,
   getDocs,
-  Timestamp,
 } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 
